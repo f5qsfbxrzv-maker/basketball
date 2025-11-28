@@ -134,6 +134,27 @@
       "sha256": "81eb5478e133ce3e5b807d92fcfb89196ae6aa422c637eb01e0c5b9404ac2d03",
       "mtime": 1764311603
     }
+    ,
+    {
+      "path": "V2/reporting/isotonic_calibrator.joblib",
+      "size": 967,
+      "sha256": "81a722d879942c1714b103a2c3cc7da0e99dbde2b36f588a47d28aa0975fc880",
+      "mtime": 1764314980
+    }
   ],
-  "report_preview": "{\n  \"timestamp\": \"2025-11-28T06:33:22.187523\",\n  \"models_trained\": [\n    \"spread_classifier\",\n    \"moneyline_classifier\",\n    \"total_regressor\"\n  ]\n}"
+  "report_preview": "{\n  \"timestamp\": \"2025-11-28T06:33:22.187523\",\n  \"models_trained\": [\n    \"spread_classifier\",\n    \"moneyline_classifier\",\n    \"total_regressor\"\n  ]\n}",
+  "models": [
+    {
+      "name": "moneyline_xgb_tuned_v1",
+      "entry": {
+        "filename": "V2/models/trained/moneyline_xgb_tuned_v1.joblib",
+        "sha256": "a705064cb97ee7ed4324a7558b1d994ebfedccc08c4eae0554923cd849a4a4f4",
+        "metrics": {
+          "accuracy": 0.7136929460580913,
+          "auc": 0.76904609475032,
+          "logloss": 0.5914152576944293
+        }
+      }
+    }
+  ]
 }
