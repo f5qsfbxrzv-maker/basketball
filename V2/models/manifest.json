@@ -1,0 +1,139 @@
+{
+  "name": "honest-data-v1",
+  "timestamp": "2025-11-28T06:38:37Z",
+  "files": [
+    {
+      "path": "V2/models/trained/moneyline_classifier_model.pkl",
+      "size": 3087,
+      "sha256": "c77c815e793996948d11dd6418c109f334458e4e63a7adebcb22d574e9efbe7d",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/models/trained/moneyline_classifier_scaler.pkl",
+      "size": 4087,
+      "sha256": "c83fb02cb49464573433c6686364b0f0ceec6c3791c19aa42b7578fe5a720c3c",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/models/trained/spread_classifier_model.pkl",
+      "size": 429736,
+      "sha256": "9ca178a9e782108a3ec43e716ac0f12410d98cda5006a71c43d482ed564b0dd9",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/models/trained/spread_classifier_scaler.pkl",
+      "size": 4087,
+      "sha256": "c83fb02cb49464573433c6686364b0f0ceec6c3791c19aa42b7578fe5a720c3c",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/models/trained/total_classifier_model.pkl",
+      "size": 49409,
+      "sha256": "092234c722e2c2d02910f4daee1d2711f4ed7bdf1f842a4124827ffc6fe2f615",
+      "mtime": 1764310750
+    },
+    {
+      "path": "V2/models/trained/total_regressor_model.pkl",
+      "size": 2816321,
+      "sha256": "defcf2adc167ae72675a4dc46acca977103338284e0a401df36c31aa8f82d4cc",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/models/trained/config/moneyline_classifier_config.json",
+      "size": 3312,
+      "sha256": "716665b887ef118bace3046e4f3e2ba6eb1d2069511b27d77e27e9121ace7e80",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/models/trained/config/spread_classifier_config.json",
+      "size": 3304,
+      "sha256": "547afcb2deecb54e4b8ae8425273b5218facc1f1ba2e288b210581e6021accbf",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/models/trained/config/total_classifier_config.json",
+      "size": 3235,
+      "sha256": "ac68c5f297395f9aabcf889ec11f8ce7643948d85d50d5b23f900c1a23d5df4f",
+      "mtime": 1764310750
+    },
+    {
+      "path": "V2/models/trained/config/total_regressor_config.json",
+      "size": 8706,
+      "sha256": "84e325cd513d96a2d93baf8cb4ea628a70f06a4980b2631326423504251519b5",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/data/training_data_ready_for_ats.vegas.csv",
+      "size": 3048095,
+      "sha256": "faeccda83b2ea4b9dd71aa562b9ddfd809e21064a9dc912223be85344e68f26c",
+      "mtime": 1764308936
+    },
+    {
+      "path": "V2/data/full_training_report.txt",
+      "size": 156,
+      "sha256": "f172cd947473f76428aa4ee0e0d99d0d5a32e5a1737a02e2bc93754780d54c10",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/data/calibration/moneyline_classifier_calibration.png",
+      "size": 31917,
+      "sha256": "0cb8d98db4086dfdefbc2577b453a6549fd055271517fd28be214ad1c9b77f57",
+      "mtime": 1764311603
+    },
+    {
+      "path": "V2/data/calibration/moneyline_classifier_classification_report.json",
+      "size": 649,
+      "sha256": "8af9d2187d9a9a971e7fa1d11336e71b7dcffbc26588e878a8ebbcd08a8a4b1f",
+      "mtime": 1764311603
+    },
+    {
+      "path": "V2/data/calibration/moneyline_classifier_evaluation.json",
+      "size": 1265,
+      "sha256": "52c3998939db07d971269eafa1090684973e3f0d6130b3dddc137b6f0d733da4",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/data/calibration/spread_classifier_calibration.png",
+      "size": 35537,
+      "sha256": "fb26eabc1fbb2da4b36b93dfd03fcb623657b52930d5ffd5cf4cbcf0a4a9397b",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/data/calibration/spread_classifier_classification_report.json",
+      "size": 648,
+      "sha256": "ad5e4da03ff8e9c33d7ec3d3e4e3329e1bd4150d03c290cb260bc4058e4985c1",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/data/calibration/spread_classifier_evaluation.json",
+      "size": 1256,
+      "sha256": "f166dc7067d4b4e1dd725a569ee2c93b719f138b4f2da0974aa7c899095ed18c",
+      "mtime": 1764311602
+    },
+    {
+      "path": "V2/data/calibration/total_classifier_calibration.png",
+      "size": 24364,
+      "sha256": "4a02bbf909f90daa87abf829643cc7d1e5ef6dc92baea0a9f01ff9b500595be3",
+      "mtime": 1764310751
+    },
+    {
+      "path": "V2/data/calibration/total_classifier_classification_report.json",
+      "size": 351,
+      "sha256": "51bc0bdfb9e2a7b9a6a0938a6f4c37ae62e573fb2579a550ca8a1cf559343304",
+      "mtime": 1764310751
+    },
+    {
+      "path": "V2/data/calibration/total_classifier_evaluation.json",
+      "size": 1184,
+      "sha256": "0ccdb88c6997a3204745e778e02be7ba0d2322d304bfdb684964337d90e39499",
+      "mtime": 1764310751
+    },
+    {
+      "path": "V2/data/calibration/total_regressor_evaluation.json",
+      "size": 6664,
+      "sha256": "81eb5478e133ce3e5b807d92fcfb89196ae6aa422c637eb01e0c5b9404ac2d03",
+      "mtime": 1764311603
+    }
+  ],
+  "report_preview": "{\n  \"timestamp\": \"2025-11-28T06:33:22.187523\",\n  \"models_trained\": [\n    \"spread_classifier\",\n    \"moneyline_classifier\",\n    \"total_regressor\"\n  ]\n}"
+}
