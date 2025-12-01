@@ -1,0 +1,35 @@
+{
+  "prediction": {
+    "heuristic_weight": 0.3,
+    "model_weight": 0.7
+  },
+  "advanced_models": {
+    "enabled": false,
+    "use_negative_binomial": false,
+    "enable_bayesian": false,
+    "poisson_simulations": 5000
+  },
+  "elo_k_factor": 20,
+  "elo_home_advantage": 100,
+  "model_retrain_frequency": 7,
+  "min_prediction_confidence": 0.6,
+  "feature_window": 10,
+  "kelly_fraction": 0.02,
+  "max_bet_size": 500,
+  "max_daily_risk": 0.05,
+  "stop_loss_percentage": 0.2,
+  "odds_api_key": "bfe595c2678a9041eb4689ef5b271241",
+  "kalshi_api_key": "9ae65c1e-15cc-4630-9f74-3e17d6920c8a",
+  "kalshi_api_secret": "-----BEGIN RSA PRIVATE KEY-----\\nMIIEpQIBAAKCAQEAmr3AsIBJvMzqEwVZ6sY4VbruQy1v+FGK6VH2AI/D1WO7xyJj\\nvIchqYaPUWW9C2I/qMSmeCUp2CBwNKqcnA6/bgWjQuLdydYwBJlnAdqIpUwZhXhS\\nDb+Yfj8w5OgRQyUpR3ZgMgIjWwXzYjEcSNAAidepmt1J+U3x0/fbJuwhh3KtV1ZO\\ne2YsMrzco7Ek9Kn9ZUHUzG9pRQVU4vRf/BzLdRMmxp9yus6NnLcYGyd2RPlYB8k0\\nGIFhz/Oya3xBT9dMEg+L2KMSnKc6ppOcbgAVeANKIHucOvcdV4+MUfJk7Mv3LqVx\\nlB9SBLQqzIdDT4ukR+UItvAw8/gdMwxRLmKXWwIDAQABAoIBACYmE8QvzH4EUszf\\nq9xKhAb2r9jV8d3ZVJLTBv/6cYBBN0EPxGDtO6pMpzadC28sCJ+144iJOPi0fpUt\\nXrDGngEk2KwbvCwPZwUrQI7fboK58SzLjgcfrhupvocgg2j3V2br0ylhB5BgNjGG\\nBAAbb5aMGZ85YQxaX/0vBNNisZ1vkQVApO8UwrZndqMiBaNzQ2/b+DQKv6BgBqxu\\nS6RWfy6bIR5uG7ZfateT4SXd+MVxUuAwQhxqKt6KZn/IWz7jND/g/Vu+EieX5bNM\\nYkdjNwuLTmNDIBpasiFOz9D6JcEEdYIqD43pmswg6MlDejyxzhjAlrbTPM1MnimT\\nBIS9UIECgYEAwHTM2yewZluEWKmBPqVTaCQg57F0+3LKETIJ3pEWL0sDsp9vw2yX\\nkP7UwZ2UCzp3xu0STZrQ0GRWcQC8jU6V0ftahm4fg+M+Gl4bbn4G+QHo43CRUz0b\\na6RigLwi0oeRZ9mLNOeGsdxk86WFKiJojsjPGh6SWGiTBrR3W1tCopsCgYEAzdUf\\nNcJvujlb5Uz++bI1qO5t+iUu0PVdRBiGHQx+xEPhy04QrL83RMHGwcMRa2YeHxxY\\nJTVzOrlHpZ1n9Kmc0YR5ZPqIqTzK6fL4lxXVbCWz0yJJ5qszUpG+s7b9ZgMl07ES\\nKSd3zOQKPt2s8SJs7Dp73kjcCZ9SFT1c6qyLykECgYEArjeNUj4lYyMpNRGMW+dR\\nD47U8qgjm5OX8+T2JjH0gS9I06Ociq18rtbgRbydzWRKFRt6XCHvMRYDYhwmk0w2\\nN3Vvxw1dHgjRqRDTiDwxl6vw5CJ8i3tfnRubx6mHZEkwiW/WojeMKOm3wQ9u8mtf\\ndxG02JIgLEPOBF3NRjfgpE0CgYEAo4VZ+xqSKm7hK8TEl9hVOvTYmC6sB8O2KaAW\\nA8PmfcO0ARDuvF5Y6R3M6igvkZQZ//tDp6PT/GYvnknzyXJqLCVDT86dfV3Xko69\\noUHuQLGfL/AAp+mAp2s0BpAstbtwdMIqvFknmrXb0d/IQfVodS9tMsXNUTOqQUdz\\nptgXYkECgYEAmBhIhld1BN7T6GpDHs4kk6ICq5ZXru7W1tT4QPBdR/ZWazSQfhFG\\nxNPl3j8zRMsK/EVIG3qWnRi6CB9rVzn254lrsbI6IqjMlxcqgv8ssiFPiIRUUmpV\\nkjRKvbF07djkcYv/UPP+/o1YAJFjyIRFpk/Zw3wxxp5Vpqactz+njso=\\n-----END RSA PRIVATE KEY-----",
+  "database_path": "nba_betting_data.db",
+  "backup_frequency": 24,
+  "auto_launch_gui": true,
+  "theme": "dark",
+  "update_frequency": 5000,
+  "environment": "prod",
+  "auto_trading": false,
+  "paper_trading": true,
+  "data_update_frequency": 300,
+  "prediction_frequency": 3600,
+  "elo_initial_rating": 1500
+}

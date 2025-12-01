@@ -1,0 +1,44 @@
+# Data (too large for git)
+data/
+*.csv
+*.xlsx
+*.db
+
+# Models (track via DVC or separate model registry)
+models/production/*.joblib
+models/production/*.pkl
+models/staging/*.joblib
+models/staging/*.pkl
+
+# Logs
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Sensitive
+config_local.py
+.env
