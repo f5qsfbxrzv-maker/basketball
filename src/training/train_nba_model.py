@@ -196,6 +196,115 @@ class NBAModelTrainer:
             }
         }
     
+    def train_with_tscv(self, df, model, features, target='WL', n_splits=5):
+        """
+        Performs Time Series Cross-Validation to prevent data leakage.
+        Replaces standard train_test_split.
+        
+        Args:
+            df (DataFrame): Input data with all features and target
+            model: scikit-learn compatible model/pipeline
+            features (list): List of feature column names
+            target (str): Target column name
+            n_splits (int): Number of time series folds
+            
+        Returns:
+            tuple: (final_model, average_accuracy)
+        """
+        from sklearn.base import clone
+        from sklearn.metrics import accuracy_score, brier_score_loss
+        
+        print(f"\n⏳ Starting Time Series Validation ({n_splits} folds)...")
+        
+        # 1. CRITICAL: Sort by date to respect the arrow of time
+        # We reset index so iloc indexing works perfectly for splits
+        if 'date' in df.columns:
+            df = df.sort_values('date').reset_index(drop=True)
+            print(f"   ✅ Data sorted by date ({df['date'].min()} to {df['date'].max()})")
+        else:
+            print("   ⚠️ Warning: No 'date' column found. Assuming data is already sorted chronologically.")
+        
+        X = df[features]
+        y = df[target]
+        
+        tscv = TimeSeriesSplit(n_splits=n_splits)
+        fold_metrics = []
+        
+        # 2. Walk Forward through history
+        for fold, (train_idx, test_idx) in enumerate(tscv.split(X)):
+            # Slice data
+            X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
+            y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
+            
+            # Train (Clone the model to ensure fresh start each fold)
+            fold_model = clone(model)
+            fold_model.fit(X_train, y_train)
+            
+            # Predict
+            probs = fold_model.predict_proba(X_test)[:, 1]
+            preds = (probs > 0.5).astype(int)
+            
+            # Score
+            acc = accuracy_score(y_test, preds)
+            brier = brier_score_loss(y_test, probs)
+            
+            # Context (Dates)
+            if 'date' in df.columns:
+                start_date = df['date'].iloc[test_idx].min()
+                end_date = df['date'].iloc[test_idx].max()
+                date_str = f"{str(start_date).split()[0]} to {str(end_date).split()[0]}"
+            else:
+                date_str = "Unknown Dates"
+            
+            print(f"   🔹 Fold {fold+1} ({date_str}): Acc {acc:.1%} | Brier {brier:.4f}")
+            fold_metrics.append(acc)
+            
+        avg_acc = sum(fold_metrics) / len(fold_metrics)
+        print(f"\n🏆 TSCV Average Accuracy: {avg_acc:.1%}")
+        print(f"   (This is your REAL expected performance)")
+
+        # 3. Final Retrain on ALL Data (for Production)
+        print("🚀 Retraining Final Model on full dataset...")
+        final_model = clone(model)
+        final_model.fit(X, y)
+        
+        return final_model, avg_acc
+    
+    def remove_collinear_features(self, df, features, threshold=0.95):
+        """
+        Scans the feature set for duplicates.
+        If Feature A and Feature B have a correlation > threshold, drop Feature B.
+        
+        Args:
+            df (DataFrame): Input data
+            features (list): List of feature column names
+            threshold (float): Correlation threshold (default 0.95)
+            
+        Returns:
+            list: Clean feature list with collinear features removed
+        """
+        print(f"\n🧹 Starting Feature Audit (Threshold: {threshold})...")
+        
+        # Calculate correlation matrix
+        X = df[features]
+        corr_matrix = X.corr().abs()
+        
+        # Select upper triangle of correlation matrix
+        upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
+        
+        # Find features with correlation greater than threshold
+        to_drop = [column for column in upper.columns if any(upper[column] > threshold)]
+        
+        print(f"   📉 Found {len(to_drop)} redundant features to drop.")
+        if len(to_drop) > 0:
+            print(f"   🗑️ Dropping examples: {to_drop[:5]}...")
+        
+        # Return the clean list of features
+        clean_features = [f for f in features if f not in to_drop]
+        print(f"   ✅ Features reduced from {len(features)} to {len(clean_features)}")
+        
+        return clean_features
+    
     def prepare_features(self, df, target_column, exclude_columns=None):
         """
         Prepare features for training
@@ -690,10 +799,58 @@ if __name__ == "__main__":
     # Initialize trainer
     trainer = NBAModelTrainer(random_state=42)
     
-    # Train all models
-    results = trainer.train_all_models(df, test_size=0.2, optimize_hyperparameters=False)
+    # OLD WAY (Random Split - CHEATING):
+    # results = trainer.train_all_models(df, test_size=0.2, optimize_hyperparameters=False)
     
-    # Save models
+    # NEW WAY (Time Series CV - REALITY):
+    print("\n" + "="*80)
+    print("🔥 TRAINING WITH TIME SERIES CROSS-VALIDATION (No Future Leakage)")
+    print("="*80)
+    
+    # 1. Define initial feature list (All numeric columns except target)
+    initial_features = ['home_pace', 'away_pace', 'home_net_rating', 'away_net_rating',
+                       'rest_differential', 'home_win_pct_recent', 'away_win_pct_recent',
+                       'pace_advantage', 'home_injury_impact', 'away_injury_impact']
+    
+    # 2. RUN THE AUDIT (Strip out redundant features)
+    # This will remove collinear features before the model sees them
+    feature_cols = trainer.remove_collinear_features(df, initial_features, threshold=0.95)
+    
+    # 3. Create XGBoost model for spread prediction
+    model_pipeline = xgb.XGBClassifier(
+        n_estimators=1000,
+        max_depth=6,
+        learning_rate=0.1,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        random_state=42,
+        eval_metric='logloss'
+    )
+    
+    # 4. Train with Time Series CV (prevents future leakage) using CLEAN features
+    best_model, real_accuracy = trainer.train_with_tscv(
+        df=df,
+        model=model_pipeline,
+        features=feature_cols,  # <--- Pass the cleaned list here
+        target='covers_spread',  # Using spread classifier as example
+        n_splits=5
+    )
+    
+    # Save the robust model
+    import os
+    os.makedirs('models/production', exist_ok=True)
+    joblib.dump(best_model, 'models/production/best_model.joblib')
+    print("\n✅ Production model saved to models/production/best_model.joblib")
+    print(f"   Expected Real-World Accuracy: {real_accuracy:.1%}")
+    print(f"   Edge over Break-Even (52.4%): {(real_accuracy - 0.524):.1%}")
+    
+    # OPTIONAL: Still train all models using the old method for comparison
+    print("\n" + "="*80)
+    print("📊 Training Full Ensemble (Old Method - For Comparison Only)")
+    print("="*80)
+    results = trainer.train_all_models(df, test_size=0.2, optimize_hyperparameters=False)
     trainer.save_models(results)
     
-    print("\nTraining completed successfully!")
+    print("\n✅ Training completed successfully!")
+    print("\n💡 TIP: The TSCV accuracy is your TRUE expected performance.")
+    print("        The old method accuracy is likely OVERLY OPTIMISTIC.")

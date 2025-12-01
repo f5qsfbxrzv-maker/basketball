@@ -350,6 +350,217 @@ class PredictionEngine:
         self.calibration_logger.log_outcome(game_id, did_go_over)
 
 
+# --- CLV TRACKER ENGINE ---
+import os
+from datetime import datetime
+
+
+class CLVTracker:
+    """
+    Closing Line Value (CLV) Tracker - The Ultimate Truth Serum for Betting Edge.
+    
+    CLV measures whether you're beating the market by comparing:
+    - **Bet Odds**: The price you locked in when placing the bet
+    - **Closing Odds**: The final market price just before game starts
+    
+    **Why CLV Matters:**
+    - Positive CLV (+5%) = You beat the market (Sharp)
+    - Negative CLV (-5%) = Market moved against you (Soft)
+    - Consistent +CLV = Long-term profitability (even if you lose individual bets)
+    - Negative CLV = Your wins are luck; casino takes it back eventually
+    
+    **Example:**
+    You bet Knicks +110 (2.10 decimal) → Line closes at +100 (2.00)
+    CLV = (2.10 / 2.00) - 1 = +5% → You captured value before sharp money moved it
+    
+    **Workflow:**
+    1. `log_bet()` - Record bet immediately with your locked-in odds
+    2. `update_closing_lines()` - After games start, backfill closing odds
+    3. System auto-calculates CLV% and reports Sharp vs Soft status
+    
+    Attributes:
+        log_path (str): CSV file path for bet tracking (default: logs/bet_tracker_with_clv.csv)
+    
+    CSV Schema:
+        - Date: Timestamp of bet placement
+        - Game_ID: Unique game identifier
+        - Team: Team you bet on
+        - Wager: Stake amount ($)
+        - Bet_Odds: Decimal odds when you placed bet (e.g., 1.909 for -110)
+        - Closing_Odds: Final market odds before game starts
+        - CLV_Percent: (Bet_Odds / Closing_Odds - 1) * 100
+        - Result: Win/Loss (populated after game settles)
+        - Profit: Net profit/loss ($)
+    
+    Examples:
+        >>> # Initialize tracker
+        >>> clv = CLVTracker()
+        >>> 
+        >>> # Log bet when placing
+        >>> clv.log_bet(
+        ...     game_id='0022400123',
+        ...     team='BOS Celtics',
+        ...     wager=100.0,
+        ...     bet_odds=1.909  # -110 American = 1.909 decimal
+        ... )
+        >>> 
+        >>> # After games start, update with closing lines
+        >>> closing_map = {
+        ...     ('0022400123', 'BOS Celtics'): 1.833  # Closed at -120 (worse)
+        ... }
+        >>> clv.update_closing_lines(closing_map)
+        >>> # Output: CLV = (1.909 / 1.833 - 1) = +4.1% (SHARP - you beat market)
+    
+    See Also:
+        - `kelly_optimizer.py`: Uses CLV health factor in sizing (penalizes negative CLV)
+        - `calibration_metrics.py`: Brier score + CLV = complete edge validation
+    """
+    def __init__(self, log_path: str = 'logs/bet_tracker_with_clv.csv') -> None:
+        """
+        Initialize CLV Tracker with specified log file path.
+        
+        Args:
+            log_path (str): Path to CSV tracking file (creates if doesn't exist)
+        """
+        self.log_path = log_path
+        self._init_log()
+
+    def _init_log(self) -> None:
+        """Creates the tracking file if it doesn't exist."""
+        if not os.path.exists('logs'):
+            os.makedirs('logs')
+            
+        if not os.path.exists(self.log_path):
+            # We track Bet Odds (what you got) vs Closing Odds (Truth)
+            df = pd.DataFrame(columns=[
+                'Date', 'Game_ID', 'Team', 'Wager', 'Bet_Odds', 
+                'Closing_Odds', 'CLV_Percent', 'Result', 'Profit'
+            ])
+            df.to_csv(self.log_path, index=False)
+
+    def log_bet(self, game_id: str, team: str, wager: float, bet_odds: float) -> None:
+        """
+        Logs a bet immediately after placement. Closing odds are pending.
+        
+        **CRITICAL**: bet_odds must be in DECIMAL format, not American.
+        - American -110 → Decimal 1.909
+        - American +150 → Decimal 2.50
+        - Conversion: Negative odds = (100 / abs(odds)) + 1
+        -              Positive odds = (odds / 100) + 1
+        
+        Args:
+            game_id (str): Unique game identifier (e.g., '0022400123')
+            team (str): Team name you bet on (e.g., 'BOS Celtics')
+            wager (float): Stake amount in dollars (e.g., 100.0)
+            bet_odds (float): Decimal odds locked in (e.g., 1.909 for -110)
+        
+        Examples:
+            >>> clv.log_bet('0022400123', 'LAL Lakers', 50.0, 2.10)  # +110 American
+            📝 [CLV Tracker] Bet Logged: LAL Lakers @ 2.10
+        """
+        new_row = {
+            'Date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'Game_ID': game_id,
+            'Team': team,
+            'Wager': wager,
+            'Bet_Odds': bet_odds,
+            'Closing_Odds': None,  # Pending market close
+            'CLV_Percent': 0.0,
+            'Result': None,
+            'Profit': 0.0
+        }
+        
+        try:
+            # Efficient append
+            df = pd.DataFrame([new_row])
+            df.to_csv(self.log_path, mode='a', header=not os.path.exists(self.log_path), index=False)
+            print(f"   📝 [CLV Tracker] Bet Logged: {team} @ {bet_odds:.2f}")
+        except Exception as e:
+            print(f"   ❌ [CLV Tracker] Error logging bet: {e}")
+
+    def update_closing_lines(self, closing_data_map: Dict[tuple, float]) -> None:
+        """
+        Updates past bets with final closing odds and calculates CLV.
+        
+        **CLV Formula**: (Bet_Odds / Closing_Odds) - 1
+        - Positive CLV: You got better odds than closing (Sharp)
+        - Negative CLV: Odds worsened after you bet (Soft/Public)
+        
+        Args:
+            closing_data_map (Dict[tuple, float]): Map of (game_id, team_name) → closing decimal odds
+                Example: {('0022400123', 'BOS Celtics'): 1.833}
+        
+        Examples:
+            >>> # Collect closing lines from odds provider
+            >>> closing_map = {
+            ...     ('0022400123', 'BOS Celtics'): 1.833,  # Closed worse than your 1.909
+            ...     ('0022400124', 'LAL Lakers'): 2.20     # Closed better than your 2.10
+            ... }
+            >>> clv.update_closing_lines(closing_map)
+            🔄 Updating CLV for past bets...
+            ✅ Updated BOS Celtics: Bet 1.909 vs Close 1.833 (CLV: +4.1%)
+            ✅ Updated LAL Lakers: Bet 2.10 vs Close 2.20 (CLV: -4.5%)
+            
+            📊 CLV PERFORMANCE REPORT
+               Total Bets Tracked: 2
+               Average CLV: -0.2%
+               Beating Market: 1/2 (50.0%)
+               ⚠️ STATUS: SOFT (Market is moving against you)
+        """
+        if not os.path.exists(self.log_path):
+            return
+        
+        df = pd.read_csv(self.log_path)
+        updated = False
+        
+        print("\n🔄 Updating CLV for past bets...")
+        
+        for idx, row in df.iterrows():
+            # Check for missing closing odds (handles both NaN and empty string)
+            closing_val = row['Closing_Odds']
+            if pd.isna(closing_val) or closing_val == '' or closing_val == 0.0:
+                key = (str(row['Game_ID']), row['Team'])
+                
+                # Check if we have closing data for this specific bet
+                if key in closing_data_map:
+                    close = float(closing_data_map[key])
+                    bet_price = float(row['Bet_Odds'])
+                    
+                    # CLV Formula: (Bet_Price / Closing_Price) - 1
+                    clv = (bet_price / close) - 1
+                    
+                    df.at[idx, 'Closing_Odds'] = close
+                    df.at[idx, 'CLV_Percent'] = round(clv * 100, 2)
+                    updated = True
+                    print(f"   ✅ Updated {row['Team']}: Bet {bet_price:.3f} vs Close {close:.3f} (CLV: {clv:+.1%})")
+        
+        if updated:
+            df.to_csv(self.log_path, index=False)
+            self._print_performance(df)
+        else:
+            print("   💤 No new closing lines found for pending bets.")
+
+    def _print_performance(self, df: pd.DataFrame) -> None:
+        """Internal report generator - shows Sharp vs Soft status."""
+        closed = df.dropna(subset=['Closing_Odds'])
+        if closed.empty:
+            return
+        
+        avg_clv = closed['CLV_Percent'].mean()
+        beating_market = len(closed[closed['CLV_Percent'] > 0])
+        total = len(closed)
+        
+        print(f"\n📊 CLV PERFORMANCE REPORT")
+        print(f"   Total Bets Tracked: {total}")
+        print(f"   Average CLV: {avg_clv:+.2f}%")
+        print(f"   Beating Market: {beating_market}/{total} ({beating_market/total:.1%})")
+        
+        if avg_clv > 0.0:
+            print("   🚀 STATUS: SHARP (You are beating the closing line)")
+        else:
+            print("   ⚠️ STATUS: SOFT (Market is moving against you)")
+
+
 def load_config(path: str) -> Dict[str, Any]:
     import yaml
     with open(path, "r", encoding="utf-8") as f:
