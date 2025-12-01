@@ -12,9 +12,9 @@ try:
 except ImportError:
     xgb = None
 
-from v2.core.calibration_fitter import CalibrationFitter as CalibrationFitter
-from v2.core.calibration_logger import CalibrationLogger as CalibrationLogger
-from v2.constants import (
+from src.core.calibration_fitter import CalibrationFitter as CalibrationFitter
+from src.core.calibration_logger import CalibrationLogger as CalibrationLogger
+from src.constants import (
     MIN_PROBABILITY, MAX_PROBABILITY,
     KALSHI_BUY_COMMISSION,
     HEURISTIC_PACE_COEFFICIENT,
@@ -24,8 +24,8 @@ from v2.constants import (
     HEURISTIC_INJURY_COEFFICIENT,
     HEURISTIC_TOTAL_LINE_COEFFICIENT
 )
-from v2.data_models import GameInfo, GameFeatures, PredictionResult
-from v2.logger_setup import get_structured_adapter, classify_error
+from src.data_models import GameInfo, GameFeatures, PredictionResult
+from src.logger_setup import get_structured_adapter, classify_error
 
 
 class PredictionEngine:
@@ -65,11 +65,11 @@ class PredictionEngine:
         _advanced_ready (bool): True if advanced models initialized successfully
     
     Examples:
-        >>> from v2.core.calibration_fitter import CalibrationFitter
-        >>> from v2.core.calibration_logger import CalibrationLogger
+        >>> from src.core.calibration_fitter import CalibrationFitter
+        >>> from src.core.calibration_logger import CalibrationLogger
         >>> config = {'advanced_models': {'enabled': True, 'use_negative_binomial': True}}
-        >>> fitter = CalibrationFitter(db_path='data/database/nba_betting_data.db')
-        >>> logger = CalibrationLogger(db_path='data/database/nba_betting_data.db')
+        >>> fitter = CalibrationFitter(db_path='data/database/data/database/nba_betting_data.db')
+        >>> logger = CalibrationLogger(db_path='data/database/data/database/nba_betting_data.db')
         >>> engine = PredictionEngine(
         ...     config=config,
         ...     model_path='models/model_v5_total.xgb',
@@ -77,7 +77,7 @@ class PredictionEngine:
         ...     calibration_logger=logger
         ... )
         >>> # Make prediction
-        >>> from v2.core.feature_calculator_v5 import FeatureCalculatorV5V5
+        >>> from src.core.feature_calculator_v5 import FeatureCalculatorV5V5
         >>> calc = FeatureCalculatorV5V5()
         >>> features = calc.calculate_game_features(game_id='0022400123')
         >>> result = engine.predict_total(

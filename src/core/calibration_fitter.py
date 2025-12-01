@@ -1,7 +1,7 @@
 import sqlite3, logging, json
 from typing import Optional, Tuple
 from datetime import datetime, timedelta
-from v2.constants import (
+from src.constants import (
     MIN_CALIBRATION_SAMPLES,
     CALIBRATION_REFIT_INTERVAL_DAYS,
     TARGET_BRIER_SCORE,
@@ -43,7 +43,7 @@ class CalibrationFitter:
         model_version (str): Version string for base prediction model (update when retraining occurs)
     
     Examples:
-        >>> fitter = CalibrationFitter(db_path='data/database/nba_betting_data.db', min_samples=250)
+        >>> fitter = CalibrationFitter(db_path='data/database/data/database/nba_betting_data.db', min_samples=250)
         >>> # Fit both calibration methods
         >>> iso_result = fitter.fit_isotonic()
         >>> platt_result = fitter.fit_platt()
@@ -58,12 +58,12 @@ class CalibrationFitter:
         - `kelly_optimizer.py`: Uses calibrated probabilities for bet sizing
         - `constants.py`: MIN_CALIBRATION_SAMPLES, MAX_BRIER_FOR_BETTING thresholds
     """
-    def __init__(self, db_path: str = 'data/database/nba_betting_data.db', min_samples: int = MIN_CALIBRATION_SAMPLES):
+    def __init__(self, db_path: str = 'data/database/data/database/nba_betting_data.db', min_samples: int = MIN_CALIBRATION_SAMPLES):
         """
         Initialize calibration fitter with database connection and minimum sample threshold.
         
         Args:
-            db_path (str): Path to SQLite database. Default: 'data/database/nba_betting_data.db'
+            db_path (str): Path to SQLite database. Default: 'data/database/data/database/nba_betting_data.db'
             min_samples (int): Minimum predictions required to fit calibration. Default: MIN_CALIBRATION_SAMPLES (250)
         
         Raises:
@@ -203,7 +203,7 @@ class CalibrationFitter:
             conn.commit()
         
         # Log Brier trend
-        from v2.core.calibration_metrics import compute_brier_score, log_brier_trend
+        from src.core.calibration_metrics import compute_brier_score, log_brier_trend
         brier = compute_brier_score(self.db_path)
         latest = self.load_latest()
         cal_ver = latest[2] if latest else 'none'

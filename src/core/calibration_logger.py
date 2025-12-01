@@ -6,7 +6,7 @@ class CalibrationLogger:
     """
     VERSION = "v6"
     
-    def __init__(self, db_path: str = "data/database/nba_betting_data.db"):
+    def __init__(self, db_path: str = "data/database/data/database/nba_betting_data.db"):
         self.db_path = db_path
         self._ensure_table()
 

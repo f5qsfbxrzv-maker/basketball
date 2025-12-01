@@ -35,22 +35,22 @@ from datetime import datetime, timedelta
 from scipy.stats import norm
 import logging
 
-from v2.constants import RECENCY_STATS_BLEND_WEIGHT
+from src.constants import RECENCY_STATS_BLEND_WEIGHT
 
 try:
     from config import DB_PATH as MASTER_DB_PATH
 except Exception:
-    MASTER_DB_PATH = "data/database/nba_betting_data.db"
+    MASTER_DB_PATH = "data/database/data/database/nba_betting_data.db"
 
 # Advanced Off/Def ELO system (optional)
 try:
-    from v2.core.off_def_elo_system import OffDefEloSystem
+    from src.core.off_def_elo_system import OffDefEloSystem
 except ImportError:  # graceful degradation if not present
     OffDefEloSystem = None
 
 # Import ELO calculator (has its own internal cache)
 try:
-    from v2.core.dynamic_elo_calculator import DynamicELOCalculator
+    from src.core.dynamic_elo_calculator import DynamicELOCalculator
 except ImportError:
     logging.warning("DynamicELOCalculator not available - ELO features disabled")
     DynamicELOCalculator = None
@@ -739,7 +739,7 @@ class FeatureCalculatorV5:
         """
         try:
             # Import here to avoid circular dependency
-            from v2.services.injury_scraper import InjuryScraper
+            from src.ingestion.injury_scraper import InjuryScraper
             
             scraper = InjuryScraper()
             differential = scraper.get_game_injury_differential(home_team, away_team)

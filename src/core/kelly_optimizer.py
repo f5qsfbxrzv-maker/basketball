@@ -56,7 +56,7 @@ class KellyOptimizer:
         event_risk_budget_pct (float): Max combined stake per event (default: 0.02 = 2%)
     
     Examples:
-        >>> optimizer = KellyOptimizer(bankroll=10000.0, db_path='data/database/nba_betting_data.db')
+        >>> optimizer = KellyOptimizer(bankroll=10000.0, db_path='data/database/data/database/nba_betting_data.db')
         >>> # Calculate bet for calibrated probability vs market price
         >>> bet = optimizer.calculate_bet(
         ...     model_prob=0.62,  # Calibrated probability (not raw!)
@@ -76,13 +76,13 @@ class KellyOptimizer:
         - `constants.py`: MAX_BRIER_FOR_BETTING, KELLY_FRACTION_MULTIPLIER
     """
     
-    def __init__(self, bankroll: float = 10000.0, db_path: str = "data/database/nba_betting_data.db"):
+    def __init__(self, bankroll: float = 10000.0, db_path: str = "data/database/data/database/nba_betting_data.db"):
         """
         Initialize Kelly optimizer with starting bankroll and database connection.
         
         Args:
             bankroll (float): Starting bankroll amount in dollars. Default: 10000.0
-            db_path (str): Path to SQLite database for bet tracking. Default: 'data/database/nba_betting_data.db'
+            db_path (str): Path to SQLite database for bet tracking. Default: 'data/database/data/database/nba_betting_data.db'
         
         Raises:
             sqlite3.Error: If database initialization fails
@@ -294,9 +294,9 @@ class KellyOptimizer:
             Dict: Bet recommendation details
         """
         # CRITICAL: Check calibration health before sizing bet
-        from v2.constants import MAX_BRIER_FOR_BETTING
+        from src.constants import MAX_BRIER_FOR_BETTING
         try:
-            from v2.core.calibration_metrics import compute_brier_score, calibration_sample_count
+            from src.core.calibration_metrics import compute_brier_score, calibration_sample_count
             brier = compute_brier_score(self.db_path)
             n_samples = calibration_sample_count(self.db_path)
             
@@ -340,7 +340,7 @@ class KellyOptimizer:
         cal_diag = {}
         if calibration_factor is None:
             try:
-                from v2.core.calibration_metrics import calibration_health_factor
+                from src.core.calibration_metrics import calibration_health_factor
                 calibration_factor, cal_diag = calibration_health_factor(self.db_path)
             except Exception:
                 calibration_factor = 1.0

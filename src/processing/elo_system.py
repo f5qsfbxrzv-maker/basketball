@@ -14,7 +14,7 @@ from typing import Dict, Optional, List
 import sqlite3
 from datetime import datetime
 
-from v2.constants import (
+from src.constants import (
     OFF_ELO_BASELINE, DEF_ELO_BASELINE, SEASON_REGRESSION_FACTOR,
     REGULAR_SEASON_BASE_K, PLAYOFF_BASE_K, ELO_MARGIN_SCALE,
     ELO_POINT_EXPECTATION_SCALE, LEAGUE_AVG_POINTS,

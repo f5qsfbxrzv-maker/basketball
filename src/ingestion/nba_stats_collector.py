@@ -11,7 +11,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 import warnings
-from v2.logger_setup import get_structured_adapter, classify_error
+from src.logger_setup import get_structured_adapter, classify_error
 
 # Official nba_api library
 from nba_api.stats.endpoints import leaguegamelog, leaguedashteamstats
@@ -25,7 +25,7 @@ class NBAStatsCollectorV2:
     More reliable than raw requests with built-in rate limiting
     """
     
-    def __init__(self, db_path: str = "data/database/nba_betting_data.db"):
+    def __init__(self, db_path: str = "data/database/data/database/nba_betting_data.db"):
         self.db_path = db_path
         self.event_logger = get_structured_adapter(component='collector', prediction_version='v5.0')
         self._init_database()

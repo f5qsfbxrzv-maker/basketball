@@ -15,7 +15,7 @@ from typing import Dict
 from pathlib import Path
 
 # Centralized database path (authoritative main DB)
-CENTRAL_DB_PATH = Path(__file__).parent / "data" / "data/database/nba_betting_data.db"
+CENTRAL_DB_PATH = Path(__file__).parent / "data" / "data/database/data/database/nba_betting_data.db"
 
 
 # ==============================================================================

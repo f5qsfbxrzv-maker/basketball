@@ -9,7 +9,7 @@ from typing import Dict, List, Tuple, Optional
 import pandas as pd
 from datetime import datetime, timedelta
 
-from v2.constants import (
+from src.constants import (
     STATUS_PLAY_PROBABILITIES,
     CHEMISTRY_LAG_FACTOR,
     MAX_LAG_ABSENCES,

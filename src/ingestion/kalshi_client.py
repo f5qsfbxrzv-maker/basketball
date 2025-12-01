@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 from dataclasses import dataclass
 import logging
-from v2.logger_setup import get_structured_adapter, classify_error
+from src.logger_setup import get_structured_adapter, classify_error
 
 @dataclass
 class BettingOpportunity:
