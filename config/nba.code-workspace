@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "NBA Betting Model"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "../Fooball Model": true
+    },
+    "search.exclude": {
+      "../Fooball Model/**": true
+    }
+  }
+}

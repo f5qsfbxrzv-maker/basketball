@@ -1,0 +1,38 @@
+# Central configuration for NBA prediction system
+# Modify values cautiously; dashboard reads these at startup.
+
+version: 1
+prediction:
+  totals_model_enabled: true
+  calibration_min_samples: 200
+  heuristic_weight: 0.35
+  model_weight: 0.65
+  max_total_edge_pct: 0.15
+  poisson_enabled: false
+features:
+  recency_decay_days: 14
+  elo_rest_bonus: 3.0
+  back_to_back_penalty: -2.0
+  injury_replacement_factor: 0.6
+  pace_blend_weight: 0.5
+injury:
+  pie_weight_scale: 1.0
+  critical_absence_threshold: 0.12
+logging:
+  level: INFO
+  structured: true
+  path: logs/structured_events.log
+risk:
+  kelly_fraction_multiplier: 0.25
+kalshi:
+  buy_commission: 0.02  # Commission on contract purchase
+  sell_commission: 0.02  # Commission on early sale/exit
+  expiry_commission: 0.0  # No commission when held to expiry
+  vig_removal_method: normalization  # simple normalization of yes/no prices
+hypertuning:
+  auto_apply: false  # Set to true to auto-apply best hyperparameters to running model
+  min_samples: 50    # Minimum games to justify applying new params
+  apply_by: brier    # Which metric to apply: 'brier' or 'roi' (ROI requires odds history and is experimental)
+calibration:
+  reliability_bins: 10
+  min_bin_count: 15

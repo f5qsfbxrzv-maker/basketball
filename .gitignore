@@ -1,0 +1,24 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.class
+.venv/
+venv/
+
+# Data
+*.db
+*.BAK
+**/nba_players_game_stats.csv
+**/games_details.csv
+data/backups/
+data/live/*.db
+
+# Models (large pickles)
+*.pkl
+!models/isotonic_calibrator_final.pkl
+
+# OS
+.DS_Store
+
+# Logs
+*.log

@@ -1,0 +1,6732 @@
+{
+  "test_period": "2024-10-22 to 2025-04-11",
+  "games_tested": 828,
+  "games_filtered_out": 313,
+  "filter_criteria": "Odds between -500 and +500",
+  "model_performance": {
+    "auc": 0.7881167558714282,
+    "brier": 0.19084167413818248,
+    "accuracy": 0.7185990338164251
+  },
+  "best_threshold": 0.05,
+  "best_results": {
+    "bets": 671,
+    "wins": 475,
+    "losses": 196,
+    "win_rate": 70.78986587183309,
+    "profit": 246.27928818394184,
+    "roi": 36.703321636951095
+  },
+  "bet_log": [
+    {
+      "date": "2024-10-22",
+      "home": "LAL",
+      "away": "MIN",
+      "pick": "HOME",
+      "odds": -105,
+      "edge": 0.23329228162765503,
+      "result": 1,
+      "profit": 0.9523809523809523
+    },
+    {
+      "date": "2024-10-23",
+      "home": "HOU",
+      "away": "CHA",
+      "pick": "AWAY",
+      "odds": 210,
+      "edge": 0.22454828023910522,
+      "result": 1,
+      "profit": 2.1
+    },
+    {
+      "date": "2024-10-23",
+      "home": "UTA",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.35557305812835693,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2024-10-23",
+      "home": "NOP",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 145,
+      "edge": 0.31647440791130066,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-23",
+      "home": "POR",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -278,
+      "edge": 0.18121695518493652,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2024-10-23",
+      "home": "MIA",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -160,
+      "edge": 0.2267206311225891,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-23",
+      "home": "DET",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.43104806542396545,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2024-10-23",
+      "home": "ATL",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -195,
+      "edge": 0.18108832836151123,
+      "result": 1,
+      "profit": 0.5128205128205128
+    },
+    {
+      "date": "2024-10-24",
+      "home": "DAL",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 220,
+      "edge": 0.14709597826004028,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-24",
+      "home": "DEN",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": 110,
+      "edge": 0.1776978075504303,
+      "result": 1,
+      "profit": 1.1
+    },
+    {
+      "date": "2024-10-24",
+      "home": "SAC",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -112,
+      "edge": 0.17143696546554565,
+      "result": 1,
+      "profit": 0.8928571428571429
+    },
+    {
+      "date": "2024-10-25",
+      "home": "HOU",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": 200,
+      "edge": 0.2663668096065521,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-25",
+      "home": "LAL",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": -122,
+      "edge": 0.23158258199691772,
+      "result": 1,
+      "profit": 0.819672131147541
+    },
+    {
+      "date": "2024-10-25",
+      "home": "MIL",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 290,
+      "edge": 0.34328988194465637,
+      "result": 1,
+      "profit": 2.9
+    },
+    {
+      "date": "2024-10-25",
+      "home": "UTA",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -258,
+      "edge": 0.24991780519485474,
+      "result": 1,
+      "profit": 0.3875968992248062
+    },
+    {
+      "date": "2024-10-25",
+      "home": "TOR",
+      "away": "PHI",
+      "pick": "AWAY",
+      "odds": -115,
+      "edge": 0.064816415309906,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-25",
+      "home": "NYK",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 185,
+      "edge": 0.2986554801464081,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-26",
+      "home": "PHX",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": 130,
+      "edge": 0.4922015368938446,
+      "result": 1,
+      "profit": 1.3
+    },
+    {
+      "date": "2024-10-26",
+      "home": "SAS",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": -122,
+      "edge": 0.10433876514434814,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-27",
+      "home": "GSW",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 310,
+      "edge": 0.3032264709472656,
+      "result": 1,
+      "profit": 3.1
+    },
+    {
+      "date": "2024-10-28",
+      "home": "NYK",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": 270,
+      "edge": 0.32942989468574524,
+      "result": 1,
+      "profit": 2.7
+    },
+    {
+      "date": "2024-10-28",
+      "home": "BOS",
+      "away": "MIL",
+      "pick": "HOME",
+      "odds": -315,
+      "edge": 0.240963876247406,
+      "result": 1,
+      "profit": 0.31746031746031744
+    },
+    {
+      "date": "2024-10-28",
+      "home": "TOR",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -210,
+      "edge": 0.293168842792511,
+      "result": 1,
+      "profit": 0.47619047619047616
+    },
+    {
+      "date": "2024-10-28",
+      "home": "PHX",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -192,
+      "edge": 0.08795315027236938,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2024-10-29",
+      "home": "UTA",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -258,
+      "edge": 0.20937073230743408,
+      "result": 1,
+      "profit": 0.3875968992248062
+    },
+    {
+      "date": "2024-10-29",
+      "home": "GSW",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": 105,
+      "edge": 0.4391792416572571,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2024-10-29",
+      "home": "MIN",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -175,
+      "edge": 0.29062050580978394,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-29",
+      "home": "BKN",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": 100,
+      "edge": 0.3280254602432251,
+      "result": 1,
+      "profit": 1.0
+    },
+    {
+      "date": "2024-10-30",
+      "home": "LAC",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 260,
+      "edge": 0.3761104941368103,
+      "result": 1,
+      "profit": 2.6
+    },
+    {
+      "date": "2024-10-30",
+      "home": "MIA",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -110,
+      "edge": 0.12572312355041504,
+      "result": 1,
+      "profit": 0.9090909090909091
+    },
+    {
+      "date": "2024-10-30",
+      "home": "IND",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": 154,
+      "edge": 0.2601875066757202,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-10-30",
+      "home": "GSW",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -162,
+      "edge": 0.3298659324645996,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2024-10-30",
+      "home": "PHI",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": -230,
+      "edge": 0.16123926639556885,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2024-10-30",
+      "home": "CHA",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -260,
+      "edge": 0.2777777910232544,
+      "result": 1,
+      "profit": 0.38461538461538464
+    },
+    {
+      "date": "2024-10-31",
+      "home": "DAL",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": 210,
+      "edge": 0.5606310367584229,
+      "result": 1,
+      "profit": 2.1
+    },
+    {
+      "date": "2024-10-31",
+      "home": "UTA",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.30874359607696533,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2024-10-31",
+      "home": "LAC",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.20067471265792847,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2024-10-31",
+      "home": "MEM",
+      "away": "MIL",
+      "pick": "HOME",
+      "odds": 135,
+      "edge": 0.11832773685455322,
+      "result": 1,
+      "profit": 1.35
+    },
+    {
+      "date": "2024-11-01",
+      "home": "NOP",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -180,
+      "edge": 0.19983947277069092,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-02",
+      "home": "LAC",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -225,
+      "edge": 0.27828049659729004,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2024-11-02",
+      "home": "HOU",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -154,
+      "edge": 0.236397385597229,
+      "result": 1,
+      "profit": 0.6493506493506493
+    },
+    {
+      "date": "2024-11-02",
+      "home": "TOR",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -145,
+      "edge": 0.28050369024276733,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-02",
+      "home": "MIL",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": 270,
+      "edge": 0.587938666343689,
+      "result": 1,
+      "profit": 2.7
+    },
+    {
+      "date": "2024-11-02",
+      "home": "PHI",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": 145,
+      "edge": 0.5218778848648071,
+      "result": 1,
+      "profit": 1.45
+    },
+    {
+      "date": "2024-11-04",
+      "home": "LAC",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": -175,
+      "edge": 0.31182289123535156,
+      "result": 1,
+      "profit": 0.5714285714285714
+    },
+    {
+      "date": "2024-11-04",
+      "home": "MIN",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -470,
+      "edge": 0.12362509965896606,
+      "result": 1,
+      "profit": 0.2127659574468085
+    },
+    {
+      "date": "2024-11-04",
+      "home": "PHX",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -290,
+      "edge": 0.09851551055908203,
+      "result": 1,
+      "profit": 0.3448275862068966
+    },
+    {
+      "date": "2024-11-04",
+      "home": "DAL",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.6002178192138672,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2024-11-04",
+      "home": "HOU",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -125,
+      "edge": 0.18214935064315796,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-04",
+      "home": "NOP",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.3881511390209198,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2024-11-04",
+      "home": "CHI",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -310,
+      "edge": 0.13555693626403809,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-04",
+      "home": "CLE",
+      "away": "MIL",
+      "pick": "HOME",
+      "odds": -445,
+      "edge": 0.07514071464538574,
+      "result": 1,
+      "profit": 0.2247191011235955
+    },
+    {
+      "date": "2024-11-04",
+      "home": "MIA",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": -115,
+      "edge": 0.24624836444854736,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-06",
+      "home": "NOP",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": -250,
+      "edge": 0.2857142686843872,
+      "result": 1,
+      "profit": 0.4
+    },
+    {
+      "date": "2024-11-06",
+      "home": "LAC",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -125,
+      "edge": 0.33609890937805176,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2024-11-06",
+      "home": "PHX",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 164,
+      "edge": 0.2751004099845886,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-06",
+      "home": "DEN",
+      "away": "OKC",
+      "pick": "HOME",
+      "odds": 225,
+      "edge": 0.3735576570034027,
+      "result": 1,
+      "profit": 2.25
+    },
+    {
+      "date": "2024-11-06",
+      "home": "DAL",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 380,
+      "edge": 0.4455549716949463,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-06",
+      "home": "BOS",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": 215,
+      "edge": 0.1015537679195404,
+      "result": 1,
+      "profit": 2.15
+    },
+    {
+      "date": "2024-11-06",
+      "home": "IND",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -375,
+      "edge": 0.15871280431747437,
+      "result": 1,
+      "profit": 0.26666666666666666
+    },
+    {
+      "date": "2024-11-06",
+      "home": "CHA",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": 120,
+      "edge": 0.2645828425884247,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2024-11-06",
+      "home": "MEM",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -175,
+      "edge": 0.14476847648620605,
+      "result": 1,
+      "profit": 0.5714285714285714
+    },
+    {
+      "date": "2024-11-07",
+      "home": "CHI",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -425,
+      "edge": 0.06281661987304688,
+      "result": 1,
+      "profit": 0.23529411764705882
+    },
+    {
+      "date": "2024-11-07",
+      "home": "MIL",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -470,
+      "edge": 0.17543858289718628,
+      "result": 1,
+      "profit": 0.2127659574468085
+    },
+    {
+      "date": "2024-11-08",
+      "home": "OKC",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -345,
+      "edge": 0.06682437658309937,
+      "result": 1,
+      "profit": 0.2898550724637681
+    },
+    {
+      "date": "2024-11-08",
+      "home": "DEN",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.2342621088027954,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2024-11-08",
+      "home": "DET",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": 270,
+      "edge": 0.07296743988990784,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-08",
+      "home": "LAL",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -305,
+      "edge": 0.1880900263786316,
+      "result": 1,
+      "profit": 0.32786885245901637
+    },
+    {
+      "date": "2024-11-08",
+      "home": "MEM",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -310,
+      "edge": 0.24390244483947754,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2024-11-08",
+      "home": "CHA",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -154,
+      "edge": 0.13140571117401123,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-08",
+      "home": "SAC",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 205,
+      "edge": 0.32601943612098694,
+      "result": 1,
+      "profit": 2.05
+    },
+    {
+      "date": "2024-11-08",
+      "home": "DAL",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 114,
+      "edge": 0.3607357442378998,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2024-11-09",
+      "home": "SAS",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": 195,
+      "edge": 0.6221064329147339,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-09",
+      "home": "ATL",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 114,
+      "edge": 0.23244914412498474,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2024-11-09",
+      "home": "LAC",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -250,
+      "edge": 0.24680376052856445,
+      "result": 1,
+      "profit": 0.4
+    },
+    {
+      "date": "2024-11-10",
+      "home": "DEN",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -135,
+      "edge": 0.39182406663894653,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2024-11-10",
+      "home": "PHI",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -175,
+      "edge": 0.14476847648620605,
+      "result": 1,
+      "profit": 0.5714285714285714
+    },
+    {
+      "date": "2024-11-10",
+      "home": "PHX",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -112,
+      "edge": 0.2216981053352356,
+      "result": 1,
+      "profit": 0.8928571428571429
+    },
+    {
+      "date": "2024-11-11",
+      "home": "NOP",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": -120,
+      "edge": 0.10843372344970703,
+      "result": 1,
+      "profit": 0.8333333333333334
+    },
+    {
+      "date": "2024-11-11",
+      "home": "CHI",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": -345,
+      "edge": 0.1547602415084839,
+      "result": 1,
+      "profit": 0.2898550724637681
+    },
+    {
+      "date": "2024-11-11",
+      "home": "SAS",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": 114,
+      "edge": 0.18947258591651917,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2024-11-12",
+      "home": "MIL",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -395,
+      "edge": 0.09367471933364868,
+      "result": 1,
+      "profit": 0.25316455696202533
+    },
+    {
+      "date": "2024-11-12",
+      "home": "POR",
+      "away": "MIN",
+      "pick": "HOME",
+      "odds": 320,
+      "edge": 0.4186670780181885,
+      "result": 1,
+      "profit": 3.2
+    },
+    {
+      "date": "2024-11-12",
+      "home": "UTA",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": -225,
+      "edge": 0.18003273010253906,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2024-11-12",
+      "home": "GSW",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -148,
+      "edge": 0.40322577953338623,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2024-11-12",
+      "home": "ORL",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -345,
+      "edge": 0.1910112500190735,
+      "result": 1,
+      "profit": 0.2898550724637681
+    },
+    {
+      "date": "2024-11-12",
+      "home": "PHI",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.2648910880088806,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2024-11-12",
+      "home": "DET",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 165,
+      "edge": 0.16977041959762573,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-13",
+      "home": "SAS",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -440,
+      "edge": 0.14627468585968018,
+      "result": 1,
+      "profit": 0.22727272727272727
+    },
+    {
+      "date": "2024-11-13",
+      "home": "LAL",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -310,
+      "edge": 0.06142067909240723,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2024-11-13",
+      "home": "POR",
+      "away": "MIN",
+      "pick": "HOME",
+      "odds": 380,
+      "edge": 0.24453775584697723,
+      "result": 1,
+      "profit": 3.8
+    },
+    {
+      "date": "2024-11-13",
+      "home": "BKN",
+      "away": "BOS",
+      "pick": "HOME",
+      "odds": 380,
+      "edge": 0.09192778170108795,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-13",
+      "home": "NYK",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 285,
+      "edge": 0.08349743485450745,
+      "result": 1,
+      "profit": 2.85
+    },
+    {
+      "date": "2024-11-13",
+      "home": "HOU",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.2835179269313812,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-13",
+      "home": "MIL",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": -278,
+      "edge": 0.1066555380821228,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2024-11-13",
+      "home": "SAC",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 270,
+      "edge": 0.32942989468574524,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-15",
+      "home": "GSW",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -298,
+      "edge": 0.14291077852249146,
+      "result": 1,
+      "profit": 0.33557046979865773
+    },
+    {
+      "date": "2024-11-15",
+      "home": "OKC",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": -305,
+      "edge": 0.1951000690460205,
+      "result": 1,
+      "profit": 0.32786885245901637
+    },
+    {
+      "date": "2024-11-15",
+      "home": "NOP",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.292991578578949,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-15",
+      "home": "SAS",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.22695034742355347,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2024-11-15",
+      "home": "HOU",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 164,
+      "edge": 0.320950984954834,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-15",
+      "home": "CLE",
+      "away": "CHI",
+      "pick": "HOME",
+      "odds": -500,
+      "edge": 0.11485320329666138,
+      "result": 1,
+      "profit": 0.2
+    },
+    {
+      "date": "2024-11-15",
+      "home": "NYK",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -375,
+      "edge": 0.17161577939987183,
+      "result": 1,
+      "profit": 0.26666666666666666
+    },
+    {
+      "date": "2024-11-15",
+      "home": "ATL",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -425,
+      "edge": 0.1386626958847046,
+      "result": 1,
+      "profit": 0.23529411764705882
+    },
+    {
+      "date": "2024-11-15",
+      "home": "IND",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": -200,
+      "edge": 0.08246225118637085,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-15",
+      "home": "ORL",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -166,
+      "edge": 0.19345808029174805,
+      "result": 1,
+      "profit": 0.6024096385542169
+    },
+    {
+      "date": "2024-11-16",
+      "home": "NOP",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -310,
+      "edge": 0.10211139917373657,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2024-11-16",
+      "home": "SAC",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -278,
+      "edge": 0.26455026865005493,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2024-11-17",
+      "home": "OKC",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -298,
+      "edge": 0.09336155652999878,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-17",
+      "home": "CHI",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": 175,
+      "edge": 0.2931259274482727,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-17",
+      "home": "NYK",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -475,
+      "edge": 0.12209957838058472,
+      "result": 1,
+      "profit": 0.21052631578947367
+    },
+    {
+      "date": "2024-11-17",
+      "home": "POR",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": 300,
+      "edge": 0.4067623019218445,
+      "result": 1,
+      "profit": 3.0
+    },
+    {
+      "date": "2024-11-17",
+      "home": "LAC",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -470,
+      "edge": 0.12362509965896606,
+      "result": 1,
+      "profit": 0.2127659574468085
+    },
+    {
+      "date": "2024-11-18",
+      "home": "SAC",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -166,
+      "edge": 0.3370293378829956,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-18",
+      "home": "MIL",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.3191409707069397,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2024-11-18",
+      "home": "LAC",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": 170,
+      "edge": 0.286391943693161,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2024-11-18",
+      "home": "MIA",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -142,
+      "edge": 0.36140966415405273,
+      "result": 1,
+      "profit": 0.704225352112676
+    },
+    {
+      "date": "2024-11-18",
+      "home": "TOR",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.08141827583312988,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-18",
+      "home": "DET",
+      "away": "CHI",
+      "pick": "HOME",
+      "odds": -140,
+      "edge": 0.16215407848358154,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-19",
+      "home": "BOS",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": -315,
+      "edge": 0.16794800758361816,
+      "result": 1,
+      "profit": 0.31746031746031744
+    },
+    {
+      "date": "2024-11-19",
+      "home": "BKN",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -118,
+      "edge": 0.419805109500885,
+      "result": 1,
+      "profit": 0.847457627118644
+    },
+    {
+      "date": "2024-11-20",
+      "home": "LAC",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": 130,
+      "edge": 0.3143463432788849,
+      "result": 1,
+      "profit": 1.3
+    },
+    {
+      "date": "2024-11-20",
+      "home": "GSW",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -345,
+      "edge": 0.17290562391281128,
+      "result": 1,
+      "profit": 0.2898550724637681
+    },
+    {
+      "date": "2024-11-20",
+      "home": "PHX",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -205,
+      "edge": 0.25791001319885254,
+      "result": 1,
+      "profit": 0.4878048780487805
+    },
+    {
+      "date": "2024-11-20",
+      "home": "HOU",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 190,
+      "edge": 0.3090606927871704,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-20",
+      "home": "MEM",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": 154,
+      "edge": 0.5544857382774353,
+      "result": 1,
+      "profit": 1.54
+    },
+    {
+      "date": "2024-11-20",
+      "home": "MIL",
+      "away": "CHI",
+      "pick": "HOME",
+      "odds": -375,
+      "edge": 0.10218077898025513,
+      "result": 1,
+      "profit": 0.26666666666666666
+    },
+    {
+      "date": "2024-11-21",
+      "home": "CHA",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.1949872076511383,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-21",
+      "home": "TOR",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -250,
+      "edge": 0.168925940990448,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-21",
+      "home": "SAS",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -148,
+      "edge": 0.3302099108695984,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2024-11-22",
+      "home": "NOP",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -500,
+      "edge": 0.09670782089233398,
+      "result": 1,
+      "profit": 0.2
+    },
+    {
+      "date": "2024-11-22",
+      "home": "DEN",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -162,
+      "edge": 0.12716680765151978,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-22",
+      "home": "MIL",
+      "away": "IND",
+      "pick": "HOME",
+      "odds": -218,
+      "edge": 0.06359434127807617,
+      "result": 1,
+      "profit": 0.45871559633027525
+    },
+    {
+      "date": "2024-11-22",
+      "home": "PHI",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 135,
+      "edge": 0.2240007519721985,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-22",
+      "home": "CHI",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -102,
+      "edge": 0.3867039680480957,
+      "result": 1,
+      "profit": 0.9803921568627451
+    },
+    {
+      "date": "2024-11-23",
+      "home": "ORL",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": -475,
+      "edge": 0.06556755304336548,
+      "result": 1,
+      "profit": 0.21052631578947367
+    },
+    {
+      "date": "2024-11-23",
+      "home": "MIL",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -325,
+      "edge": 0.1834806203842163,
+      "result": 1,
+      "profit": 0.3076923076923077
+    },
+    {
+      "date": "2024-11-23",
+      "home": "SAS",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": 136,
+      "edge": 0.41837644577026367,
+      "result": 1,
+      "profit": 1.36
+    },
+    {
+      "date": "2024-11-23",
+      "home": "LAL",
+      "away": "DEN",
+      "pick": "HOME",
+      "odds": -166,
+      "edge": 0.15707194805145264,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-24",
+      "home": "SAC",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 300,
+      "edge": 0.09323769807815552,
+      "result": 1,
+      "profit": 3.0
+    },
+    {
+      "date": "2024-11-24",
+      "home": "MIA",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -250,
+      "edge": 0.1032325029373169,
+      "result": 1,
+      "profit": 0.4
+    },
+    {
+      "date": "2024-11-25",
+      "home": "CHA",
+      "away": "ORL",
+      "pick": "AWAY",
+      "odds": -145,
+      "edge": 0.2508598566055298,
+      "result": 1,
+      "profit": 0.6896551724137931
+    },
+    {
+      "date": "2024-11-25",
+      "home": "DET",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -360,
+      "edge": 0.16557782888412476,
+      "result": 1,
+      "profit": 0.2777777777777778
+    },
+    {
+      "date": "2024-11-25",
+      "home": "DEN",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": 145,
+      "edge": 0.2915755808353424,
+      "result": 1,
+      "profit": 1.45
+    },
+    {
+      "date": "2024-11-25",
+      "home": "SAC",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -166,
+      "edge": 0.24828028678894043,
+      "result": 1,
+      "profit": 0.6024096385542169
+    },
+    {
+      "date": "2024-11-26",
+      "home": "WAS",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": -210,
+      "edge": 0.25262176990509033,
+      "result": 1,
+      "profit": 0.47619047619047616
+    },
+    {
+      "date": "2024-11-26",
+      "home": "UTA",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.25831204652786255,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2024-11-26",
+      "home": "MIN",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.2342621088027954,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-26",
+      "home": "MIA",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": 185,
+      "edge": 0.5073317289352417,
+      "result": 1,
+      "profit": 1.85
+    },
+    {
+      "date": "2024-11-26",
+      "home": "PHX",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": 114,
+      "edge": 0.1822429597377777,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-27",
+      "home": "NOP",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 100,
+      "edge": 0.3426966071128845,
+      "result": 1,
+      "profit": 1.0
+    },
+    {
+      "date": "2024-11-27",
+      "home": "MIN",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": 130,
+      "edge": 0.21910569071769714,
+      "result": 1,
+      "profit": 1.3
+    },
+    {
+      "date": "2024-11-27",
+      "home": "MEM",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": -310,
+      "edge": 0.19208896160125732,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2024-11-27",
+      "home": "PHX",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 320,
+      "edge": 0.5854341983795166,
+      "result": 1,
+      "profit": 3.2
+    },
+    {
+      "date": "2024-11-27",
+      "home": "PHI",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": -280,
+      "edge": 0.06457632780075073,
+      "result": 1,
+      "profit": 0.35714285714285715
+    },
+    {
+      "date": "2024-11-27",
+      "home": "DAL",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -175,
+      "edge": 0.29367750883102417,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-27",
+      "home": "CHA",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": -166,
+      "edge": 0.30598098039627075,
+      "result": 1,
+      "profit": 0.6024096385542169
+    },
+    {
+      "date": "2024-11-27",
+      "home": "IND",
+      "away": "POR",
+      "pick": "HOME",
+      "odds": -500,
+      "edge": 0.12775617837905884,
+      "result": 1,
+      "profit": 0.2
+    },
+    {
+      "date": "2024-11-29",
+      "home": "IND",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": -198,
+      "edge": 0.2625545859336853,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-29",
+      "home": "POR",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": 230,
+      "edge": 0.14984077215194702,
+      "result": 1,
+      "profit": 2.3
+    },
+    {
+      "date": "2024-11-29",
+      "home": "MIA",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -340,
+      "edge": 0.06937801837921143,
+      "result": 1,
+      "profit": 0.29411764705882354
+    },
+    {
+      "date": "2024-11-29",
+      "home": "BKN",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": 225,
+      "edge": 0.0926075279712677,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-29",
+      "home": "MIN",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 210,
+      "edge": 0.33130764961242676,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-30",
+      "home": "UTA",
+      "away": "DAL",
+      "pick": "AWAY",
+      "odds": -250,
+      "edge": 0.1137397289276123,
+      "result": 1,
+      "profit": 0.4
+    },
+    {
+      "date": "2024-11-30",
+      "home": "DET",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": 290,
+      "edge": 0.5856950283050537,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-11-30",
+      "home": "PHX",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -125,
+      "edge": 0.05613541603088379,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2024-12-01",
+      "home": "SAC",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 200,
+      "edge": 0.21379557251930237,
+      "result": 1,
+      "profit": 2.0
+    },
+    {
+      "date": "2024-12-01",
+      "home": "POR",
+      "away": "DAL",
+      "pick": "AWAY",
+      "odds": -225,
+      "edge": 0.1312217116355896,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2024-12-01",
+      "home": "UTA",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -205,
+      "edge": 0.21108055114746094,
+      "result": 1,
+      "profit": 0.4878048780487805
+    },
+    {
+      "date": "2024-12-01",
+      "home": "HOU",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -120,
+      "edge": 0.2059904932975769,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-01",
+      "home": "LAC",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.08141827583312988,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-01",
+      "home": "CLE",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": 100,
+      "edge": 0.3832116723060608,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-01",
+      "home": "TOR",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": -105,
+      "edge": 0.289223313331604,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-02",
+      "home": "BOS",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": -470,
+      "edge": 0.13652807474136353,
+      "result": 1,
+      "profit": 0.2127659574468085
+    },
+    {
+      "date": "2024-12-02",
+      "home": "CHI",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -310,
+      "edge": 0.20499193668365479,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2024-12-03",
+      "home": "DEN",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -198,
+      "edge": 0.15308868885040283,
+      "result": 1,
+      "profit": 0.5050505050505051
+    },
+    {
+      "date": "2024-12-03",
+      "home": "SAC",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -125,
+      "edge": 0.1012067198753357,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2024-12-03",
+      "home": "CHA",
+      "away": "PHI",
+      "pick": "AWAY",
+      "odds": -238,
+      "edge": 0.09585797786712646,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2024-12-03",
+      "home": "DAL",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.48783859610557556,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-03",
+      "home": "DET",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -154,
+      "edge": 0.3237419128417969,
+      "result": 1,
+      "profit": 0.6493506493506493
+    },
+    {
+      "date": "2024-12-03",
+      "home": "PHX",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 240,
+      "edge": 0.09419134259223938,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-03",
+      "home": "TOR",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.18309783935546875,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-04",
+      "home": "BKN",
+      "away": "IND",
+      "pick": "HOME",
+      "odds": 130,
+      "edge": 0.10562142729759216,
+      "result": 1,
+      "profit": 1.3
+    },
+    {
+      "date": "2024-12-04",
+      "home": "MIL",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -185,
+      "edge": 0.2920536398887634,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-04",
+      "home": "LAC",
+      "away": "MIN",
+      "pick": "HOME",
+      "odds": 142,
+      "edge": 0.19846785068511963,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-05",
+      "home": "NOP",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": -125,
+      "edge": 0.30265337228775024,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-05",
+      "home": "GSW",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": 142,
+      "edge": 0.40429508686065674,
+      "result": 1,
+      "profit": 1.42
+    },
+    {
+      "date": "2024-12-05",
+      "home": "SAS",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 105,
+      "edge": 0.384535551071167,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2024-12-06",
+      "home": "PHI",
+      "away": "ORL",
+      "pick": "AWAY",
+      "odds": -145,
+      "edge": 0.06205153465270996,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-06",
+      "home": "ATL",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": 140,
+      "edge": 0.18303349614143372,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-06",
+      "home": "CHI",
+      "away": "IND",
+      "pick": "HOME",
+      "odds": 136,
+      "edge": 0.08331340551376343,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-06",
+      "home": "SAS",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": 215,
+      "edge": 0.08283951878547668,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-06",
+      "home": "GSW",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -122,
+      "edge": 0.29314708709716797,
+      "result": 1,
+      "profit": 0.819672131147541
+    },
+    {
+      "date": "2024-12-06",
+      "home": "POR",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -135,
+      "edge": 0.3171864151954651,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-07",
+      "home": "BOS",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -290,
+      "edge": 0.19758671522140503,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-07",
+      "home": "NYK",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": -325,
+      "edge": 0.0773993730545044,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-07",
+      "home": "MIA",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 185,
+      "edge": 0.10871878266334534,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-08",
+      "home": "SAS",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -188,
+      "edge": 0.2954087257385254,
+      "result": 1,
+      "profit": 0.5319148936170213
+    },
+    {
+      "date": "2024-12-08",
+      "home": "LAL",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 340,
+      "edge": 0.42661553621292114,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-08",
+      "home": "LAC",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": 170,
+      "edge": 0.2413206398487091,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-08",
+      "home": "GSW",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -115,
+      "edge": 0.21656131744384766,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-08",
+      "home": "MIA",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": 290,
+      "edge": 0.13189873099327087,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-08",
+      "home": "ORL",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": -130,
+      "edge": 0.09154492616653442,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2024-12-09",
+      "home": "TOR",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -310,
+      "edge": 0.12711411714553833,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2024-12-10",
+      "home": "MIL",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -245,
+      "edge": 0.23804157972335815,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2024-12-10",
+      "home": "OKC",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -192,
+      "edge": 0.1845710277557373,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2024-12-11",
+      "home": "HOU",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.24519339203834534,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-12",
+      "home": "MIA",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -485,
+      "edge": 0.13202965259552002,
+      "result": 1,
+      "profit": 0.20618556701030927
+    },
+    {
+      "date": "2024-12-12",
+      "home": "NOP",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -285,
+      "edge": 0.23032844066619873,
+      "result": 1,
+      "profit": 0.3508771929824561
+    },
+    {
+      "date": "2024-12-13",
+      "home": "PHI",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 124,
+      "edge": 0.4836125671863556,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2024-12-13",
+      "home": "MEM",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -500,
+      "edge": 0.13295882940292358,
+      "result": 1,
+      "profit": 0.2
+    },
+    {
+      "date": "2024-12-13",
+      "home": "CHI",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -225,
+      "edge": 0.23467642068862915,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2024-12-13",
+      "home": "DEN",
+      "away": "LAC",
+      "pick": "HOME",
+      "odds": -225,
+      "edge": 0.14979755878448486,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2024-12-15",
+      "home": "LAL",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.15091019868850708,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-15",
+      "home": "GSW",
+      "away": "DAL",
+      "pick": "AWAY",
+      "odds": -125,
+      "edge": 0.09397709369659424,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2024-12-16",
+      "home": "SAC",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -102,
+      "edge": 0.14893776178359985,
+      "result": 1,
+      "profit": 0.9803921568627451
+    },
+    {
+      "date": "2024-12-16",
+      "home": "TOR",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": -120,
+      "edge": 0.31275439262390137,
+      "result": 1,
+      "profit": 0.8333333333333334
+    },
+    {
+      "date": "2024-12-19",
+      "home": "TOR",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.09258344769477844,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2024-12-19",
+      "home": "HOU",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -395,
+      "edge": 0.09367471933364868,
+      "result": 1,
+      "profit": 0.25316455696202533
+    },
+    {
+      "date": "2024-12-19",
+      "home": "MEM",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -135,
+      "edge": 0.3737184405326843,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2024-12-19",
+      "home": "DET",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": 175,
+      "edge": 0.3818510174751282,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-19",
+      "home": "ORL",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -230,
+      "edge": 0.2330714464187622,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2024-12-19",
+      "home": "MIN",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.3881511390209198,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2024-12-19",
+      "home": "DAL",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -105,
+      "edge": 0.1373375654220581,
+      "result": 1,
+      "profit": 0.9523809523809523
+    },
+    {
+      "date": "2024-12-19",
+      "home": "PHX",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 200,
+      "edge": 0.3205549418926239,
+      "result": 1,
+      "profit": 2.0
+    },
+    {
+      "date": "2024-12-19",
+      "home": "SAS",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -118,
+      "edge": 0.17784392833709717,
+      "result": 1,
+      "profit": 0.847457627118644
+    },
+    {
+      "date": "2024-12-19",
+      "home": "POR",
+      "away": "DEN",
+      "pick": "HOME",
+      "odds": 285,
+      "edge": 0.5823650360107422,
+      "result": 1,
+      "profit": 2.85
+    },
+    {
+      "date": "2024-12-20",
+      "home": "CLE",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": 285,
+      "edge": 0.08349743485450745,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-20",
+      "home": "MIA",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -110,
+      "edge": 0.17592930793762207,
+      "result": 1,
+      "profit": 0.9090909090909091
+    },
+    {
+      "date": "2024-12-21",
+      "home": "ATL",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.26280808448791504,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2024-12-21",
+      "home": "NOP",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -340,
+      "edge": 0.15731388330459595,
+      "result": 1,
+      "profit": 0.29411764705882354
+    },
+    {
+      "date": "2024-12-21",
+      "home": "DAL",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 142,
+      "edge": 0.24066513776779175,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-21",
+      "home": "MIN",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -148,
+      "edge": 0.14871317148208618,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-21",
+      "home": "SAS",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 220,
+      "edge": 0.23462891578674316,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-21",
+      "home": "SAC",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -115,
+      "edge": 0.21060365438461304,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-21",
+      "home": "CLE",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -440,
+      "edge": 0.14627468585968018,
+      "result": 1,
+      "profit": 0.22727272727272727
+    },
+    {
+      "date": "2024-12-21",
+      "home": "MIL",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -395,
+      "edge": 0.16831237077713013,
+      "result": 1,
+      "profit": 0.25316455696202533
+    },
+    {
+      "date": "2024-12-21",
+      "home": "BKN",
+      "away": "UTA",
+      "pick": "AWAY",
+      "odds": 105,
+      "edge": 0.16608339548110962,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2024-12-22",
+      "home": "TOR",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": -230,
+      "edge": 0.1862419843673706,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2024-12-22",
+      "home": "SAC",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -175,
+      "edge": 0.23597681522369385,
+      "result": 1,
+      "profit": 0.5714285714285714
+    },
+    {
+      "date": "2024-12-22",
+      "home": "NOP",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -215,
+      "edge": 0.317460298538208,
+      "result": 1,
+      "profit": 0.46511627906976744
+    },
+    {
+      "date": "2024-12-23",
+      "home": "CHI",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": 114,
+      "edge": 0.3341287076473236,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2024-12-23",
+      "home": "LAL",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": 185,
+      "edge": 0.37376049160957336,
+      "result": 1,
+      "profit": 1.85
+    },
+    {
+      "date": "2024-12-23",
+      "home": "GSW",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.48783859610557556,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2024-12-23",
+      "home": "MEM",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 210,
+      "edge": 0.09643346071243286,
+      "result": 1,
+      "profit": 2.1
+    },
+    {
+      "date": "2024-12-23",
+      "home": "MIA",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -440,
+      "edge": 0.11216932535171509,
+      "result": 1,
+      "profit": 0.22727272727272727
+    },
+    {
+      "date": "2024-12-23",
+      "home": "PHI",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 140,
+      "edge": 0.2372216284275055,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-25",
+      "home": "PHX",
+      "away": "DEN",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.1441226303577423,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2024-12-25",
+      "home": "GSW",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": 140,
+      "edge": 0.23286601901054382,
+      "result": 1,
+      "profit": 1.4
+    },
+    {
+      "date": "2024-12-26",
+      "home": "MIL",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -265,
+      "edge": 0.165627121925354,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-26",
+      "home": "NOP",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": -290,
+      "edge": 0.13962191343307495,
+      "result": 1,
+      "profit": 0.3448275862068966
+    },
+    {
+      "date": "2024-12-26",
+      "home": "POR",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.1376442313194275,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2024-12-26",
+      "home": "IND",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -125,
+      "edge": 0.09833270311355591,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2024-12-26",
+      "home": "ORL",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 290,
+      "edge": 0.5862863063812256,
+      "result": 1,
+      "profit": 2.9
+    },
+    {
+      "date": "2024-12-26",
+      "home": "WAS",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": 135,
+      "edge": 0.0829426646232605,
+      "result": 1,
+      "profit": 1.35
+    },
+    {
+      "date": "2024-12-26",
+      "home": "ATL",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.1767585575580597,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-26",
+      "home": "SAC",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": 185,
+      "edge": 0.3488616645336151,
+      "result": 1,
+      "profit": 1.85
+    },
+    {
+      "date": "2024-12-27",
+      "home": "HOU",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -105,
+      "edge": 0.23924994468688965,
+      "result": 1,
+      "profit": 0.9523809523809523
+    },
+    {
+      "date": "2024-12-27",
+      "home": "DEN",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": -155,
+      "edge": 0.11679452657699585,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2024-12-27",
+      "home": "NOP",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -310,
+      "edge": 0.21449065208435059,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2024-12-27",
+      "home": "LAC",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -230,
+      "edge": 0.2512168288230896,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2024-12-27",
+      "home": "BKN",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": -325,
+      "edge": 0.16533523797988892,
+      "result": 1,
+      "profit": 0.3076923076923077
+    },
+    {
+      "date": "2024-12-27",
+      "home": "ORL",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -238,
+      "edge": 0.2258991003036499,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2024-12-27",
+      "home": "PHX",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -115,
+      "edge": 0.35677075386047363,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-28",
+      "home": "LAL",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": 100,
+      "edge": 0.24548739194869995,
+      "result": 1,
+      "profit": 1.0
+    },
+    {
+      "date": "2024-12-28",
+      "home": "DEN",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": -245,
+      "edge": 0.13196033239364624,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2024-12-28",
+      "home": "GSW",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 195,
+      "edge": 0.3607558012008667,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-28",
+      "home": "CHI",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.07942020893096924,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-28",
+      "home": "POR",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": 154,
+      "edge": 0.2179902195930481,
+      "result": 1,
+      "profit": 1.54
+    },
+    {
+      "date": "2024-12-29",
+      "home": "TOR",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": 154,
+      "edge": 0.3874313235282898,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-29",
+      "home": "HOU",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 230,
+      "edge": 0.18849509954452515,
+      "result": 1,
+      "profit": 2.3
+    },
+    {
+      "date": "2024-12-29",
+      "home": "OKC",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": 290,
+      "edge": 0.4433285892009735,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-30",
+      "home": "CHA",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": -120,
+      "edge": 0.4251336455345154,
+      "result": 1,
+      "profit": 0.8333333333333334
+    },
+    {
+      "date": "2024-12-30",
+      "home": "NOP",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.2725068926811218,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2024-12-30",
+      "home": "UTA",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -305,
+      "edge": 0.21750175952911377,
+      "result": 1,
+      "profit": 0.32786885245901637
+    },
+    {
+      "date": "2024-12-30",
+      "home": "GSW",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": -166,
+      "edge": 0.11364477872848511,
+      "result": 1,
+      "profit": 0.6024096385542169
+    },
+    {
+      "date": "2024-12-30",
+      "home": "POR",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": 210,
+      "edge": 0.5195246338844299,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-31",
+      "home": "OKC",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 205,
+      "edge": 0.06044015288352966,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2024-12-31",
+      "home": "PHX",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": 180,
+      "edge": 0.4708825945854187,
+      "result": 1,
+      "profit": 1.8
+    },
+    {
+      "date": "2024-12-31",
+      "home": "SAS",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 250,
+      "edge": 0.26141461730003357,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-01",
+      "home": "DEN",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -285,
+      "edge": 0.20792675018310547,
+      "result": 1,
+      "profit": 0.3508771929824561
+    },
+    {
+      "date": "2025-01-01",
+      "home": "TOR",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 100,
+      "edge": 0.09970015287399292,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-01",
+      "home": "SAC",
+      "away": "PHI",
+      "pick": "AWAY",
+      "odds": 210,
+      "edge": 0.277119517326355,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-01",
+      "home": "MIA",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -360,
+      "edge": 0.18368345499038696,
+      "result": 1,
+      "profit": 0.2777777777777778
+    },
+    {
+      "date": "2025-01-01",
+      "home": "WAS",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": -260,
+      "edge": 0.07919621467590332,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-01",
+      "home": "DET",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -250,
+      "edge": 0.12781953811645508,
+      "result": 1,
+      "profit": 0.4
+    },
+    {
+      "date": "2025-01-02",
+      "home": "MIA",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 114,
+      "edge": 0.23244914412498474,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2025-01-02",
+      "home": "MIN",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -155,
+      "edge": 0.39215683937072754,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2025-01-02",
+      "home": "GSW",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -162,
+      "edge": 0.21501272916793823,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2025-01-02",
+      "home": "LAL",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 235,
+      "edge": 0.3011927008628845,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-03",
+      "home": "DEN",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": -225,
+      "edge": 0.14979755878448486,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-03",
+      "home": "LAL",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -148,
+      "edge": 0.2948802709579468,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2025-01-03",
+      "home": "DAL",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": -470,
+      "edge": 0.14602679014205933,
+      "result": 1,
+      "profit": 0.2127659574468085
+    },
+    {
+      "date": "2025-01-03",
+      "home": "SAC",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -148,
+      "edge": 0.05998808145523071,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2025-01-03",
+      "home": "OKC",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": 160,
+      "edge": 0.2150847613811493,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-03",
+      "home": "DET",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -260,
+      "edge": 0.16943228244781494,
+      "result": 1,
+      "profit": 0.38461538461538464
+    },
+    {
+      "date": "2025-01-03",
+      "home": "HOU",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.3816794157028198,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2025-01-03",
+      "home": "TOR",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": 110,
+      "edge": 0.13550052046775818,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-04",
+      "home": "CHI",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": 190,
+      "edge": 0.16364699602127075,
+      "result": 1,
+      "profit": 1.9
+    },
+    {
+      "date": "2025-01-04",
+      "home": "SAS",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -142,
+      "edge": 0.29643481969833374,
+      "result": 1,
+      "profit": 0.704225352112676
+    },
+    {
+      "date": "2025-01-04",
+      "home": "LAC",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -238,
+      "edge": 0.13796323537826538,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2025-01-04",
+      "home": "IND",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": -188,
+      "edge": 0.2954087257385254,
+      "result": 1,
+      "profit": 0.5319148936170213
+    },
+    {
+      "date": "2025-01-04",
+      "home": "MIA",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -345,
+      "edge": 0.18580859899520874,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-05",
+      "home": "ORL",
+      "away": "UTA",
+      "pick": "AWAY",
+      "odds": 160,
+      "edge": 0.26927289366722107,
+      "result": 1,
+      "profit": 1.6
+    },
+    {
+      "date": "2025-01-05",
+      "home": "HOU",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": 135,
+      "edge": 0.3121730089187622,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-06",
+      "home": "MEM",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -198,
+      "edge": 0.2272249460220337,
+      "result": 1,
+      "profit": 0.5050505050505051
+    },
+    {
+      "date": "2025-01-06",
+      "home": "CHI",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.30270037055015564,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2025-01-06",
+      "home": "PHI",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 160,
+      "edge": 0.26927289366722107,
+      "result": 1,
+      "profit": 1.6
+    },
+    {
+      "date": "2025-01-06",
+      "home": "DET",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 114,
+      "edge": 0.1324104368686676,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-06",
+      "home": "SAC",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.09258344769477844,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-07",
+      "home": "DEN",
+      "away": "BOS",
+      "pick": "HOME",
+      "odds": 250,
+      "edge": 0.11458554863929749,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-07",
+      "home": "UTA",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.093910813331604,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2025-01-07",
+      "home": "DAL",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -250,
+      "edge": 0.1137397289276123,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-07",
+      "home": "NOP",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -180,
+      "edge": 0.19983947277069092,
+      "result": 1,
+      "profit": 0.5555555555555556
+    },
+    {
+      "date": "2025-01-07",
+      "home": "GSW",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 330,
+      "edge": 0.3671420216560364,
+      "result": 1,
+      "profit": 3.3
+    },
+    {
+      "date": "2025-01-08",
+      "home": "IND",
+      "away": "CHI",
+      "pick": "HOME",
+      "odds": -280,
+      "edge": 0.2294500470161438,
+      "result": 1,
+      "profit": 0.35714285714285715
+    },
+    {
+      "date": "2025-01-08",
+      "home": "BKN",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": -410,
+      "edge": 0.07929009199142456,
+      "result": 1,
+      "profit": 0.24390243902439024
+    },
+    {
+      "date": "2025-01-08",
+      "home": "NOP",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 110,
+      "edge": 0.49439772963523865,
+      "result": 1,
+      "profit": 1.1
+    },
+    {
+      "date": "2025-01-08",
+      "home": "DEN",
+      "away": "LAC",
+      "pick": "HOME",
+      "odds": 180,
+      "edge": 0.38834452629089355,
+      "result": 1,
+      "profit": 1.8
+    },
+    {
+      "date": "2025-01-08",
+      "home": "MIL",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": -175,
+      "edge": 0.20574164390563965,
+      "result": 1,
+      "profit": 0.5714285714285714
+    },
+    {
+      "date": "2025-01-09",
+      "home": "MEM",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.09258344769477844,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2025-01-09",
+      "home": "UTA",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": -225,
+      "edge": 0.1357177495956421,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2025-01-09",
+      "home": "DAL",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 250,
+      "edge": 0.20724347233772278,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-10",
+      "home": "IND",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -475,
+      "edge": 0.10089719295501709,
+      "result": 1,
+      "profit": 0.21052631578947367
+    },
+    {
+      "date": "2025-01-10",
+      "home": "ORL",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.36482375860214233,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2025-01-10",
+      "home": "PHI",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -270,
+      "edge": 0.11237555742263794,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-10",
+      "home": "NYK",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -142,
+      "edge": 0.25591975450515747,
+      "result": 1,
+      "profit": 0.704225352112676
+    },
+    {
+      "date": "2025-01-11",
+      "home": "MIN",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": 110,
+      "edge": 0.12350967526435852,
+      "result": 1,
+      "profit": 1.1
+    },
+    {
+      "date": "2025-01-11",
+      "home": "POR",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": 160,
+      "edge": 0.39651671051979065,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-12",
+      "home": "ORL",
+      "away": "PHI",
+      "pick": "AWAY",
+      "odds": 110,
+      "edge": 0.1776978075504303,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-12",
+      "home": "UTA",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.2342621088027954,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2025-01-12",
+      "home": "PHX",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -278,
+      "edge": 0.21273678541183472,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2025-01-13",
+      "home": "HOU",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -142,
+      "edge": 0.06998544931411743,
+      "result": 1,
+      "profit": 0.704225352112676
+    },
+    {
+      "date": "2025-01-13",
+      "home": "LAL",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": -175,
+      "edge": 0.29062050580978394,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-13",
+      "home": "TOR",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": 170,
+      "edge": 0.286391943693161,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2025-01-13",
+      "home": "NYK",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": 270,
+      "edge": 0.383618026971817,
+      "result": 1,
+      "profit": 2.7
+    },
+    {
+      "date": "2025-01-14",
+      "home": "IND",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": 250,
+      "edge": 0.06039741635322571,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-14",
+      "home": "ATL",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": 114,
+      "edge": 0.18947258591651917,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2025-01-14",
+      "home": "CHI",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -125,
+      "edge": 0.05613541603088379,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-14",
+      "home": "DAL",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -148,
+      "edge": 0.286437451839447,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2025-01-14",
+      "home": "POR",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -205,
+      "edge": 0.2195233702659607,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-15",
+      "home": "UTA",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": 180,
+      "edge": 0.361985445022583,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-15",
+      "home": "DEN",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -125,
+      "edge": 0.16357272863388062,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-15",
+      "home": "SAS",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -148,
+      "edge": 0.286437451839447,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2025-01-15",
+      "home": "PHI",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": -475,
+      "edge": 0.10395419597625732,
+      "result": 1,
+      "profit": 0.21052631578947367
+    },
+    {
+      "date": "2025-01-15",
+      "home": "MIN",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -265,
+      "edge": 0.11607789993286133,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-15",
+      "home": "MIL",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -230,
+      "edge": 0.1205485463142395,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2025-01-15",
+      "home": "CHI",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": 200,
+      "edge": 0.4181117117404938,
+      "result": 1,
+      "profit": 2.0
+    },
+    {
+      "date": "2025-01-15",
+      "home": "NOP",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -118,
+      "edge": 0.17784392833709717,
+      "result": 1,
+      "profit": 0.847457627118644
+    },
+    {
+      "date": "2025-01-15",
+      "home": "LAL",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": -205,
+      "edge": 0.0733562707901001,
+      "result": 1,
+      "profit": 0.4878048780487805
+    },
+    {
+      "date": "2025-01-16",
+      "home": "POR",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -278,
+      "edge": 0.06596869230270386,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2025-01-16",
+      "home": "SAC",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": 142,
+      "edge": 0.13390576839447021,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-17",
+      "home": "NYK",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 124,
+      "edge": 0.2074597179889679,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2025-01-17",
+      "home": "SAS",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.30874359607696533,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2025-01-17",
+      "home": "DAL",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -218,
+      "edge": 0.11588382720947266,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-18",
+      "home": "IND",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -500,
+      "edge": 0.09365081787109375,
+      "result": 1,
+      "profit": 0.2
+    },
+    {
+      "date": "2025-01-19",
+      "home": "ORL",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -298,
+      "edge": 0.1344679594039917,
+      "result": 1,
+      "profit": 0.33557046979865773
+    },
+    {
+      "date": "2025-01-19",
+      "home": "LAC",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -218,
+      "edge": 0.09559750556945801,
+      "result": 1,
+      "profit": 0.45871559633027525
+    },
+    {
+      "date": "2025-01-19",
+      "home": "POR",
+      "away": "CHI",
+      "pick": "HOME",
+      "odds": 220,
+      "edge": 0.5296052694320679,
+      "result": 1,
+      "profit": 2.2
+    },
+    {
+      "date": "2025-01-20",
+      "home": "LAC",
+      "away": "CHI",
+      "pick": "HOME",
+      "odds": -238,
+      "edge": 0.2621501088142395,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-21",
+      "home": "MIA",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 320,
+      "edge": 0.15021376311779022,
+      "result": 1,
+      "profit": 3.2
+    },
+    {
+      "date": "2025-01-21",
+      "home": "TOR",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -110,
+      "edge": 0.22531938552856445,
+      "result": 1,
+      "profit": 0.9090909090909091
+    },
+    {
+      "date": "2025-01-22",
+      "home": "SAC",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -285,
+      "edge": 0.20091670751571655,
+      "result": 1,
+      "profit": 0.3508771929824561
+    },
+    {
+      "date": "2025-01-22",
+      "home": "ATL",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": 142,
+      "edge": 0.18647700548171997,
+      "result": 1,
+      "profit": 1.42
+    },
+    {
+      "date": "2025-01-22",
+      "home": "DAL",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -170,
+      "edge": 0.25358206033706665,
+      "result": 1,
+      "profit": 0.5882352941176471
+    },
+    {
+      "date": "2025-01-23",
+      "home": "GSW",
+      "away": "CHI",
+      "pick": "HOME",
+      "odds": -135,
+      "edge": 0.20666402578353882,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2025-01-23",
+      "home": "ORL",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 195,
+      "edge": 0.5037135481834412,
+      "result": 1,
+      "profit": 1.95
+    },
+    {
+      "date": "2025-01-23",
+      "home": "DEN",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": -310,
+      "edge": 0.19208896160125732,
+      "result": 1,
+      "profit": 0.3225806451612903
+    },
+    {
+      "date": "2025-01-23",
+      "home": "MIL",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": -245,
+      "edge": 0.2509445548057556,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2025-01-23",
+      "home": "ATL",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 180,
+      "edge": 0.5260688066482544,
+      "result": 1,
+      "profit": 1.8
+    },
+    {
+      "date": "2025-01-24",
+      "home": "CHA",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 160,
+      "edge": 0.5101214647293091,
+      "result": 1,
+      "profit": 1.6
+    },
+    {
+      "date": "2025-01-24",
+      "home": "MEM",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -440,
+      "edge": 0.13337171077728271,
+      "result": 1,
+      "profit": 0.22727272727272727
+    },
+    {
+      "date": "2025-01-25",
+      "home": "GSW",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -115,
+      "edge": 0.11900454759597778,
+      "result": 1,
+      "profit": 0.8695652173913043
+    },
+    {
+      "date": "2025-01-25",
+      "home": "ORL",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": -145,
+      "edge": 0.06492555141448975,
+      "result": 1,
+      "profit": 0.6896551724137931
+    },
+    {
+      "date": "2025-01-25",
+      "home": "CLE",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -192,
+      "edge": 0.06159406900405884,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-25",
+      "home": "NYK",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": -192,
+      "edge": 0.2906522750854492,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2025-01-25",
+      "home": "CHA",
+      "away": "NOP",
+      "pick": "AWAY",
+      "odds": -160,
+      "edge": 0.0843542218208313,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-25",
+      "home": "ATL",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 185,
+      "edge": 0.30301108956336975,
+      "result": 1,
+      "profit": 1.85
+    },
+    {
+      "date": "2025-01-25",
+      "home": "BKN",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": -360,
+      "edge": 0.21739131212234497,
+      "result": 1,
+      "profit": 0.2777777777777778
+    },
+    {
+      "date": "2025-01-25",
+      "home": "LAC",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": 136,
+      "edge": 0.17597132921218872,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-27",
+      "home": "TOR",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -115,
+      "edge": 0.10341411828994751,
+      "result": 1,
+      "profit": 0.8695652173913043
+    },
+    {
+      "date": "2025-01-27",
+      "home": "CHI",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -380,
+      "edge": 0.0915449857711792,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-27",
+      "home": "MIA",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -105,
+      "edge": 0.26893699169158936,
+      "result": 1,
+      "profit": 0.9523809523809523
+    },
+    {
+      "date": "2025-01-27",
+      "home": "BOS",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.1767585575580597,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2025-01-27",
+      "home": "UTA",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -410,
+      "edge": 0.16666662693023682,
+      "result": 1,
+      "profit": 0.24390243902439024
+    },
+    {
+      "date": "2025-01-28",
+      "home": "ATL",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": -185,
+      "edge": 0.2090861201286316,
+      "result": 1,
+      "profit": 0.5405405405405406
+    },
+    {
+      "date": "2025-01-28",
+      "home": "PHI",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": 160,
+      "edge": 0.19637051224708557,
+      "result": 1,
+      "profit": 1.6
+    },
+    {
+      "date": "2025-01-29",
+      "home": "NOP",
+      "away": "DAL",
+      "pick": "AWAY",
+      "odds": -112,
+      "edge": 0.17143696546554565,
+      "result": 1,
+      "profit": 0.8928571428571429
+    },
+    {
+      "date": "2025-01-29",
+      "home": "PHI",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -325,
+      "edge": 0.16533523797988892,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-29",
+      "home": "NYK",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": 124,
+      "edge": 0.25331029295921326,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-29",
+      "home": "PHX",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 100,
+      "edge": 0.1538882851600647,
+      "result": 1,
+      "profit": 1.0
+    },
+    {
+      "date": "2025-01-29",
+      "home": "MIA",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": 190,
+      "edge": 0.05547225475311279,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-29",
+      "home": "CHA",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.08431529998779297,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2025-01-29",
+      "home": "SAS",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -170,
+      "edge": 0.30041152238845825,
+      "result": 1,
+      "profit": 0.5882352941176471
+    },
+    {
+      "date": "2025-01-30",
+      "home": "WAS",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -500,
+      "edge": 0.13725489377975464,
+      "result": 1,
+      "profit": 0.2
+    },
+    {
+      "date": "2025-01-30",
+      "home": "MEM",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.3403433561325073,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2025-01-30",
+      "home": "UTA",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -238,
+      "edge": 0.2258991003036499,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2025-01-30",
+      "home": "POR",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": 164,
+      "edge": 0.5128666162490845,
+      "result": 1,
+      "profit": 1.64
+    },
+    {
+      "date": "2025-01-31",
+      "home": "SAS",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -148,
+      "edge": 0.3738139867782593,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-01-31",
+      "home": "PHI",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -410,
+      "edge": 0.12611955404281616,
+      "result": 1,
+      "profit": 0.24390243902439024
+    },
+    {
+      "date": "2025-01-31",
+      "home": "GSW",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": -115,
+      "edge": 0.20282119512557983,
+      "result": 1,
+      "profit": 0.8695652173913043
+    },
+    {
+      "date": "2025-02-01",
+      "home": "SAS",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.1949872076511383,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2025-02-01",
+      "home": "NYK",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": 380,
+      "edge": 0.2512626647949219,
+      "result": 1,
+      "profit": 3.8
+    },
+    {
+      "date": "2025-02-01",
+      "home": "POR",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": 145,
+      "edge": 0.31096503138542175,
+      "result": 1,
+      "profit": 1.45
+    },
+    {
+      "date": "2025-02-01",
+      "home": "OKC",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": 250,
+      "edge": 0.1738816797733307,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-02",
+      "home": "PHI",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": 200,
+      "edge": 0.5390070676803589,
+      "result": 1,
+      "profit": 2.0
+    },
+    {
+      "date": "2025-02-03",
+      "home": "POR",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": 164,
+      "edge": 0.4023442268371582,
+      "result": 1,
+      "profit": 1.64
+    },
+    {
+      "date": "2025-02-03",
+      "home": "UTA",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -285,
+      "edge": 0.23032844066619873,
+      "result": 1,
+      "profit": 0.3508771929824561
+    },
+    {
+      "date": "2025-02-03",
+      "home": "DEN",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -485,
+      "edge": 0.13202965259552002,
+      "result": 1,
+      "profit": 0.20618556701030927
+    },
+    {
+      "date": "2025-02-03",
+      "home": "GSW",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.1376442313194275,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2025-02-03",
+      "home": "CHA",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -180,
+      "edge": 0.10627180337905884,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-03",
+      "home": "MEM",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": -170,
+      "edge": 0.2620248794555664,
+      "result": 1,
+      "profit": 0.5882352941176471
+    },
+    {
+      "date": "2025-02-03",
+      "home": "NYK",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -278,
+      "edge": 0.15620476007461548,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2025-02-03",
+      "home": "MIN",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": 160,
+      "edge": 0.2150847613811493,
+      "result": 1,
+      "profit": 1.6
+    },
+    {
+      "date": "2025-02-03",
+      "home": "DET",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": 165,
+      "edge": 0.11559927463531494,
+      "result": 1,
+      "profit": 1.65
+    },
+    {
+      "date": "2025-02-04",
+      "home": "POR",
+      "away": "IND",
+      "pick": "HOME",
+      "odds": 164,
+      "edge": 0.4633173942565918,
+      "result": 1,
+      "profit": 1.64
+    },
+    {
+      "date": "2025-02-04",
+      "home": "LAC",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": 275,
+      "edge": 0.3872216045856476,
+      "result": 1,
+      "profit": 2.75
+    },
+    {
+      "date": "2025-02-04",
+      "home": "CHI",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": 145,
+      "edge": 0.24859902262687683,
+      "result": 1,
+      "profit": 1.45
+    },
+    {
+      "date": "2025-02-04",
+      "home": "PHI",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -280,
+      "edge": 0.22424739599227905,
+      "result": 1,
+      "profit": 0.35714285714285715
+    },
+    {
+      "date": "2025-02-04",
+      "home": "BKN",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": 330,
+      "edge": 0.11790914833545685,
+      "result": 1,
+      "profit": 3.3
+    },
+    {
+      "date": "2025-02-05",
+      "home": "SAC",
+      "away": "ORL",
+      "pick": "AWAY",
+      "odds": 180,
+      "edge": 0.05230593681335449,
+      "result": 1,
+      "profit": 1.8
+    },
+    {
+      "date": "2025-02-05",
+      "home": "DET",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": -210,
+      "edge": 0.25262176990509033,
+      "result": 1,
+      "profit": 0.47619047619047616
+    },
+    {
+      "date": "2025-02-05",
+      "home": "DEN",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -485,
+      "edge": 0.11912667751312256,
+      "result": 1,
+      "profit": 0.20618556701030927
+    },
+    {
+      "date": "2025-02-05",
+      "home": "ATL",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": 160,
+      "edge": 0.06825569272041321,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-05",
+      "home": "PHI",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 110,
+      "edge": 0.22354838252067566,
+      "result": 1,
+      "profit": 1.1
+    },
+    {
+      "date": "2025-02-06",
+      "home": "MIN",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -115,
+      "edge": 0.35677075386047363,
+      "result": 1,
+      "profit": 0.8695652173913043
+    },
+    {
+      "date": "2025-02-06",
+      "home": "DEN",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": -258,
+      "edge": 0.12143486738204956,
+      "result": 1,
+      "profit": 0.3875968992248062
+    },
+    {
+      "date": "2025-02-06",
+      "home": "LAL",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": -250,
+      "edge": 0.17736876010894775,
+      "result": 1,
+      "profit": 0.4
+    },
+    {
+      "date": "2025-02-06",
+      "home": "POR",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": -102,
+      "edge": 0.44323599338531494,
+      "result": 1,
+      "profit": 0.9803921568627451
+    },
+    {
+      "date": "2025-02-06",
+      "home": "LAC",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.22932979464530945,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2025-02-07",
+      "home": "ATL",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.1769769787788391,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-07",
+      "home": "PHX",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -345,
+      "edge": 0.15170323848724365,
+      "result": 1,
+      "profit": 0.2898550724637681
+    },
+    {
+      "date": "2025-02-07",
+      "home": "BKN",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": -205,
+      "edge": 0.0655738115310669,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-07",
+      "home": "CHA",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": -154,
+      "edge": 0.2519097328186035,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-07",
+      "home": "DET",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": 190,
+      "edge": 0.10804349184036255,
+      "result": 1,
+      "profit": 1.9
+    },
+    {
+      "date": "2025-02-08",
+      "home": "PHX",
+      "away": "DEN",
+      "pick": "HOME",
+      "odds": 215,
+      "edge": 0.08283951878547668,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-08",
+      "home": "NYK",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -185,
+      "edge": 0.2090861201286316,
+      "result": 1,
+      "profit": 0.5405405405405406
+    },
+    {
+      "date": "2025-02-08",
+      "home": "SAC",
+      "away": "NOP",
+      "pick": "AWAY",
+      "odds": 250,
+      "edge": 0.05911329388618469,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-08",
+      "home": "MIN",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 140,
+      "edge": 0.18303349614143372,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-08",
+      "home": "MEM",
+      "away": "OKC",
+      "pick": "HOME",
+      "odds": 100,
+      "edge": 0.11169099807739258,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-08",
+      "home": "CHI",
+      "away": "GSW",
+      "pick": "HOME",
+      "odds": 205,
+      "edge": 0.07243099808692932,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-08",
+      "home": "ORL",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": -120,
+      "edge": 0.11130774021148682,
+      "result": 1,
+      "profit": 0.8333333333333334
+    },
+    {
+      "date": "2025-02-08",
+      "home": "WAS",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": -245,
+      "edge": 0.16219550371170044,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2025-02-10",
+      "home": "DAL",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -120,
+      "edge": 0.19225037097930908,
+      "result": 1,
+      "profit": 0.8333333333333334
+    },
+    {
+      "date": "2025-02-10",
+      "home": "BKN",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -205,
+      "edge": 0.07786887884140015,
+      "result": 1,
+      "profit": 0.4878048780487805
+    },
+    {
+      "date": "2025-02-10",
+      "home": "MIA",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -325,
+      "edge": 0.16533523797988892,
+      "result": 1,
+      "profit": 0.3076923076923077
+    },
+    {
+      "date": "2025-02-10",
+      "home": "ORL",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": 150,
+      "edge": 0.1471289098262787,
+      "result": 1,
+      "profit": 1.5
+    },
+    {
+      "date": "2025-02-11",
+      "home": "PHI",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 190,
+      "edge": 0.3090606927871704,
+      "result": 1,
+      "profit": 1.9
+    },
+    {
+      "date": "2025-02-11",
+      "home": "CHI",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": 154,
+      "edge": 0.4484044909477234,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-11",
+      "home": "PHX",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.20067471265792847,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2025-02-12",
+      "home": "HOU",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 300,
+      "edge": 0.09323769807815552,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-12",
+      "home": "NOP",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -225,
+      "edge": 0.1503888964653015,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2025-02-12",
+      "home": "MIN",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": 330,
+      "edge": 0.3671420216560364,
+      "result": 1,
+      "profit": 3.3
+    },
+    {
+      "date": "2025-02-12",
+      "home": "NYK",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": 245,
+      "edge": 0.09845393896102905,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-12",
+      "home": "BKN",
+      "away": "PHI",
+      "pick": "AWAY",
+      "odds": 110,
+      "edge": 0.12350967526435852,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-12",
+      "home": "WAS",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -395,
+      "edge": 0.17260843515396118,
+      "result": 1,
+      "profit": 0.25316455696202533
+    },
+    {
+      "date": "2025-02-12",
+      "home": "UTA",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": 320,
+      "edge": 0.062165871262550354,
+      "result": 1,
+      "profit": 3.2
+    },
+    {
+      "date": "2025-02-13",
+      "home": "HOU",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -110,
+      "edge": 0.4062315821647644,
+      "result": 1,
+      "profit": 0.9090909090909091
+    },
+    {
+      "date": "2025-02-13",
+      "home": "MIN",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -500,
+      "edge": 0.09670782089233398,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-13",
+      "home": "UTA",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -410,
+      "edge": 0.07929009199142456,
+      "result": 1,
+      "profit": 0.24390243902439024
+    },
+    {
+      "date": "2025-02-20",
+      "home": "PHI",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -375,
+      "edge": 0.18111449480056763,
+      "result": 1,
+      "profit": 0.26666666666666666
+    },
+    {
+      "date": "2025-02-20",
+      "home": "MIL",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -115,
+      "edge": 0.064816415309906,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-20",
+      "home": "POR",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -120,
+      "edge": 0.2237762212753296,
+      "result": 1,
+      "profit": 0.8333333333333334
+    },
+    {
+      "date": "2025-02-21",
+      "home": "DAL",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -225,
+      "edge": 0.08882439136505127,
+      "result": 1,
+      "profit": 0.4444444444444444
+    },
+    {
+      "date": "2025-02-21",
+      "home": "SAS",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": -180,
+      "edge": 0.2871840000152588,
+      "result": 1,
+      "profit": 0.5555555555555556
+    },
+    {
+      "date": "2025-02-21",
+      "home": "TOR",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.11938434839248657,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2025-02-21",
+      "home": "HOU",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 136,
+      "edge": 0.12340009212493896,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-21",
+      "home": "WAS",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -145,
+      "edge": 0.33820438385009766,
+      "result": 1,
+      "profit": 0.6896551724137931
+    },
+    {
+      "date": "2025-02-21",
+      "home": "ORL",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -140,
+      "edge": 0.2748756408691406,
+      "result": 1,
+      "profit": 0.7142857142857143
+    },
+    {
+      "date": "2025-02-21",
+      "home": "CLE",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": 340,
+      "edge": 0.11596496403217316,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-21",
+      "home": "SAC",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.1632368564605713,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2025-02-22",
+      "home": "DEN",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -250,
+      "edge": 0.12781953811645508,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-22",
+      "home": "UTA",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": 300,
+      "edge": 0.3309859037399292,
+      "result": 1,
+      "profit": 3.0
+    },
+    {
+      "date": "2025-02-22",
+      "home": "POR",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -205,
+      "edge": 0.2195233702659607,
+      "result": 1,
+      "profit": 0.4878048780487805
+    },
+    {
+      "date": "2025-02-23",
+      "home": "TOR",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 300,
+      "edge": 0.399532675743103,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-23",
+      "home": "MIN",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -375,
+      "edge": 0.18111449480056763,
+      "result": 1,
+      "profit": 0.26666666666666666
+    },
+    {
+      "date": "2025-02-23",
+      "home": "MIL",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": 165,
+      "edge": 0.3681288957595825,
+      "result": 1,
+      "profit": 1.65
+    },
+    {
+      "date": "2025-02-24",
+      "home": "UTA",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": -258,
+      "edge": 0.10735505819320679,
+      "result": 1,
+      "profit": 0.3875968992248062
+    },
+    {
+      "date": "2025-02-24",
+      "home": "ATL",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": -135,
+      "edge": 0.10678189992904663,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2025-02-24",
+      "home": "PHI",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": -110,
+      "edge": 0.31888705492019653,
+      "result": 1,
+      "profit": 0.9090909090909091
+    },
+    {
+      "date": "2025-02-24",
+      "home": "WAS",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 195,
+      "edge": 0.31054961681365967,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-24",
+      "home": "DET",
+      "away": "LAC",
+      "pick": "HOME",
+      "odds": -115,
+      "edge": 0.24624836444854736,
+      "result": 1,
+      "profit": 0.8695652173913043
+    },
+    {
+      "date": "2025-02-25",
+      "home": "ORL",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": -245,
+      "edge": 0.17306673526763916,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2025-02-25",
+      "home": "HOU",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": 124,
+      "edge": 0.30501648783683777,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-25",
+      "home": "MEM",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 245,
+      "edge": 0.16628527641296387,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-25",
+      "home": "NOP",
+      "away": "SAS",
+      "pick": "HOME",
+      "odds": -148,
+      "edge": 0.05998808145523071,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2025-02-25",
+      "home": "LAL",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -410,
+      "edge": 0.14426493644714355,
+      "result": 1,
+      "profit": 0.24390243902439024
+    },
+    {
+      "date": "2025-02-26",
+      "home": "WAS",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": -230,
+      "edge": 0.14572691917419434,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2025-02-26",
+      "home": "HOU",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 280,
+      "edge": 0.08007979393005371,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-26",
+      "home": "UTA",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -395,
+      "edge": 0.13206136226654053,
+      "result": 1,
+      "profit": 0.25316455696202533
+    },
+    {
+      "date": "2025-02-26",
+      "home": "CHI",
+      "away": "LAC",
+      "pick": "HOME",
+      "odds": 310,
+      "edge": 0.15639740228652954,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-26",
+      "home": "DET",
+      "away": "BOS",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.1345573365688324,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2025-02-26",
+      "home": "MIA",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.14128577709197998,
+      "result": 1,
+      "profit": 0.6451612903225806
+    },
+    {
+      "date": "2025-02-27",
+      "home": "ORL",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -188,
+      "edge": 0.277263343334198,
+      "result": 1,
+      "profit": 0.5319148936170213
+    },
+    {
+      "date": "2025-02-27",
+      "home": "DAL",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -485,
+      "edge": 0.09792429208755493,
+      "result": 1,
+      "profit": 0.20618556701030927
+    },
+    {
+      "date": "2025-02-27",
+      "home": "PHX",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -258,
+      "edge": 0.12143486738204956,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-27",
+      "home": "LAL",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.22932979464530945,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-28",
+      "home": "PHX",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -425,
+      "edge": 0.1386626958847046,
+      "result": 1,
+      "profit": 0.23529411764705882
+    },
+    {
+      "date": "2025-02-28",
+      "home": "MEM",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": -155,
+      "edge": 0.11128515005111694,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-28",
+      "home": "CHI",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -118,
+      "edge": 0.31585848331451416,
+      "result": 1,
+      "profit": 0.847457627118644
+    },
+    {
+      "date": "2025-02-28",
+      "home": "UTA",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.14388418197631836,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-28",
+      "home": "BKN",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": -120,
+      "edge": 0.3268858790397644,
+      "result": 1,
+      "profit": 0.8333333333333334
+    },
+    {
+      "date": "2025-02-28",
+      "home": "MIA",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -148,
+      "edge": 0.05711406469345093,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-02-28",
+      "home": "BOS",
+      "away": "CLE",
+      "pick": "AWAY",
+      "odds": 102,
+      "edge": 0.2426554262638092,
+      "result": 1,
+      "profit": 1.02
+    },
+    {
+      "date": "2025-03-01",
+      "home": "CHA",
+      "away": "WAS",
+      "pick": "AWAY",
+      "odds": 105,
+      "edge": 0.21193397045135498,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2025-03-01",
+      "home": "HOU",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": 154,
+      "edge": 0.40771764516830444,
+      "result": 1,
+      "profit": 1.54
+    },
+    {
+      "date": "2025-03-01",
+      "home": "MEM",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 200,
+      "edge": 0.08568075299263,
+      "result": 1,
+      "profit": 2.0
+    },
+    {
+      "date": "2025-03-01",
+      "home": "PHI",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -270,
+      "edge": 0.15348196029663086,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-01",
+      "home": "DAL",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -148,
+      "edge": 0.286437451839447,
+      "result": 1,
+      "profit": 0.6756756756756757
+    },
+    {
+      "date": "2025-03-02",
+      "home": "PHX",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 102,
+      "edge": 0.2426554262638092,
+      "result": 1,
+      "profit": 1.02
+    },
+    {
+      "date": "2025-03-02",
+      "home": "UTA",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": 235,
+      "edge": 0.15436363220214844,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-02",
+      "home": "ORL",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 175,
+      "edge": 0.2902519106864929,
+      "result": 1,
+      "profit": 1.75
+    },
+    {
+      "date": "2025-03-02",
+      "home": "LAL",
+      "away": "LAC",
+      "pick": "HOME",
+      "odds": 142,
+      "edge": 0.19846785068511963,
+      "result": 1,
+      "profit": 1.42
+    },
+    {
+      "date": "2025-03-03",
+      "home": "DAL",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.35144931077957153,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2025-03-03",
+      "home": "MIA",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -360,
+      "edge": 0.17848080396652222,
+      "result": 1,
+      "profit": 0.2777777777777778
+    },
+    {
+      "date": "2025-03-03",
+      "home": "PHI",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": 124,
+      "edge": 0.2074597179889679,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2025-03-04",
+      "home": "PHX",
+      "away": "LAC",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.1441226303577423,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2025-03-04",
+      "home": "SAS",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": -162,
+      "edge": 0.1991976499557495,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2025-03-04",
+      "home": "NYK",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -105,
+      "edge": 0.3113343119621277,
+      "result": 1,
+      "profit": 0.9523809523809523
+    },
+    {
+      "date": "2025-03-04",
+      "home": "ATL",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -205,
+      "edge": 0.17056548595428467,
+      "result": 1,
+      "profit": 0.4878048780487805
+    },
+    {
+      "date": "2025-03-04",
+      "home": "ORL",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 220,
+      "edge": 0.38723886013031006,
+      "result": 1,
+      "profit": 2.2
+    },
+    {
+      "date": "2025-03-04",
+      "home": "IND",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -260,
+      "edge": 0.23886728286743164,
+      "result": 1,
+      "profit": 0.38461538461538464
+    },
+    {
+      "date": "2025-03-04",
+      "home": "LAL",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": -380,
+      "edge": 0.16942280530929565,
+      "result": 1,
+      "profit": 0.2631578947368421
+    },
+    {
+      "date": "2025-03-05",
+      "home": "BOS",
+      "away": "POR",
+      "pick": "HOME",
+      "odds": -375,
+      "edge": 0.15871280431747437,
+      "result": 1,
+      "profit": 0.26666666666666666
+    },
+    {
+      "date": "2025-03-05",
+      "home": "MEM",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -325,
+      "edge": 0.16533523797988892,
+      "result": 1,
+      "profit": 0.3076923076923077
+    },
+    {
+      "date": "2025-03-05",
+      "home": "DEN",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": -245,
+      "edge": 0.21683919429779053,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2025-03-05",
+      "home": "LAC",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": 145,
+      "edge": 0.27308669686317444,
+      "result": 1,
+      "profit": 1.45
+    },
+    {
+      "date": "2025-03-06",
+      "home": "ORL",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 260,
+      "edge": 0.3219223618507385,
+      "result": 1,
+      "profit": 2.6
+    },
+    {
+      "date": "2025-03-06",
+      "home": "LAL",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": -142,
+      "edge": 0.06998544931411743,
+      "result": 1,
+      "profit": 0.704225352112676
+    },
+    {
+      "date": "2025-03-06",
+      "home": "ATL",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 110,
+      "edge": 0.3252279460430145,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-07",
+      "home": "TOR",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -218,
+      "edge": 0.09559750556945801,
+      "result": 1,
+      "profit": 0.45871559633027525
+    },
+    {
+      "date": "2025-03-07",
+      "home": "MIA",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.2983461022377014,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2025-03-07",
+      "home": "OKC",
+      "away": "POR",
+      "pick": "HOME",
+      "odds": -125,
+      "edge": 0.18993180990219116,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2025-03-07",
+      "home": "LAC",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": -245,
+      "edge": 0.07098716497421265,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2025-03-08",
+      "home": "MIA",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.2835179269313812,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2025-03-08",
+      "home": "BOS",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -238,
+      "edge": 0.2440444827079773,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2025-03-08",
+      "home": "TOR",
+      "away": "WAS",
+      "pick": "AWAY",
+      "odds": 154,
+      "edge": 0.25583189725875854,
+      "result": 1,
+      "profit": 1.54
+    },
+    {
+      "date": "2025-03-08",
+      "home": "ATL",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -112,
+      "edge": 0.1255863904953003,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-09",
+      "home": "POR",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": -162,
+      "edge": 0.20970487594604492,
+      "result": 1,
+      "profit": 0.6172839506172839
+    },
+    {
+      "date": "2025-03-09",
+      "home": "PHI",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -220,
+      "edge": 0.20415449142456055,
+      "result": 1,
+      "profit": 0.45454545454545453
+    },
+    {
+      "date": "2025-03-09",
+      "home": "NOP",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -230,
+      "edge": 0.27361851930618286,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2025-03-09",
+      "home": "OKC",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": 295,
+      "edge": 0.09007313847541809,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-10",
+      "home": "SAS",
+      "away": "DAL",
+      "pick": "AWAY",
+      "odds": 220,
+      "edge": 0.23462891578674316,
+      "result": 1,
+      "profit": 2.2
+    },
+    {
+      "date": "2025-03-10",
+      "home": "MEM",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": 114,
+      "edge": 0.14440128207206726,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2025-03-10",
+      "home": "SAC",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": 110,
+      "edge": 0.1047954261302948,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-10",
+      "home": "OKC",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": 220,
+      "edge": 0.23462891578674316,
+      "result": 1,
+      "profit": 2.2
+    },
+    {
+      "date": "2025-03-10",
+      "home": "BKN",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -298,
+      "edge": 0.09395289421081543,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-10",
+      "home": "CHI",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -175,
+      "edge": 0.11508142948150635,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-10",
+      "home": "TOR",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -238,
+      "edge": 0.13796323537826538,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2025-03-11",
+      "home": "IND",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.08431529998779297,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-11",
+      "home": "NOP",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -220,
+      "edge": 0.17070895433425903,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-11",
+      "home": "CLE",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": 140,
+      "edge": 0.5444228649139404,
+      "result": 1,
+      "profit": 1.4
+    },
+    {
+      "date": "2025-03-12",
+      "home": "MEM",
+      "away": "UTA",
+      "pick": "HOME",
+      "odds": -395,
+      "edge": 0.16310971975326538,
+      "result": 1,
+      "profit": 0.25316455696202533
+    },
+    {
+      "date": "2025-03-12",
+      "home": "HOU",
+      "away": "PHX",
+      "pick": "AWAY",
+      "odds": 210,
+      "edge": 0.277119517326355,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-12",
+      "home": "ATL",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": -315,
+      "edge": 0.08306914567947388,
+      "result": 1,
+      "profit": 0.31746031746031744
+    },
+    {
+      "date": "2025-03-12",
+      "home": "SAS",
+      "away": "DAL",
+      "pick": "AWAY",
+      "odds": 260,
+      "edge": 0.11053121089935303,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-12",
+      "home": "MIA",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -180,
+      "edge": 0.19983947277069092,
+      "result": 1,
+      "profit": 0.5555555555555556
+    },
+    {
+      "date": "2025-03-12",
+      "home": "BOS",
+      "away": "OKC",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.06204602122306824,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-12",
+      "home": "DEN",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 120,
+      "edge": 0.1451546847820282,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2025-03-13",
+      "home": "DET",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -245,
+      "edge": 0.10737329721450806,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-13",
+      "home": "MIL",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -238,
+      "edge": 0.13796323537826538,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2025-03-13",
+      "home": "CHI",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": 105,
+      "edge": 0.40384960174560547,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2025-03-13",
+      "home": "GSW",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": -290,
+      "edge": 0.1480647325515747,
+      "result": 1,
+      "profit": 0.3448275862068966
+    },
+    {
+      "date": "2025-03-13",
+      "home": "NOP",
+      "away": "ORL",
+      "pick": "AWAY",
+      "odds": -245,
+      "edge": 0.11338448524475098,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2025-03-14",
+      "home": "PHX",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": 130,
+      "edge": 0.11234632134437561,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-14",
+      "home": "SAS",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.2726997435092926,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-14",
+      "home": "UTA",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 102,
+      "edge": 0.10465064644813538,
+      "result": 1,
+      "profit": 1.02
+    },
+    {
+      "date": "2025-03-14",
+      "home": "MIA",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -154,
+      "edge": 0.3237419128417969,
+      "result": 1,
+      "profit": 0.6493506493506493
+    },
+    {
+      "date": "2025-03-14",
+      "home": "ATL",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -160,
+      "edge": 0.22731196880340576,
+      "result": 1,
+      "profit": 0.625
+    },
+    {
+      "date": "2025-03-14",
+      "home": "MEM",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.2726997435092926,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-14",
+      "home": "PHI",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": -360,
+      "edge": 0.18797951936721802,
+      "result": 1,
+      "profit": 0.2777777777777778
+    },
+    {
+      "date": "2025-03-15",
+      "home": "GSW",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": -270,
+      "edge": 0.10360360145568848,
+      "result": 1,
+      "profit": 0.37037037037037035
+    },
+    {
+      "date": "2025-03-15",
+      "home": "SAS",
+      "away": "NOP",
+      "pick": "HOME",
+      "odds": 114,
+      "edge": 0.31384238600730896,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2025-03-15",
+      "home": "MIL",
+      "away": "IND",
+      "pick": "HOME",
+      "odds": -180,
+      "edge": 0.17466109991073608,
+      "result": 1,
+      "profit": 0.5555555555555556
+    },
+    {
+      "date": "2025-03-15",
+      "home": "HOU",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 220,
+      "edge": 0.337032675743103,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-15",
+      "home": "DET",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -200,
+      "edge": 0.2633744478225708,
+      "result": 1,
+      "profit": 0.5
+    },
+    {
+      "date": "2025-03-15",
+      "home": "MEM",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 280,
+      "edge": 0.08007979393005371,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-16",
+      "home": "BKN",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": 240,
+      "edge": 0.1620226800441742,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-17",
+      "home": "UTA",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.34246575832366943,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2025-03-17",
+      "home": "POR",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -238,
+      "edge": 0.25694745779037476,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2025-03-17",
+      "home": "SAC",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -142,
+      "edge": 0.13235145807266235,
+      "result": 1,
+      "profit": 0.704225352112676
+    },
+    {
+      "date": "2025-03-17",
+      "home": "PHX",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": -395,
+      "edge": 0.16310971975326538,
+      "result": 1,
+      "profit": 0.25316455696202533
+    },
+    {
+      "date": "2025-03-17",
+      "home": "GSW",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": 160,
+      "edge": 0.2150847613811493,
+      "result": 1,
+      "profit": 1.6
+    },
+    {
+      "date": "2025-03-17",
+      "home": "HOU",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -500,
+      "edge": 0.05832117795944214,
+      "result": 1,
+      "profit": 0.2
+    },
+    {
+      "date": "2025-03-17",
+      "home": "NYK",
+      "away": "MIA",
+      "pick": "AWAY",
+      "odds": 200,
+      "edge": 0.1666666567325592,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-17",
+      "home": "LAL",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 330,
+      "edge": 0.11067955195903778,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-18",
+      "home": "LAC",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": 120,
+      "edge": 0.5065439939498901,
+      "result": 1,
+      "profit": 1.2
+    },
+    {
+      "date": "2025-03-19",
+      "home": "SAC",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": 210,
+      "edge": 0.39654767513275146,
+      "result": 1,
+      "profit": 2.1
+    },
+    {
+      "date": "2025-03-19",
+      "home": "POR",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": 154,
+      "edge": 0.059170305728912354,
+      "result": 1,
+      "profit": 1.54
+    },
+    {
+      "date": "2025-03-19",
+      "home": "PHX",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 190,
+      "edge": 0.0646212100982666,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-19",
+      "home": "UTA",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": -142,
+      "edge": 0.06998544931411743,
+      "result": 1,
+      "profit": 0.704225352112676
+    },
+    {
+      "date": "2025-03-19",
+      "home": "SAS",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": 110,
+      "edge": 0.13550052046775818,
+      "result": 1,
+      "profit": 1.1
+    },
+    {
+      "date": "2025-03-19",
+      "home": "ORL",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": 170,
+      "edge": 0.08250072598457336,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-19",
+      "home": "MIA",
+      "away": "DET",
+      "pick": "AWAY",
+      "odds": 100,
+      "edge": 0.2246376872062683,
+      "result": 1,
+      "profit": 1.0
+    },
+    {
+      "date": "2025-03-20",
+      "home": "LAL",
+      "away": "MIL",
+      "pick": "HOME",
+      "odds": 225,
+      "edge": 0.19230768084526062,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-20",
+      "home": "CHA",
+      "away": "NYK",
+      "pick": "AWAY",
+      "odds": 135,
+      "edge": 0.41716468334198,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-20",
+      "home": "IND",
+      "away": "BKN",
+      "pick": "HOME",
+      "odds": 105,
+      "edge": 0.3297133445739746,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2025-03-20",
+      "home": "SAC",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 195,
+      "edge": 0.3607558012008667,
+      "result": 1,
+      "profit": 1.95
+    },
+    {
+      "date": "2025-03-21",
+      "home": "LAC",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -290,
+      "edge": 0.25641024112701416,
+      "result": 1,
+      "profit": 0.3448275862068966
+    },
+    {
+      "date": "2025-03-21",
+      "home": "POR",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -112,
+      "edge": 0.07139825820922852,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-21",
+      "home": "PHX",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": 285,
+      "edge": 0.28066375851631165,
+      "result": 1,
+      "profit": 2.85
+    },
+    {
+      "date": "2025-03-21",
+      "home": "MIA",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": 210,
+      "edge": 0.07771921157836914,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-22",
+      "home": "SAC",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": 105,
+      "edge": 0.16608339548110962,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2025-03-22",
+      "home": "LAL",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 340,
+      "edge": 0.3198561668395996,
+      "result": 1,
+      "profit": 3.4
+    },
+    {
+      "date": "2025-03-23",
+      "home": "HOU",
+      "away": "DEN",
+      "pick": "HOME",
+      "odds": -145,
+      "edge": 0.06492555141448975,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-23",
+      "home": "LAC",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.07942020893096924,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2025-03-24",
+      "home": "NOP",
+      "away": "PHI",
+      "pick": "HOME",
+      "odds": -175,
+      "edge": 0.2552908658981323,
+      "result": 1,
+      "profit": 0.5714285714285714
+    },
+    {
+      "date": "2025-03-24",
+      "home": "DEN",
+      "away": "CHI",
+      "pick": "AWAY",
+      "odds": 114,
+      "edge": 0.4627514183521271,
+      "result": 1,
+      "profit": 1.14
+    },
+    {
+      "date": "2025-03-24",
+      "home": "SAC",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.22567743062973022,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2025-03-24",
+      "home": "WAS",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.08867090940475464,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2025-03-24",
+      "home": "ORL",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": 154,
+      "edge": 0.059170305728912354,
+      "result": 1,
+      "profit": 1.54
+    },
+    {
+      "date": "2025-03-24",
+      "home": "IND",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": 124,
+      "edge": 0.25331029295921326,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-25",
+      "home": "SAC",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -425,
+      "edge": 0.0736878514289856,
+      "result": 1,
+      "profit": 0.23529411764705882
+    },
+    {
+      "date": "2025-03-25",
+      "home": "MIA",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": 240,
+      "edge": 0.3055824935436249,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-26",
+      "home": "PHI",
+      "away": "WAS",
+      "pick": "HOME",
+      "odds": 210,
+      "edge": 0.5107526779174805,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-26",
+      "home": "BKN",
+      "away": "TOR",
+      "pick": "HOME",
+      "odds": 280,
+      "edge": 0.48232948780059814,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-26",
+      "home": "IND",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": 280,
+      "edge": 0.0829538106918335,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-26",
+      "home": "NYK",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -115,
+      "edge": 0.43570446968078613,
+      "result": 1,
+      "profit": 0.8695652173913043
+    },
+    {
+      "date": "2025-03-26",
+      "home": "PHX",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -238,
+      "edge": 0.2258991003036499,
+      "result": 1,
+      "profit": 0.42016806722689076
+    },
+    {
+      "date": "2025-03-27",
+      "home": "SAC",
+      "away": "POR",
+      "pick": "HOME",
+      "odds": -230,
+      "edge": 0.052159249782562256,
+      "result": 1,
+      "profit": 0.43478260869565216
+    },
+    {
+      "date": "2025-03-27",
+      "home": "CHI",
+      "away": "LAL",
+      "pick": "HOME",
+      "odds": -110,
+      "edge": 0.40317457914352417,
+      "result": 1,
+      "profit": 0.9090909090909091
+    },
+    {
+      "date": "2025-03-27",
+      "home": "MIA",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": -125,
+      "edge": 0.33609890937805176,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2025-03-27",
+      "home": "ORL",
+      "away": "DAL",
+      "pick": "AWAY",
+      "odds": 340,
+      "edge": 0.3198561668395996,
+      "result": 1,
+      "profit": 3.4
+    },
+    {
+      "date": "2025-03-28",
+      "home": "DET",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": 105,
+      "edge": 0.193445086479187,
+      "result": 1,
+      "profit": 1.05
+    },
+    {
+      "date": "2025-03-28",
+      "home": "TOR",
+      "away": "CHA",
+      "pick": "AWAY",
+      "odds": 260,
+      "edge": 0.11053121089935303,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-28",
+      "home": "MIL",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": 120,
+      "edge": 0.052496761083602905,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-29",
+      "home": "WAS",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 240,
+      "edge": 0.09419134259223938,
+      "result": 1,
+      "profit": 2.4
+    },
+    {
+      "date": "2025-03-30",
+      "home": "NOP",
+      "away": "CHA",
+      "pick": "HOME",
+      "odds": 145,
+      "edge": 0.5188208818435669,
+      "result": 1,
+      "profit": 1.45
+    },
+    {
+      "date": "2025-03-30",
+      "home": "PHX",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": -130,
+      "edge": 0.23620104789733887,
+      "result": 1,
+      "profit": 0.7692307692307693
+    },
+    {
+      "date": "2025-03-30",
+      "home": "MIL",
+      "away": "ATL",
+      "pick": "HOME",
+      "odds": 124,
+      "edge": 0.39567670226097107,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-03-30",
+      "home": "MIN",
+      "away": "DET",
+      "pick": "HOME",
+      "odds": 110,
+      "edge": 0.36591479182243347,
+      "result": 1,
+      "profit": 1.1
+    },
+    {
+      "date": "2025-03-31",
+      "home": "IND",
+      "away": "SAC",
+      "pick": "HOME",
+      "odds": 260,
+      "edge": 0.5643274784088135,
+      "result": 1,
+      "profit": 2.6
+    },
+    {
+      "date": "2025-03-31",
+      "home": "ORL",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": 124,
+      "edge": 0.436783105134964,
+      "result": 1,
+      "profit": 1.24
+    },
+    {
+      "date": "2025-03-31",
+      "home": "MEM",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": -125,
+      "edge": 0.3744855523109436,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2025-03-31",
+      "home": "DAL",
+      "away": "BKN",
+      "pick": "AWAY",
+      "odds": 330,
+      "edge": 0.17689065635204315,
+      "result": 1,
+      "profit": 3.3
+    },
+    {
+      "date": "2025-03-31",
+      "home": "LAL",
+      "away": "HOU",
+      "pick": "AWAY",
+      "odds": 142,
+      "edge": 0.08677685260772705,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-01",
+      "home": "MIL",
+      "away": "PHX",
+      "pick": "HOME",
+      "odds": -280,
+      "edge": 0.10526317358016968,
+      "result": 1,
+      "profit": 0.35714285714285715
+    },
+    {
+      "date": "2025-04-01",
+      "home": "CHI",
+      "away": "TOR",
+      "pick": "AWAY",
+      "odds": 185,
+      "edge": 0.10871878266334534,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-01",
+      "home": "SAS",
+      "away": "ORL",
+      "pick": "HOME",
+      "odds": 270,
+      "edge": 0.3414207398891449,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-02",
+      "home": "CLE",
+      "away": "NYK",
+      "pick": "HOME",
+      "odds": -145,
+      "edge": 0.40816324949264526,
+      "result": 1,
+      "profit": 0.6896551724137931
+    },
+    {
+      "date": "2025-04-02",
+      "home": "BOS",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": -115,
+      "edge": 0.2826344966888428,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-02",
+      "home": "WAS",
+      "away": "SAC",
+      "pick": "AWAY",
+      "odds": -425,
+      "edge": 0.1205173134803772,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-03",
+      "home": "TOR",
+      "away": "POR",
+      "pick": "AWAY",
+      "odds": -270,
+      "edge": 0.11296689510345459,
+      "result": 1,
+      "profit": 0.37037037037037035
+    },
+    {
+      "date": "2025-04-03",
+      "home": "LAL",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -102,
+      "edge": 0.19478833675384521,
+      "result": 1,
+      "profit": 0.9803921568627451
+    },
+    {
+      "date": "2025-04-04",
+      "home": "GSW",
+      "away": "DEN",
+      "pick": "HOME",
+      "odds": 100,
+      "edge": 0.15676230192184448,
+      "result": 1,
+      "profit": 1.0
+    },
+    {
+      "date": "2025-04-04",
+      "home": "HOU",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -195,
+      "edge": 0.26902419328689575,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-04",
+      "home": "LAC",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -485,
+      "edge": 0.13202965259552002,
+      "result": 1,
+      "profit": 0.20618556701030927
+    },
+    {
+      "date": "2025-04-04",
+      "home": "CHI",
+      "away": "POR",
+      "pick": "HOME",
+      "odds": -330,
+      "edge": 0.1936476230621338,
+      "result": 1,
+      "profit": 0.30303030303030304
+    },
+    {
+      "date": "2025-04-05",
+      "home": "DET",
+      "away": "MEM",
+      "pick": "AWAY",
+      "odds": -180,
+      "edge": 0.32773107290267944,
+      "result": 1,
+      "profit": 0.5555555555555556
+    },
+    {
+      "date": "2025-04-05",
+      "home": "MIA",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -125,
+      "edge": 0.28714102506637573,
+      "result": 1,
+      "profit": 0.8
+    },
+    {
+      "date": "2025-04-05",
+      "home": "LAC",
+      "away": "DAL",
+      "pick": "HOME",
+      "odds": -325,
+      "edge": 0.19638359546661377,
+      "result": 1,
+      "profit": 0.3076923076923077
+    },
+    {
+      "date": "2025-04-06",
+      "home": "DEN",
+      "away": "IND",
+      "pick": "AWAY",
+      "odds": 260,
+      "edge": 0.6054338812828064,
+      "result": 1,
+      "profit": 2.6
+    },
+    {
+      "date": "2025-04-06",
+      "home": "NOP",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -245,
+      "edge": 0.28985506296157837,
+      "result": 1,
+      "profit": 0.40816326530612246
+    },
+    {
+      "date": "2025-04-06",
+      "home": "GSW",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -192,
+      "edge": 0.12359786033630371,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-08",
+      "home": "NYK",
+      "away": "BOS",
+      "pick": "AWAY",
+      "odds": 170,
+      "edge": 0.3810746967792511,
+      "result": 1,
+      "profit": 1.7
+    },
+    {
+      "date": "2025-04-08",
+      "home": "MIL",
+      "away": "MIN",
+      "pick": "HOME",
+      "odds": 230,
+      "edge": 0.5144879221916199,
+      "result": 1,
+      "profit": 2.3
+    },
+    {
+      "date": "2025-04-08",
+      "home": "PHX",
+      "away": "GSW",
+      "pick": "AWAY",
+      "odds": -455,
+      "edge": 0.15076839923858643,
+      "result": 1,
+      "profit": 0.21978021978021978
+    },
+    {
+      "date": "2025-04-09",
+      "home": "SAC",
+      "away": "DEN",
+      "pick": "AWAY",
+      "odds": -192,
+      "edge": 0.08017069101333618,
+      "result": 1,
+      "profit": 0.5208333333333334
+    },
+    {
+      "date": "2025-04-09",
+      "home": "PHX",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -278,
+      "edge": 0.26455026865005493,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2025-04-09",
+      "home": "LAC",
+      "away": "HOU",
+      "pick": "HOME",
+      "odds": -470,
+      "edge": 0.06709307432174683,
+      "result": 1,
+      "profit": 0.2127659574468085
+    },
+    {
+      "date": "2025-04-09",
+      "home": "CHI",
+      "away": "MIA",
+      "pick": "HOME",
+      "odds": 135,
+      "edge": 0.08151030540466309,
+      "result": 1,
+      "profit": 1.35
+    },
+    {
+      "date": "2025-04-09",
+      "home": "DAL",
+      "away": "LAL",
+      "pick": "AWAY",
+      "odds": -210,
+      "edge": 0.25262176990509033,
+      "result": 1,
+      "profit": 0.47619047619047616
+    },
+    {
+      "date": "2025-04-09",
+      "home": "WAS",
+      "away": "PHI",
+      "pick": "AWAY",
+      "odds": -188,
+      "edge": 0.09866726398468018,
+      "result": 1,
+      "profit": 0.5319148936170213
+    },
+    {
+      "date": "2025-04-10",
+      "home": "IND",
+      "away": "CLE",
+      "pick": "HOME",
+      "odds": -195,
+      "edge": 0.18108832836151123,
+      "result": 1,
+      "profit": 0.5128205128205128
+    },
+    {
+      "date": "2025-04-10",
+      "home": "MEM",
+      "away": "MIN",
+      "pick": "AWAY",
+      "odds": -135,
+      "edge": 0.25355738401412964,
+      "result": 1,
+      "profit": 0.7407407407407407
+    },
+    {
+      "date": "2025-04-11",
+      "home": "UTA",
+      "away": "OKC",
+      "pick": "AWAY",
+      "odds": -410,
+      "edge": 0.19607841968536377,
+      "result": 1,
+      "profit": 0.24390243902439024
+    },
+    {
+      "date": "2025-04-11",
+      "home": "DEN",
+      "away": "MEM",
+      "pick": "HOME",
+      "odds": -278,
+      "edge": 0.1066555380821228,
+      "result": 1,
+      "profit": 0.3597122302158273
+    },
+    {
+      "date": "2025-04-11",
+      "home": "SAC",
+      "away": "LAC",
+      "pick": "AWAY",
+      "odds": -265,
+      "edge": 0.20401376485824585,
+      "result": 1,
+      "profit": 0.37735849056603776
+    },
+    {
+      "date": "2025-04-11",
+      "home": "PHX",
+      "away": "SAS",
+      "pick": "AWAY",
+      "odds": 154,
+      "edge": 0.2601875066757202,
+      "result": 0,
+      "profit": -1.0
+    },
+    {
+      "date": "2025-04-11",
+      "home": "PHI",
+      "away": "ATL",
+      "pick": "AWAY",
+      "odds": -298,
+      "edge": 0.09395289421081543,
+      "result": 1,
+      "profit": 0.33557046979865773
+    },
+    {
+      "date": "2025-04-11",
+      "home": "DET",
+      "away": "MIL",
+      "pick": "AWAY",
+      "odds": -145,
+      "edge": 0.33820438385009766,
+      "result": 1,
+      "profit": 0.6896551724137931
+    }
+  ]
+}
