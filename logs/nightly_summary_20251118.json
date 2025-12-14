@@ -1,0 +1,15 @@
+{
+  "date": "2025-11-18",
+  "generated_at": "2025-11-20T00:37:49+00:00",
+  "outcomes": {
+    "games_finalized": 8,
+    "games_missing": 0,
+    "postponed": 0
+  },
+  "calibration_metrics": {
+    "brier_score": 0.0,
+    "avg_confidence": 0.0,
+    "expected_value_mean": 0.0
+  },
+  "alerts": []
+}

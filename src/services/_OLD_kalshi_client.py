@@ -16,7 +16,26 @@ import pandas as pd
 import numpy as np
 from dataclasses import dataclass
 import logging
-from v2.logger_setup import get_structured_adapter, classify_error
+
+# Use config instead of v2
+try:
+    from config.logger_setup import get_structured_adapter, classify_error
+except ImportError:
+    # Fallback to simple logging
+    import logging
+    
+    class SimpleStructuredLogger:
+        def __init__(self, name='kalshi'):
+            self.logger = logging.getLogger(name)
+        
+        def event(self, level, message, category='general'):
+            getattr(self.logger, level)(f"[{category}] {message}")
+    
+    def get_structured_adapter(name='kalshi'):
+        return SimpleStructuredLogger(name)
+    
+    def classify_error(e):
+        return type(e).__name__
 
 @dataclass
 class BettingOpportunity:
@@ -82,7 +101,7 @@ class KalshiClient:
         self.cache_expiry = 300  # 5 minutes
         
         # Structured logger
-        self.event_logger = get_structured_adapter(component='kalshi', prediction_version='v5.0')
+        self.event_logger = get_structured_adapter(name='kalshi')
         # Initialize authentication (optionally non-blocking for UI callers)
         if auth_on_init:
             self.authenticate()
@@ -612,36 +631,36 @@ class KalshiClient:
             events = events_resp.get('events', [])
 
             team_name_map = {
-                'LAL': ['Lakers', 'Los Angeles L', 'LA L'],
-                'LAC': ['Clippers', 'Los Angeles C', 'LA C'],
-                'BOS': ['Celtics', 'Boston'],
-                'GSW': ['Warriors', 'Golden State'],
-                'MIA': ['Heat', 'Miami'],
-                'PHX': ['Suns', 'Phoenix'],
-                'DEN': ['Nuggets', 'Denver'],
-                'MIL': ['Bucks', 'Milwaukee'],
-                'PHI': ['Philadelphia', '76ers', 'Sixers'],
-                'BKN': ['Nets', 'Brooklyn'],
-                'DAL': ['Mavericks', 'Dallas', 'Mavs'],
-                'MEM': ['Grizzlies', 'Memphis'],
-                'SAC': ['Kings', 'Sacramento'],
-                'NYK': ['Knicks', 'New York'],
-                'CLE': ['Cavaliers', 'Cleveland', 'Cavs'],
-                'MIN': ['Timberwolves', 'Minnesota', 'Wolves'],
-                'NOP': ['Pelicans', 'New Orleans'],
-                'OKC': ['Thunder', 'Oklahoma City'],
-                'ATL': ['Hawks', 'Atlanta'],
-                'CHI': ['Bulls', 'Chicago'],
-                'TOR': ['Raptors', 'Toronto'],
-                'WAS': ['Wizards', 'Washington'],
-                'IND': ['Pacers', 'Indiana'],
-                'CHA': ['Hornets', 'Charlotte'],
-                'DET': ['Pistons', 'Detroit'],
-                'HOU': ['Rockets', 'Houston'],
-                'ORL': ['Magic', 'Orlando'],
-                'POR': ['Trail Blazers', 'Portland', 'Blazers'],
-                'SAS': ['Spurs', 'San Antonio'],
-                'UTA': ['Jazz', 'Utah']
+                'LAL': ['Lakers', 'Los Angeles L', 'LA L', 'LAL'],
+                'LAC': ['Clippers', 'Los Angeles C', 'LA C', 'LAC'],
+                'BOS': ['Celtics', 'Boston', 'BOS'],
+                'GSW': ['Warriors', 'Golden State', 'GSW'],
+                'MIA': ['Heat', 'Miami', 'MIA'],
+                'PHX': ['Suns', 'Phoenix', 'PHX'],
+                'DEN': ['Nuggets', 'Denver', 'DEN'],
+                'MIL': ['Bucks', 'Milwaukee', 'MIL'],
+                'PHI': ['Philadelphia', '76ers', 'Sixers', 'PHI'],
+                'BKN': ['Nets', 'Brooklyn', 'BKN'],
+                'DAL': ['Mavericks', 'Dallas', 'Mavs', 'DAL'],
+                'MEM': ['Grizzlies', 'Memphis', 'MEM'],
+                'SAC': ['Kings', 'Sacramento', 'SAC'],
+                'NYK': ['Knicks', 'New York', 'NYK'],
+                'CLE': ['Cavaliers', 'Cleveland', 'Cavs', 'CLE'],
+                'MIN': ['Timberwolves', 'Minnesota', 'Wolves', 'MIN'],
+                'NOP': ['Pelicans', 'New Orleans', 'NOP'],
+                'OKC': ['Thunder', 'Oklahoma City', 'OKC'],
+                'ATL': ['Hawks', 'Atlanta', 'ATL'],
+                'CHI': ['Bulls', 'Chicago', 'CHI'],
+                'TOR': ['Raptors', 'Toronto', 'TOR'],
+                'WAS': ['Wizards', 'Washington', 'WAS'],
+                'IND': ['Pacers', 'Indiana', 'IND'],
+                'CHA': ['Hornets', 'Charlotte', 'CHA'],
+                'DET': ['Pistons', 'Detroit', 'DET'],
+                'HOU': ['Rockets', 'Houston', 'HOU'],
+                'ORL': ['Magic', 'Orlando', 'ORL'],
+                'POR': ['Trail Blazers', 'Portland', 'Blazers', 'POR'],
+                'SAS': ['Spurs', 'San Antonio', 'SAS'],
+                'UTA': ['Jazz', 'Utah', 'UTA']
             }
 
             home_names = team_name_map.get(home_team.upper(), [home_team])
@@ -671,23 +690,35 @@ class KalshiClient:
             result: Dict[str, Any] = {}
             for m in markets:
                 ticker = m.get('ticker', '').upper()
-                yes_price = m.get('yes_bid', 50)
-                no_price = m.get('no_bid', 50)
+                
+                # Use last_price as primary, fallback to yes_ask, then yes_bid
+                yes_price = m.get('last_price') or m.get('yes_ask') or m.get('yes_bid') or 50
+                no_price = 100 - yes_price if yes_price else 50  # No price is complement
+                
+                # Skip if we still don't have valid prices
+                if yes_price == 0:
+                    continue
 
                 # Kalshi NBA markets are moneyline only
-                # Ticker format: KXNBAGAME-25NOV21PORGSW-POR (home) or -GSW (away)
-                if any(n.upper() in ticker for n in home_names):
-                    prob = (yes_price or 50) / 100
-                    american = self._kalshi_to_american_odds(prob)
-                    result['home_ml_yes_price'] = yes_price
-                    result['home_ml_no_price'] = no_price
-                    result['home_ml'] = american
-                elif any(n.upper() in ticker for n in away_names):
-                    prob = (yes_price or 50) / 100
-                    american = self._kalshi_to_american_odds(prob)
-                    result['away_ml_yes_price'] = yes_price
-                    result['away_ml_no_price'] = no_price
-                    result['away_ml'] = american
+                # Ticker format: KXNBAGAME-25DEC12MINGSW-MIN (MIN contract) or -GSW (GSW contract)
+                # The LAST part after final hyphen indicates which team the contract is for
+                ticker_parts = ticker.split('-')
+                if len(ticker_parts) >= 3:
+                    team_suffix = ticker_parts[-1]  # Last part = team abbreviation
+                    
+                    # Check if this contract is for home or away team
+                    if any(n.upper() == team_suffix for n in home_names):
+                        prob = (yes_price or 50) / 100
+                        american = self._kalshi_to_american_odds(prob)
+                        result['home_ml_yes_price'] = yes_price
+                        result['home_ml_no_price'] = no_price
+                        result['home_ml'] = american
+                    elif any(n.upper() == team_suffix for n in away_names):
+                        prob = (yes_price or 50) / 100
+                        american = self._kalshi_to_american_odds(prob)
+                        result['away_ml_yes_price'] = yes_price
+                        result['away_ml_no_price'] = no_price
+                        result['away_ml'] = american
 
             self.event_logger.event('info', f"Found moneyline for {home_team} vs {away_team}", category='market_data')
             return result if result else None

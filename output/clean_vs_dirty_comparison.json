@@ -1,0 +1,10 @@
+{
+  "DIRTY (original)": {
+    "mean_auc": 0.5508255140078264,
+    "std_auc": 0.08371843963061734,
+    "mean_accuracy": 0.5618485742379546,
+    "std_accuracy": 0.03895840871151648,
+    "mean_logloss": 0.6935442963072007,
+    "train_time": 5.292762994766235,
+    "top_feature": "away_back_to_back",
+    "top_importance": 

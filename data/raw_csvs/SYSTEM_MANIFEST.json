@@ -1,0 +1,60 @@
+{
+  "audit_date": "2025-12-06T00:53:58.323972",
+  "total_models_found": 109,
+  "models_archived": 1,
+  "verified_components": {},
+  "needs_verification": {
+    "V2\\v2\\models\\moneyline_model_enhanced.pkl": {
+      "status": "NEEDS_VERIFICATION",
+      "reason": "Has calibration system, needs walk-forward test to verify no leakage",
+      "type": "LGBMClassifier",
+      "features": 36,
+      "verified_date": null,
+      "action": "TEST with walk-forward backtest"
+    },
+    "V2\\v2\\models\\totals_model_enhanced.pkl": {
+      "status": "NEEDS_VERIFICATION",
+      "reason": "Enhanced totals model, needs validation",
+      "type": "XGBRegressor",
+      "features": 36,
+      "verified_date": null,
+      "action": "TEST with walk-forward backtest"
+    }
+  },
+  "broken_archived": {
+    "Sports_Betting_System\\nba_tuned_deep_model.joblib": {
+      "status": "BROKEN",
+      "reason": "Confirmed data leakage (77% walk-forward), injury impact #69/97",
+      "type": "XGBClassifier",
+      "features": 97,
+      "verified_date": "2025-12-06",
+      "action": "ARCHIVE - DO NOT USE"
+    }
+  },
+  "recommendations": [
+    {
+      "priority": 1,
+      "action": "Run walk-forward backtest on V2 models",
+      "reason": "Verify no data leakage (accuracy should be 54-57%)",
+      "command": "python walk_forward_backtest_v2.py"
+    },
+    {
+      "priority": 2,
+      "action": "Fix team_stats_service.py data leakage",
+      "reason": "Query game_advanced_stats with game_date < as_of_date filter",
+      "file": "team_stats_service.py line 716"
+    },
+    {
+      "priority": 3,
+      "action": "Fix injury impact weighting",
+      "reason": "Curry OUT should be top 3 feature, currently #69",
+      "file": "injury_replacement_model.py"
+    },
+    {
+      "priority": 4,
+      "action": "Update dashboard to use only verified V2 models",
+      "reason": "Currently using broken Sports_Betting_System model",
+      "file": "nba_gui_dashboard_v2.py line 37"
+    }
+  ]
+}

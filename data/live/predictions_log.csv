@@ -1,0 +1,3 @@
+date,home_team,away_team,game_id,calibrated_prob,home_ml_odds,away_ml_odds,prediction_timestamp,model_version
+2024-12-13,BOS,MIA,TEST_001,0.6567623,-200,170,2025-12-12T13:30:13.309552,trial98_isotonic
+2024-12-13,LAL,GSW,TEST_002,0.6567623,-150,130,2025-12-12T13:30:13.309552,trial98_isotonic

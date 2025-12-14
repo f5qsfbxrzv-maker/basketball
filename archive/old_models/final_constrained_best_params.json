@@ -1,0 +1,27 @@
+{
+  "best_trial": 229,
+  "best_auc": 0.567433664913357,
+  "best_params": {
+    "learning_rate": 0.00501064713529886,
+    "n_estimators": 800,
+    "max_depth": 7,
+    "min_child_weight": 30,
+    "subsample": 0.6915477963664621,
+    "colsample_bytree": 0.6265024613919146,
+    "gamma": 0.7080693462587426,
+    "reg_alpha": 1.02315629433698,
+    "reg_lambda": 2.1546949814114926
+  },
+  "tuning_date": "2025-12-12T11:23:14.895117",
+  "dataset": "training_data_with_temporal_features.csv",
+  "n_features": 43,
+  "n_trials": 300,
+  "cv_folds": 5,
+  "strategy": "Smart constraints: physics constrained, eras unconstrained",
+  "constraints_applied": 21,
+  "baselines": {
+    "dirty_36": 0.5508,
+    "clean_36": 0.5407,
+    "clean_43_unconstrained": 0.55698
+  }
+}

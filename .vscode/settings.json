@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/Fooball Model": true
+  },
+  "search.exclude": {
+    "**/Fooball Model/**": true
+  },
+  "files.watcherExclude": {
+    "**/Fooball Model/**": true
+  }
+}

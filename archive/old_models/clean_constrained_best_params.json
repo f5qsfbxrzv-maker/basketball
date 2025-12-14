@@ -1,0 +1,25 @@
+{
+  "best_trial": 191,
+  "best_auc": 0.5507498420486597,
+  "best_params": {
+    "learning_rate": 0.005775786867240383,
+    "n_estimators": 500,
+    "max_depth": 3,
+    "min_child_weight": 10,
+    "subsample": 0.7007517104492316,
+    "colsample_bytree": 0.642935757597451,
+    "gamma": 1.500887993410759,
+    "reg_alpha": 2.5356991391049646,
+    "reg_lambda": 4.760834542520926
+  },
+  "tuning_date": "2025-12-12T09:59:07.497193",
+  "dataset": "training_data_with_features_cleaned.csv",
+  "n_trials": 200,
+  "strategy": "Constrained search with monotonic constraints",
+  "constraints_applied": 21,
+  "data_fixes": [
+    "286-day rest bug",
+    "ELO inflation normalized",
+    "Outliers clipped"
+  ]
+}

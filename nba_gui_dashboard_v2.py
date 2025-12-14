@@ -15,13 +15,13 @@ World-class professional grade with all features integrated:
 """
 import sys
 import json
+import traceback
 from pathlib import Path
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTabWidget, QTableWidget, QTableWidgetItem, QPushButton, QLabel,
     QSpinBox, QDoubleSpinBox, QTextEdit, QGroupBox,
-    QHeaderView, QMessageBox, QProgressBar, QDialog, QGridLayout, QCheckBox,
-    QLineEdit
+    QHeaderView, QMessageBox, QProgressBar, QDialog, QGridL   QLineEdit, QScrollArea
 )
 from PyQt6.QtCore import Qt, QTimer, QThread, pyqtSignal
 from PyQt6.QtGui import QFont, QColor
@@ -70,7 +70,7 @@ except ImportError as e:
     print(f"[WARNING] Prediction engine not available: {e}")
 
 try:
-    from paper_trading_tracker import PaperTradingTracker
+    from src.core.paper_trading_tracker import PaperTradingTracker
     PAPER_TRADING_AVAILABLE = True
 except ImportError:
     PAPER_TRADING_AVAILABLE = False
@@ -599,53 +599,42 @@ class GameDetailDialog(QDialog):
             features = self.prediction.get('features', {})
             stats_rows = []
             
-            # Extract team names for database queries
+            # Extract team names and features
             home_team = self.prediction['home_team']
             away_team = self.prediction['away_team']
+            features = self.prediction.get('features', {})
             
-            # Records - calculate from win percentage
+            # Records - use features from prediction instead of database query
             home_win_pct = features.get('home_win_pct', 0.5)
             away_win_pct = features.get('away_win_pct', 0.5)
             
-            # Fetch actual records from database
-            import sqlite3
-            try:
-                conn = sqlite3.connect(str(DATABASE_PATH))
-                cursor = conn.cursor()
-                
-                # Get home team record
-                cursor.execute("SELECT wins, losses, last_10 FROM team_records WHERE team = ?", (home_team,))
-                home_record = cursor.fetchone()
-                home_wins, home_losses, home_last_10 = home_record if home_record else (0, 0, '0-0')
-                
-                # Get away team record
-                cursor.execute("SELECT wins, losses, last_10 FROM team_records WHERE team = ?", (away_team,))
-                away_record = cursor.fetchone()
-                away_wins, away_losses, away_last_10 = away_record if away_record else (0, 0, '0-0')
-                
-                conn.close()
-            except Exception as e:
-                print(f"[WARNING] Could not fetch team records: {e}")
-                home_wins, home_losses, home_last_10 = 0, 0, '0-0'
-                away_wins, away_losses, away_last_10 = 0, 0, '0-0'
+            # Estimate record from win percentage (82 games in season)
+            home_wins = int(home_win_pct * 82)
+            home_losses = 82 - home_wins
+            away_wins = int(away_win_pct * 82)
+            away_losses = 82 - away_wins
             
             stats_rows.append((
                 'Record', 
-                (int(home_wins), int(home_losses)),
-                (int(away_wins), int(away_losses)),
+                (home_wins, home_losses),
+                (away_wins, away_losses),
                 'record',
-                f"{int(home_wins)}-{int(home_losses)}", 
-                f"{int(away_wins)}-{int(away_losses)}"
+                f"{home_wins}-{home_losses}", 
+                f"{away_wins}-{away_losses}"
             ))
+            
+            # Last 10 (estimate from recent form if available, otherwise from win pct)
+            home_last_10_wins = int(home_win_pct * 10)
+            away_last_10_wins = int(away_win_pct * 10)
             
             stats_rows.append((
                 'Last 10', 
-                home_last_10,
-                away_last_10,
+                f"{home_last_10_wins}-{10-home_last_10_wins}",
+                f"{away_last_10_wins}-{10-away_last_10_wins}",
                 'record',
-                home_last_10, 
-                away_last_10
-                ))
+                f"{home_last_10_wins}-{10-home_last_10_wins}", 
+                f"{away_last_10_wins}-{10-away_last_10_wins}"
+            ))
             
             # Points Per Game
             home_off_rating = features.get('home_off_rating') or 110

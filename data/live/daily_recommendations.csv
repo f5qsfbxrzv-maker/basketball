@@ -1,0 +1,2 @@
+game_time,home_team,away_team,bet_team,bet_side,odds,model_prob,market_prob,edge,stake,stake_pct,potential_profit,roi,game_id
+22:00,LAL,GSW,LAL,HOME,-150,0.6567623019218445,0.5798319327731092,0.0769303691487353,250.98888430775742,2.509888843077574,167.32592287183826,66.66666666666666,TEST_002

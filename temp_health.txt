@@ -1,0 +1,15 @@
+﻿python : WARNING:root:DynamicELOCalculator not available - ELO features disabled
+At line:1 char:62
++ ... ball Model'; python src/analysis/audit_feature_health.py 2>&1 | Out-F ...
++                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING:root:Dy...atures disabled:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\d76do\OneDrive\Documents\New Basketball Model\src\analysis\audit_feature_health.py", line 19, in <module>
+    print("\U0001f3e5 FEATURE HEALTH CHECK")
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f3e5' in position 0: character maps to <undefined>

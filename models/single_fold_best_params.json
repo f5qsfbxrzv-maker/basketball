@@ -1,0 +1,18 @@
+{
+  "best_trial": 98,
+  "best_auc": 0.6640720908464416,
+  "best_params": {
+    "learning_rate": 0.00802574907081087,
+    "n_estimators": 2000,
+    "max_depth": 4,
+    "min_child_weight": 14,
+    "subsample": 0.831750182903984,
+    "colsample_bytree": 0.6087083605810719,
+    "gamma": 2.6570883096981364,
+    "reg_alpha": 0.015873940280007957,
+    "reg_lambda": 1.0829576614942722
+  },
+  "baseline_auc": 0.63888,
+  "improvement_pct": 2.5192090846441584,
+  "tuning_date": "2025-12-12T11:43:22.998362"
+}

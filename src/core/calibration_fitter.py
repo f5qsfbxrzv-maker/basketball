@@ -1,13 +1,13 @@
 import sqlite3, logging, json
 from typing import Optional, Tuple
 from datetime import datetime, timedelta
-from v2.constants import (
-    MIN_CALIBRATION_SAMPLES,
-    CALIBRATION_REFIT_INTERVAL_DAYS,
-    TARGET_BRIER_SCORE,
-    MAX_BRIER_FOR_BETTING,
-    ISOTONIC_MIN_SAMPLES
-)
+
+# Calibration constants - inline to avoid v2 dependency
+MIN_CALIBRATION_SAMPLES = 250
+CALIBRATION_REFIT_INTERVAL_DAYS = 7
+TARGET_BRIER_SCORE = 0.20
+MAX_BRIER_FOR_BETTING = 0.25
+ISOTONIC_MIN_SAMPLES = 50
 
 try:
     from sklearn.isotonic import IsotonicRegression

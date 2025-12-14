@@ -21,9 +21,10 @@ BACKUP_DIR = DATA_DIR / "backups"
 PRODUCTION_MODELS_DIR = MODELS_DIR / "production"
 EXPERIMENTAL_MODELS_DIR = MODELS_DIR / "experimental"
 
-MONEYLINE_MODEL = PRODUCTION_MODELS_DIR / "moneyline_model_enhanced.pkl"
+# PRODUCTION MODEL from Dec 12, 2025 commit (36.7% ROI, 70.8% win rate, all injury features)
+MONEYLINE_MODEL = MODELS_DIR / "xgboost_final_trial98.json"
 TOTALS_MODEL = PRODUCTION_MODELS_DIR / "totals_model_enhanced.pkl"
-ISOTONIC_CALIBRATOR = PRODUCTION_MODELS_DIR / "moneyline_calibrator_isotonic.pkl"
+ISOTONIC_CALIBRATOR = MODELS_DIR / "isotonic_calibrator_final.pkl"  # Dec 12 calibrator
 PLATT_CALIBRATOR = PRODUCTION_MODELS_DIR / "moneyline_calibrator_platt.pkl"
 
 # Logs

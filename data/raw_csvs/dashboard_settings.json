@@ -1,0 +1,12 @@
+{
+  "model_directory": "models/",
+  "auto_retrain": true,
+  "odds_api_key": "",
+  "kalshi_api_key": "",
+  "auto_trading": false,
+  "paper_trading": true,
+  "kelly_fraction": 0.02,
+  "max_bet_size": 500.0,
+  "min_confidence": 0.6,
+  "stop_loss_pct": 20.0
+}

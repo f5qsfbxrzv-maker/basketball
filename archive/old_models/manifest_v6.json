@@ -1,0 +1,79 @@
+{
+  "system_version": "6.0",
+  "generated_at": "2025-11-21T21:06:43+00:00",
+  "schema_version": 2,
+  "models": [
+    {
+      "model_id": "basket_ats_model_v6",
+      "version": "6.0",
+      "feature_version": "v6",
+      "filename": "model_v6_ats.xgb",
+      "status": "production"
+    },
+    {
+      "model_id": "basket_ml_model_v6",
+      "version": "6.0",
+      "feature_version": "v6",
+      "filename": "model_v6_ml.xgb",
+      "status": "production"
+    },
+    {
+      "model_id": "basket_total_model_v6",
+      "version": "6.0",
+      "feature_version": "v6",
+      "filename": "model_v6_total.xgb",
+      "status": "production"
+    },
+    {
+      "model_id": "basket_ats_model_20251121_210643",
+      "filename": "basket_ats_model_20251121_210643.joblib",
+      "sha256": "3266de780f4bc4372a5b55253aba91dac3669702460e869a6679ac155061cc72",
+      "file_size": 357694,
+      "modified_time": "2025-11-21T21:06:43+00:00",
+      "training_start": "2025-11-21T21:06:43+00:00",
+      "training_end": "2025-11-21T21:06:43+00:00",
+      "data_slice": "up_to=2025-11-21",
+      "feature_version": "v6",
+      "metrics": {},
+      "dependencies_hash": "dc67947c4816fdac46487c45fa945d560c8a7886623730e72dc98217f1f400d4",
+      "status": "production",
+      "deployed_at": "2025-11-21T21:06:43+00:00"
+    },
+    {
+      "model_id": "basket_moneyline_model_20251121_210643",
+      "filename": "basket_moneyline_model_20251121_210643.joblib",
+      "sha256": "d997ac57c9d6638b3477a3f8766003ebe65798f26a679246c5c839fbaa13ad5b",
+      "file_size": 380342,
+      "modified_time": "2025-11-21T21:06:43+00:00",
+      "training_start": "2025-11-21T21:06:43+00:00",
+      "training_end": "2025-11-21T21:06:43+00:00",
+      "data_slice": "up_to=2025-11-21",
+      "feature_version": "v6",
+      "metrics": {},
+      "dependencies_hash": "dc67947c4816fdac46487c45fa945d560c8a7886623730e72dc98217f1f400d4",
+      "status": "production",
+      "deployed_at": "2025-11-21T21:06:43+00:00"
+    },
+    {
+      "model_id": "basket_total_model_20251121_210643",
+      "filename": "basket_total_model_20251121_210643.joblib",
+      "sha256": "8ba8b99a8af91999bee982f19746ab7acf5d8ca22ac1f6c93c83f54ff8f72724",
+      "file_size": 281305,
+      "modified_time": "2025-11-21T21:06:43+00:00",
+      "training_start": "2025-11-21T21:06:43+00:00",
+      "training_end": "2025-11-21T21:06:43+00:00",
+      "data_slice": "up_to=2025-11-21",
+      "feature_version": "v6",
+      "metrics": {},
+      "dependencies_hash": "dc67947c4816fdac46487c45fa945d560c8a7886623730e72dc98217f1f400d4",
+      "status": "production",
+      "deployed_at": "2025-11-21T21:06:43+00:00"
+    }
+  ],
+  "dependencies": {
+    "feature_calculator": "v6",
+    "calibration": "v6",
+    "elo_system": "v6"
+  },
+  "dependencies_hash": "dc67947c4816fdac46487c45fa945d560c8a7886623730e72dc98217f1f400d4"
+}

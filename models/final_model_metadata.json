@@ -1,0 +1,155 @@
+{
+  "training_date": "2025-12-12T11:52:02.067073",
+  "dataset": "training_data_with_temporal_features.csv",
+  "n_games": 12205,
+  "n_features": 43,
+  "features": [
+    "ewma_efg_diff",
+    "ewma_tov_diff",
+    "ewma_orb_diff",
+    "ewma_pace_diff",
+    "ewma_vol_3p_diff",
+    "home_ewma_3p_pct",
+    "away_ewma_3p_pct",
+    "away_ewma_tov_pct",
+    "home_orb",
+    "away_orb",
+    "away_ewma_fta_rate",
+    "ewma_foul_synergy_home",
+    "ewma_foul_synergy_away",
+    "total_foul_environment",
+    "ewma_chaos_home",
+    "ewma_net_chaos",
+    "home_rest_days",
+    "away_rest_days",
+    "rest_advantage",
+    "fatigue_mismatch",
+    "home_back_to_back",
+    "away_back_to_back",
+    "home_3in4",
+    "away_3in4",
+    "home_composite_elo",
+    "altitude_game",
+    "injury_impact_diff",
+    "injury_impact_abs",
+    "injury_shock_home",
+    "injury_shock_away",
+    "injury_shock_diff",
+    "home_star_missing",
+    "away_star_missing",
+    "star_mismatch",
+    "off_elo_diff",
+    "def_elo_diff",
+    "is_season_opener",
+    "season_year",
+    "season_year_normalized",
+    "games_into_season",
+    "season_progress",
+    "endgame_phase",
+    "season_month"
+  ],
+  "trial_number": 98,
+  "hyperparameters": {
+    "learning_rate": 0.00802574907081087,
+    "n_estimators": 2000,
+    "max_depth": 4,
+    "min_child_weight": 14,
+    "subsample": 0.831750182903984,
+    "colsample_bytree": 0.6087083605810719,
+    "gamma": 2.6570883096981364,
+    "reg_alpha": 0.015873940280007957,
+    "reg_lambda": 1.0829576614942722
+  },
+  "performance": {
+    "raw_auc": 0.8055093099904848,
+    "raw_brier": 0.19807892369049895,
+    "raw_logloss": 0.5835361012613836,
+    "calibrated_auc": 0.8071809949499023,
+    "calibrated_brier": 0.17665173430099734,
+    "calibrated_logloss": 0.5256864967325566,
+    "brier_improvement": 0.02142718938950161,
+    "logloss_improvement": 0.057849604528826926
+  },
+  "feature_importance": [
+    {
+      "feature": "season_year",
+      "importance": 0.050166115164756775
+    },
+    {
+      "feature": "season_year_normalized",
+      "importance": 0.048482052981853485
+    },
+    {
+      "feature": "ewma_efg_diff",
+      "importance": 0.037737905979156494
+    },
+    {
+      "feature": "off_elo_diff",
+      "importance": 0.029734203591942787
+    },
+    {
+      "feature": "away_back_to_back",
+      "importance": 0.0292422566562891
+    },
+    {
+      "feature": "def_elo_diff",
+      "importance": 0.027293525636196136
+    },
+    {
+      "feature": "away_rest_days",
+      "importance": 0.02655014954507351
+    },
+    {
+      "feature": "ewma_tov_diff",
+      "importance": 0.026194483041763306
+    },
+    {
+      "feature": "altitude_game",
+      "importance": 0.026062240824103355
+    },
+    {
+      "feature": "away_3in4",
+      "importance": 0.025081399828195572
+    },
+    {
+      "feature": "home_back_to_back",
+      "importance": 0.025060134008526802
+    },
+    {
+      "feature": "away_star_missing",
+      "importance": 0.024364259093999863
+    },
+    {
+      "feature": "away_ewma_tov_pct",
+      "importance": 0.023830944672226906
+    },
+    {
+      "feature": "ewma_pace_diff",
+      "importance": 0.02380843460559845
+    },
+    {
+      "feature": "home_rest_days",
+      "importance": 0.022785428911447525
+    },
+    {
+      "feature": "fatigue_mismatch",
+      "importance": 0.0227268747985363
+    },
+    {
+      "feature": "injury_shock_diff",
+      "importance": 0.022425977513194084
+    },
+    {
+      "feature": "home_composite_elo",
+      "importance": 0.022144723683595657
+    },
+    {
+      "feature": "home_orb",
+      "importance": 0.021432215347886086
+    },
+    {
+      "feature": "ewma_chaos_home",
+      "importance": 0.021411381661891937
+    }
+  ]
+}

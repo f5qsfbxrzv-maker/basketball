@@ -1,0 +1,13 @@
+Script,Status,Leak_Score,Has_Modern_CSV,Has_PLUS_MINUS,Has_PTS,Modified
+core\live_model_backtester_v6.py,⚠️  UNKNOWN,0,False,False,False,2025-11-21
+core\live_wp_backtester_v6.py,⚠️  UNKNOWN,0,False,False,False,2025-11-20
+Updates\live model backtester.py,⚠️  UNKNOWN,0,False,False,False,2025-11-17
+V2\diagnose_backtest.py,⚠️  UNKNOWN,0,False,False,False,2025-11-24
+V2\final_backtest.py,⚠️  UNKNOWN,0,False,False,False,2025-11-24
+V2\full_backtest.py,⚠️  UNKNOWN,0,False,False,False,2025-11-24
+V2\simple_backtest.py,⚠️  UNKNOWN,0,False,False,False,2025-11-24
+V2\scripts\truth_backtest.py,⚠️  UNKNOWN,0,False,False,False,2025-11-27
+V2\_archive\numpy_backtest.py,⚠️  UNKNOWN,0,False,False,False,2025-11-25
+V2\_archive\run_sample_audit_and_backtest.py,⚠️  UNKNOWN,0,False,False,False,2025-11-25
+V2\scripts\run_2025_backtest.py,🚨 LIKELY LEAKY,10,True,False,False,2025-11-30
+V2\scripts\run_honest_backtest.py,🚨 LIKELY LEAKY,10,True,False,False,2025-11-30

@@ -1,0 +1,11 @@
+params,mean_test_score,std_test_score,rank_test_score
+"{'subsample': 0.7, 'reg_lambda': 5, 'reg_alpha': 2, 'n_estimators': 200, 'min_child_weight': 20, 'max_depth': 5, 'learning_rate': 0.02, 'gamma': 0, 'colsample_bytree': 0.7}",-0.6624193839158959,0.01262335504264042,1
+"{'subsample': 0.6, 'reg_lambda': 10, 'reg_alpha': 0.5, 'n_estimators': 200, 'min_child_weight': 5, 'max_depth': 2, 'learning_rate': 0.03, 'gamma': 1.0, 'colsample_bytree': 0.8}",-0.662864835977452,0.012823959957103748,2
+"{'subsample': 0.6, 'reg_lambda': 2, 'reg_alpha': 0.5, 'n_estimators': 300, 'min_child_weight': 5, 'max_depth': 3, 'learning_rate': 0.01, 'gamma': 1.0, 'colsample_bytree': 0.6}",-0.6628750412305234,0.010226559078547201,3
+"{'subsample': 0.7, 'reg_lambda': 10, 'reg_alpha': 0, 'n_estimators': 300, 'min_child_weight': 5, 'max_depth': 2, 'learning_rate': 0.02, 'gamma': 1.0, 'colsample_bytree': 0.8}",-0.6628775000832661,0.012289854560386908,4
+"{'subsample': 0.8, 'reg_lambda': 10, 'reg_alpha': 0, 'n_estimators': 300, 'min_child_weight': 15, 'max_depth': 5, 'learning_rate': 0.01, 'gamma': 0, 'colsample_bytree': 0.6}",-0.662904617617943,0.011259542384844765,5
+"{'subsample': 0.8, 'reg_lambda': 10, 'reg_alpha': 0.5, 'n_estimators': 200, 'min_child_weight': 20, 'max_depth': 4, 'learning_rate': 0.02, 'gamma': 2.0, 'colsample_bytree': 0.7}",-0.663179453275172,0.012449790127478088,6
+"{'subsample': 0.6, 'reg_lambda': 1, 'reg_alpha': 0.5, 'n_estimators': 300, 'min_child_weight': 15, 'max_depth': 5, 'learning_rate': 0.01, 'gamma': 2.0, 'colsample_bytree': 0.7}",-0.663574595181015,0.012552198004161564,7
+"{'subsample': 0.6, 'reg_lambda': 2, 'reg_alpha': 0, 'n_estimators': 200, 'min_child_weight': 15, 'max_depth': 2, 'learning_rate': 0.02, 'gamma': 0.5, 'colsample_bytree': 0.8}",-0.6638849316647771,0.011485873734362186,8
+"{'subsample': 0.8, 'reg_lambda': 2, 'reg_alpha': 1, 'n_estimators': 200, 'min_child_weight': 15, 'max_depth': 2, 'learning_rate': 0.02, 'gamma': 0, 'colsample_bytree': 0.7}",-0.66390475177449,0.010618715911986501,9
+"{'subsample': 0.6, 'reg_lambda': 2, 'reg_alpha': 2, 'n_estimators': 300, 'min_child_weight': 20, 'max_depth': 2, 'learning_rate': 0.01, 'gamma': 0.5, 'colsample_bytree': 0.6}",-0.6642831628290772,0.007858563766380694,10

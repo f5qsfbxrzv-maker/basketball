@@ -31,9 +31,9 @@ class TeamElo:
 
     @property
     def composite(self) -> float:
-        # Defensive elo: lower number should represent worse defense.
-        # To make composite intuitive (higher = stronger), invert defensive component.
-        return (self.off_elo + (2000 - self.def_elo)) / 2.0
+        # FIXED: Match database storage - simple average, no inversion
+        # Higher values for both off_elo and def_elo = stronger team
+        return (self.off_elo + self.def_elo) / 2.0
 
 class OffDefEloSystem:
     def __init__(self, db_path: str):
@@ -228,7 +228,7 @@ class OffDefEloSystem:
         away = self.get_latest(away_team, season, before_date=game_date) or TeamElo(away_team, season, OFF_ELO_BASELINE, DEF_ELO_BASELINE, self._today())
         return {
             'off_elo_diff': home.off_elo - away.off_elo,
-            'def_elo_diff': (2000 - home.def_elo) - (2000 - away.def_elo),  # defensive strength differential
+            'def_elo_diff': home.def_elo - away.def_elo,  # FIXED: removed inversion, higher = better defense
             'composite_elo_diff': home.composite - away.composite
         }
 

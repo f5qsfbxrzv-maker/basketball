@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0",
+  "description": "Feature definitions, expected ranges, and normalization parameters for NBA totals model",
+  "features": {
+    "elo_diff": {
+      "type": "float",
+      "description": "Home ELO - Away ELO (with rest adjustments)",
+      "expected_range": [-150, 150],
+      "training_mean": 0.0,
+      "training_std": 45.0,
+      "normalization": "z-score",
+      "drift_alert_threshold": 2.0
+    },
+    "sos_diff": {
+      "type": "float",
+      "description": "Home SOS - Away SOS (strength of schedule)",
+      "expected_range": [-5, 5],
+      "training_mean": 0.0,
+      "training_std": 1.5,
+      "normalization": "z-score"
+    },
+    "rest_days_diff": {
+      "type": "float",
+      "description": "Home rest days - Away rest days",
+      "expected_range": [-4, 4],
+      "training_mean": 0.0,
+      "training_std": 1.2,
+      "normalization": "none"
+    },
+    "is_b2b_diff": {
+      "type": "int",
+      "description": "Back-to-back differential: 0=neither, 1=home only, -1=away only",
+      "expected_range": [-1, 1],
+      "normalization": "none"
+    },
+    "injury_impact_diff": {
+      "type": "float",
+      "description": "PIE-weighted injury impact: Home injuries - Away injuries",
+      "expected_range": [-0.5, 0.5],
+      "training_mean": 0.0,
+      "training_std": 0.08,
+      "normalization": "z-score"
+    },
+    "expected_pace": {
+      "type": "float",
+      "description": "Predicted possessions per game (harmonic mean of team paces)",
+      "expected_range": [95, 110],
+      "training_mean": 100.5,
+      "training_std": 3.2,
+      "normalization": "min-max",
+      "min_value": 92,
+      "max_value": 112
+    },
+    "vs_net_rating": {
+      "type": "float",
+      "description": "Identity comparison net rating (Home O-D vs Away O-D)",
+      "expected_range": [-20, 20],
+      "training_mean": 0.0,
+      "training_std": 8.5,
+      "normalization": "z-score"
+    },
+    "h2h_win_rate_l3y": {
+      "type": "float",
+      "description": "Home team win rate vs Away team (last 3 years)",
+      "expected_range": [0.0, 1.0],
+      "training_mean": 0.5,
+      "training_std": 0.25,
+      "normalization": "none"
+    },
+    "efg_pct_diff": {
+      "type": "float",
+      "description": "Four Factors: Home eFG% - Away eFG%",
+      "expected_range": [-0.15, 0.15],
+      "training_mean": 0.0,
+      "training_std": 0.04,
+      "normalization": "z-score"
+    },
+    "tov_pct_diff": {
+      "type": "float",
+      "description": "Four Factors: Home TOV% - Away TOV%",
+      "expected_range": [-0.08, 0.08],
+      "training_mean": 0.0,
+      "training_std": 0.025,
+      "normalization": "z-score"
+    },
+    "orb_pct_diff": {
+      "type": "float",
+      "description": "Four Factors: Home ORB% - Away ORB%",
+      "expected_range": [-0.12, 0.12],
+      "training_mean": 0.0,
+      "training_std": 0.035,
+      "normalization": "z-score"
+    },
+    "ftr_diff": {
+      "type": "float",
+      "description": "Four Factors: Home FT Rate - Away FT Rate",
+      "expected_range": [-0.15, 0.15],
+      "training_mean": 0.0,
+      "training_std": 0.05,
+      "normalization": "z-score"
+    },
+    "travel_distance_miles": {
+      "type": "float",
+      "description": "Away team miles traveled since last game (great circle)",
+      "expected_range": [0, 3000],
+      "training_mean": 750,
+      "training_std": 600,
+      "normalization": "log1p",
+      "note": "Use log(1+x) transform before z-score"
+    },
+    "altitude_diff": {
+      "type": "float",
+      "description": "Home altitude - Away home altitude (feet); DEN=5280, UTA=4226",
+      "expected_range": [-5280, 5280],
+      "training_mean": 0,
+      "training_std": 1200,
+      "normalization": "z-score"
+    },
+    "games_in_last_3d": {
+      "type": "int",
+      "description": "Number of games played by away team in last 3 days",
+      "expected_range": [0, 3],
+      "normalization": "none"
+    },
+    "games_in_last_5d": {
+      "type": "int",
+      "description": "Number of games played by away team in last 5 days",
+      "expected_range": [0, 5],
+      "normalization": "none"
+    },
+    "clutch_net_rating_diff": {
+      "type": "float",
+      "description": "Home clutch net rating (last 5 min, ±5pts) - Away clutch net rating",
+      "expected_range": [-25, 25],
+      "training_mean": 0.0,
+      "training_std": 10.0,
+      "normalization": "z-score"
+    },
+    "usage_volatility_diff": {
+      "type": "float",
+      "description": "Std of top-3 player PIE (L10): Away volatility - Home volatility",
+      "expected_range": [-0.15, 0.15],
+      "training_mean": 0.0,
+      "training_std": 0.04,
+      "normalization": "z-score"
+    },
+    "line_movement_points": {
+      "type": "float",
+      "description": "Current total line - opening total line (positive = line rising)",
+      "expected_range": [-5, 5],
+      "training_mean": 0.0,
+      "training_std": 1.2,
+      "normalization": "none"
+    }
+  },
+  "target": {
+    "went_over": {
+      "type": "binary",
+      "description": "1 if actual total > line, 0 otherwise"
+    }
+  },
+  "drift_monitoring": {
+    "enabled": true,
+    "ks_test_threshold": 0.05,
+    "warning_sample_size": 50,
+    "alert_sample_size": 100,
+    "features_to_monitor": [
+      "elo_diff",
+      "injury_impact_diff",
+      "expected_pace",
+      "vs_net_rating",
+      "travel_distance_miles"
+    ]
+  },
+  "preprocessing": {
+    "missing_value_strategy": "median_impute",
+    "outlier_clip_std": 3.5,
+    "categorical_encoding": "none"
+  }
+}

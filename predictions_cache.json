@@ -1,0 +1,2075 @@
+{
+  "2025-12-13_NYK@ORL": {
+    "home_team": "ORL",
+    "away_team": "NYK",
+    "game_date": "2025-12-13",
+    "game_time": "22:30:00",
+    "home_win_prob": 0.35088056325912476,
+    "away_win_prob": 0.6491194367408752,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "ORL",
+        "edge": 0.34088056325912475,
+        "model_prob": 0.35088056325912476,
+        "market_prob": 0.01,
+        "odds": 9900,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "NYK",
+        "edge": -0.3408795631591147,
+        "model_prob": 0.6491194367408752,
+        "market_prob": 0.98999899989999,
+        "odds": -9899,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "ORL",
+      "edge": 0.34088056325912475,
+      "model_prob": 0.35088056325912476,
+      "market_prob": 0.01,
+      "odds": 9900,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": -0.05544313376380139,
+      "ewma_tov_diff": -0.0007818187074487559,
+      "ewma_orb_diff": -0.03481530744756356,
+      "ewma_pace_diff": 6.739643709263163,
+      "ewma_vol_3p_diff": -5.883264344807358,
+      "home_ewma_3p_pct": 0.34700640456508663,
+      "away_ewma_3p_pct": 0.3954522611955671,
+      "away_ewma_tov_pct": 0.11727798009503708,
+      "home_orb": 0.26392530927176616,
+      "away_orb": 0.2987406167193297,
+      "away_ewma_fta_rate": 0.2714123889262405,
+      "ewma_foul_synergy_home": 25.70074249627052,
+      "ewma_foul_synergy_away": 27.14123889262405,
+      "total_foul_environment": 52.84198138889457,
+      "ewma_chaos_home": 14.045418424083461,
+      "ewma_net_chaos": 15.023438966682464,
+      "home_rest_days": 3,
+      "away_rest_days": 3,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1543.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": 3.240485441042059,
+      "injury_impact_abs": 3.240485441042059,
+      "injury_shock_home": 3.240485441042059,
+      "injury_shock_away": 0.0,
+      "injury_shock_diff": 3.240485441042059,
+      "home_star_missing": 0,
+      "away_star_missing": 0,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.439999999999998,
+      "season_progress": 0.31176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": -120.0,
+      "def_elo_diff": 42.0
+    },
+    "kalshi_home_prob": 0.01,
+    "kalshi_away_prob": 0.99,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": false,
+    "home_injuries": [
+      {
+        "player": "Jalen Suggs",
+        "status": "Day-To-Day",
+        "injury": "Hip",
+        "position": "N/A"
+      },
+      {
+        "player": "Franz Wagner",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Moritz Wagner",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Colin Castleton",
+        "status": "Out",
+        "injury": "Hand",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Miles McBride",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Landry Shamet",
+        "status": "Out",
+        "injury": "Shoulder",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 3.240485441042059,
+    "away_injury_impact": 0.0,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-13_SAS@OKC": {
+    "home_team": "OKC",
+    "away_team": "SAS",
+    "game_date": "2025-12-13",
+    "game_time": "02:00:00",
+    "home_win_prob": 0.5374817848205566,
+    "away_win_prob": 0.46251821517944336,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "SAS",
+        "edge": 0.30251821517944333,
+        "model_prob": 0.46251821517944336,
+        "market_prob": 0.16,
+        "odds": 525,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "OKC",
+        "edge": -0.31236806502929326,
+        "model_prob": 0.5374817848205566,
+        "market_prob": 0.8498498498498499,
+        "odds": -566,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "SAS",
+      "edge": 0.30251821517944333,
+      "model_prob": 0.46251821517944336,
+      "market_prob": 0.16,
+      "odds": 525,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": 0.06769584028637043,
+      "ewma_tov_diff": -0.0036915204584494626,
+      "ewma_orb_diff": -0.07779551647066874,
+      "ewma_pace_diff": -3.142919675677504,
+      "ewma_vol_3p_diff": -1.7776845710531077,
+      "home_ewma_3p_pct": 0.43887386382692367,
+      "away_ewma_3p_pct": 0.39061354314435043,
+      "away_ewma_tov_pct": 0.11434806273172796,
+      "home_orb": 0.18703841378222902,
+      "away_orb": 0.26483393025289775,
+      "away_ewma_fta_rate": 0.3012806107249512,
+      "ewma_foul_synergy_home": 26.47330659181003,
+      "ewma_foul_synergy_away": 30.12806107249512,
+      "total_foul_environment": 56.60136766430515,
+      "ewma_chaos_home": 15.525179305555168,
+      "ewma_net_chaos": 13.180503141185806,
+      "home_rest_days": 2,
+      "away_rest_days": 2,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1651.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": 3.4000000000000004,
+      "injury_impact_abs": 3.4000000000000004,
+      "injury_shock_home": 3.4000000000000004,
+      "injury_shock_away": 0.0,
+      "injury_shock_diff": 3.4000000000000004,
+      "home_star_missing": 0,
+      "away_star_missing": 0,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.439999999999998,
+      "season_progress": 0.31176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 26.0,
+      "def_elo_diff": 202.0
+    },
+    "kalshi_home_prob": 0.85,
+    "kalshi_away_prob": 0.16,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": false,
+    "home_injuries": [
+      {
+        "player": "Isaiah Joe",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Nikola Topic",
+        "status": "Out",
+        "injury": "Groin",
+        "position": "N/A"
+      },
+      {
+        "player": "Thomas Sorber",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [],
+    "home_injury_impact": 3.4000000000000004,
+    "away_injury_impact": 0.0,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_WAS@IND": {
+    "home_team": "IND",
+    "away_team": "WAS",
+    "game_date": "2025-12-14",
+    "game_time": "20:00:00",
+    "home_win_prob": 0.4287109673023224,
+    "away_win_prob": 0.5712890326976776,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "WAS",
+        "edge": 0.3510247155170609,
+        "model_prob": 0.5712890326976776,
+        "market_prob": 0.22026431718061673,
+        "odds": 354,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "IND",
+        "edge": -0.3408742861538988,
+        "model_prob": 0.4287109673023224,
+        "market_prob": 0.7695852534562212,
+        "odds": -334,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "WAS",
+      "edge": 0.3510247155170609,
+      "model_prob": 0.5712890326976776,
+      "market_prob": 0.22026431718061673,
+      "odds": 354,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": -0.004419098644601993,
+      "ewma_tov_diff": 0.025984057551778142,
+      "ewma_orb_diff": -0.016738448739161277,
+      "ewma_pace_diff": -1.9029855625240373,
+      "ewma_vol_3p_diff": -0.9863664621837032,
+      "home_ewma_3p_pct": 0.37883086374234864,
+      "away_ewma_3p_pct": 0.3562434311948764,
+      "away_ewma_tov_pct": 0.14291313531340893,
+      "home_orb": 0.23876235613869604,
+      "away_orb": 0.2555008048778573,
+      "away_ewma_fta_rate": 0.27949929551488994,
+      "ewma_foul_synergy_home": 26.46617929212402,
+      "ewma_foul_synergy_away": 27.949929551488996,
+      "total_foul_environment": 54.41610884361302,
+      "ewma_chaos_home": 12.316375965955748,
+      "ewma_net_chaos": 14.222699494045614,
+      "home_rest_days": 1,
+      "away_rest_days": 1,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1417.433333333333,
+      "altitude_game": 0,
+      "injury_impact_diff": -0.4327982227465368,
+      "injury_impact_abs": 9.772764715515887,
+      "injury_shock_home": 4.669983246384675,
+      "injury_shock_away": 5.1027814691312114,
+      "injury_shock_diff": -0.4327982227465368,
+      "home_star_missing": 1,
+      "away_star_missing": 1,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 5.999999999999773,
+      "def_elo_diff": 141.99999999999977
+    },
+    "kalshi_home_prob": 0.77,
+    "kalshi_away_prob": 0.22,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Tony Bradley",
+        "status": "Day-To-Day",
+        "injury": "Quadriceps",
+        "position": "N/A"
+      },
+      {
+        "player": "Andrew Nembhard",
+        "status": "Day-To-Day",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Ben Sheppard",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Aaron Nesmith",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Obi Toppin",
+        "status": "Out",
+        "injury": "Foot",
+        "position": "N/A"
+      },
+      {
+        "player": "Tyrese Haliburton",
+        "status": "Out",
+        "injury": "Achilles",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Malaki Branham",
+        "status": "Out",
+        "injury": "Thumb",
+        "position": "N/A"
+      },
+      {
+        "player": "Khris Middleton",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Alex Sarr",
+        "status": "Out",
+        "injury": "Thigh",
+        "position": "N/A"
+      },
+      {
+        "player": "Bilal Coulibaly",
+        "status": "Out",
+        "injury": "Oblique",
+        "position": "N/A"
+      },
+      {
+        "player": "Corey Kispert",
+        "status": "Out",
+        "injury": "Thumb",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 4.669983246384675,
+    "away_injury_impact": 5.1027814691312114,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_CHA@CLE": {
+    "home_team": "CLE",
+    "away_team": "CHA",
+    "game_date": "2025-12-14",
+    "game_time": "20:30:00",
+    "home_win_prob": 0.4981369972229004,
+    "away_win_prob": 0.5018630027770996,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "CHA",
+        "edge": 0.311748934336035,
+        "model_prob": 0.5018630027770996,
+        "market_prob": 0.19011406844106463,
+        "odds": 426,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "CLE",
+        "edge": -0.30186300277709965,
+        "model_prob": 0.4981369972229004,
+        "market_prob": 0.8,
+        "odds": -400,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "CHA",
+      "edge": 0.311748934336035,
+      "model_prob": 0.5018630027770996,
+      "market_prob": 0.19011406844106463,
+      "odds": 426,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": -0.019460225383519436,
+      "ewma_tov_diff": 0.028992025892474613,
+      "ewma_orb_diff": 0.07467370148839247,
+      "ewma_pace_diff": -0.06837841594817462,
+      "ewma_vol_3p_diff": 3.924696654727178,
+      "home_ewma_3p_pct": 0.3102337929768672,
+      "away_ewma_3p_pct": 0.3468152862539473,
+      "away_ewma_tov_pct": 0.13002173217657775,
+      "home_orb": 0.3100275370044317,
+      "away_orb": 0.23535383551603922,
+      "away_ewma_fta_rate": 0.2470256475253234,
+      "ewma_foul_synergy_home": 25.62771516529223,
+      "ewma_foul_synergy_away": 24.70256475253234,
+      "total_foul_environment": 50.33027991782457,
+      "ewma_chaos_home": 12.543663522493182,
+      "ewma_net_chaos": 11.358477883085243,
+      "home_rest_days": 1,
+      "away_rest_days": 1,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1532.433333333333,
+      "altitude_game": 0,
+      "injury_impact_diff": 3.005272918821178,
+      "injury_impact_abs": 17.03689401013141,
+      "injury_shock_home": 10.021083464476293,
+      "injury_shock_away": 7.015810545655115,
+      "injury_shock_diff": 3.005272918821178,
+      "home_star_missing": 1,
+      "away_star_missing": 1,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 57.99999999999977,
+      "def_elo_diff": 84.0
+    },
+    "kalshi_home_prob": 0.8,
+    "kalshi_away_prob": 0.19,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Sam Merrill",
+        "status": "Out",
+        "injury": "Hand",
+        "position": "N/A"
+      },
+      {
+        "player": "Max Strus",
+        "status": "Out",
+        "injury": "Foot",
+        "position": "N/A"
+      },
+      {
+        "player": "Jarrett Allen",
+        "status": "Out",
+        "injury": "Finger",
+        "position": "N/A"
+      },
+      {
+        "player": "Evan Mobley",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Larry Nance Jr.",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Tidjane Salaun",
+        "status": "Day-To-Day",
+        "injury": "Hip",
+        "position": "N/A"
+      },
+      {
+        "player": "Pat Connaughton",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Grant Williams",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Collin Sexton",
+        "status": "Out",
+        "injury": "Quadriceps",
+        "position": "N/A"
+      },
+      {
+        "player": "Tre Mann",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "LaMelo Ball",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 10.021083464476293,
+    "away_injury_impact": 7.015810545655115,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_PHI@ATL": {
+    "home_team": "ATL",
+    "away_team": "PHI",
+    "game_date": "2025-12-14",
+    "game_time": "23:00:00",
+    "home_win_prob": 0.4609990417957306,
+    "away_win_prob": 0.5390009582042694,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "PHI",
+        "edge": 0.16863058783389906,
+        "model_prob": 0.5390009582042694,
+        "market_prob": 0.37037037037037035,
+        "odds": 170,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "ATL",
+        "edge": -0.19886490378250066,
+        "model_prob": 0.4609990417957306,
+        "market_prob": 0.6598639455782312,
+        "odds": -194,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "PHI",
+      "edge": 0.16863058783389906,
+      "model_prob": 0.5390009582042694,
+      "market_prob": 0.37037037037037035,
+      "odds": 170,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": 0.042718595915897994,
+      "ewma_tov_diff": -0.021523899197504665,
+      "ewma_orb_diff": -0.0178098896464563,
+      "ewma_pace_diff": 2.1291297625342764,
+      "ewma_vol_3p_diff": 0.8570394819423939,
+      "home_ewma_3p_pct": 0.3518526675247993,
+      "away_ewma_3p_pct": 0.3401963533212875,
+      "away_ewma_tov_pct": 0.11899950397183401,
+      "home_orb": 0.26432693119983836,
+      "away_orb": 0.28213682084629466,
+      "away_ewma_fta_rate": 0.2970389655780663,
+      "ewma_foul_synergy_home": 23.04954583257374,
+      "ewma_foul_synergy_away": 29.70389655780663,
+      "total_foul_environment": 52.75344239038037,
+      "ewma_chaos_home": 14.382032126089415,
+      "ewma_net_chaos": 12.682316212334925,
+      "home_rest_days": 1,
+      "away_rest_days": 1,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1509.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": 6.4809562005023205,
+      "injury_impact_abs": 15.16462538210969,
+      "injury_shock_home": 10.822790791306005,
+      "injury_shock_away": 4.341834590803685,
+      "injury_shock_diff": 6.4809562005023205,
+      "home_star_missing": 1,
+      "away_star_missing": 1,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": -7.999999999999773,
+      "def_elo_diff": 6.0
+    },
+    "kalshi_home_prob": 0.66,
+    "kalshi_away_prob": 0.37,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "N'Faly Dante",
+        "status": "Out",
+        "injury": "Concussion",
+        "position": "N/A"
+      },
+      {
+        "player": "Kristaps Porzingis",
+        "status": "Out",
+        "injury": "Illness",
+        "position": "N/A"
+      },
+      {
+        "player": "Nickeil Alexander-Walker",
+        "status": "Day-To-Day",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Trae Young",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Eli John N'Diaye",
+        "status": "Day-To-Day",
+        "injury": "Shoulder",
+        "position": "N/A"
+      },
+      {
+        "player": "Jacob Toppin",
+        "status": "Out",
+        "injury": "Shoulder",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Kelly Oubre Jr.",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Joel Embiid",
+        "status": "Day-To-Day",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Tyrese Maxey",
+        "status": "Day-To-Day",
+        "injury": "Illness",
+        "position": "N/A"
+      },
+      {
+        "player": "Hunter Sallis",
+        "status": "Day-To-Day",
+        "injury": "Shoulder",
+        "position": "N/A"
+      },
+      {
+        "player": "Trendon Watford",
+        "status": "Out",
+        "injury": "Thigh",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 10.822790791306005,
+    "away_injury_impact": 4.341834590803685,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_MIL@BKN": {
+    "home_team": "BKN",
+    "away_team": "MIL",
+    "game_date": "2025-12-14",
+    "game_time": "23:00:00",
+    "home_win_prob": 0.422615110874176,
+    "away_win_prob": 0.577384889125824,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "MIL",
+        "edge": 0.027835339576274376,
+        "model_prob": 0.577384889125824,
+        "market_prob": 0.5495495495495496,
+        "odds": -122,
+        "stake": 0.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "BKN",
+        "edge": -0.04908300233337115,
+        "model_prob": 0.422615110874176,
+        "market_prob": 0.4716981132075472,
+        "odds": 112,
+        "stake": 0
+      }
+    ],
+    "best_bet": null,
+    "features": {
+      "ewma_efg_diff": -0.03498529288580843,
+      "ewma_tov_diff": -0.009850714718999481,
+      "ewma_orb_diff": 0.04823314320914979,
+      "ewma_pace_diff": 2.441725309743134,
+      "ewma_vol_3p_diff": 2.7845633863671253,
+      "home_ewma_3p_pct": 0.3714022166207675,
+      "away_ewma_3p_pct": 0.401284428201575,
+      "away_ewma_tov_pct": 0.1438948462653534,
+      "home_orb": 0.25873352920242965,
+      "away_orb": 0.21050038599327986,
+      "away_ewma_fta_rate": 0.2645663351314398,
+      "ewma_foul_synergy_home": 26.24092265483753,
+      "ewma_foul_synergy_away": 26.456633513143977,
+      "total_foul_environment": 52.6975561679815,
+      "ewma_chaos_home": 12.488247106217774,
+      "ewma_net_chaos": 12.831116160869264,
+      "home_rest_days": 1,
+      "away_rest_days": 2,
+      "rest_advantage": -1,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1411.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": -8.904149029603877,
+      "injury_impact_abs": 9.704969369401931,
+      "injury_shock_home": 0.40041016989902645,
+      "injury_shock_away": 9.304559199502904,
+      "injury_shock_diff": -8.904149029603877,
+      "home_star_missing": 0,
+      "away_star_missing": 1,
+      "star_mismatch": -1,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": -50.0,
+      "def_elo_diff": -80.0
+    },
+    "kalshi_home_prob": 0.47,
+    "kalshi_away_prob": 0.55,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "E.J. Liddell",
+        "status": "Day-To-Day",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Cam Thomas",
+        "status": "Out",
+        "injury": "Hamstring",
+        "position": "N/A"
+      },
+      {
+        "player": "Haywood Highsmith",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "AJ Green",
+        "status": "Out",
+        "injury": "Shoulder",
+        "position": "N/A"
+      },
+      {
+        "player": "Giannis Antetokounmpo",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Taurean Prince",
+        "status": "Out",
+        "injury": "Neck",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 0.40041016989902645,
+    "away_injury_impact": 9.304559199502904,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_SAC@MIN": {
+    "home_team": "MIN",
+    "away_team": "SAC",
+    "game_date": "2025-12-14",
+    "game_time": "00:00:00",
+    "home_win_prob": 0.4525637626647949,
+    "away_win_prob": 0.5474362373352051,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "SAC",
+        "edge": 0.34743623733520507,
+        "model_prob": 0.5474362373352051,
+        "market_prob": 0.2,
+        "odds": 400,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "MIN",
+        "edge": -0.3573221688941405,
+        "model_prob": 0.4525637626647949,
+        "market_prob": 0.8098859315589354,
+        "odds": -426,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "SAC",
+      "edge": 0.34743623733520507,
+      "model_prob": 0.5474362373352051,
+      "market_prob": 0.2,
+      "odds": 400,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": 0.05099867968553329,
+      "ewma_tov_diff": -0.0022821221627650212,
+      "ewma_orb_diff": -0.0062913958676406034,
+      "ewma_pace_diff": -1.574082660052639,
+      "ewma_vol_3p_diff": 5.788692473085803,
+      "home_ewma_3p_pct": 0.3707261867889603,
+      "away_ewma_3p_pct": 0.329602798730917,
+      "away_ewma_tov_pct": 0.1247450556976856,
+      "home_orb": 0.2547885981353211,
+      "away_orb": 0.2610799940029617,
+      "away_ewma_fta_rate": 0.23578939865474693,
+      "ewma_foul_synergy_home": 31.067373062161806,
+      "ewma_foul_synergy_away": 23.578939865474695,
+      "total_foul_environment": 54.6463129276365,
+      "ewma_chaos_home": 12.224361677415356,
+      "ewma_net_chaos": 13.765682871470986,
+      "home_rest_days": 1,
+      "away_rest_days": 2,
+      "rest_advantage": -1,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1547.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": -3.8711017561494176,
+      "injury_impact_abs": 11.231980366738005,
+      "injury_shock_home": 3.680439305294294,
+      "injury_shock_away": 7.551541061443712,
+      "injury_shock_diff": -3.8711017561494176,
+      "home_star_missing": 0,
+      "away_star_missing": 1,
+      "star_mismatch": -1,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 190.0,
+      "def_elo_diff": 127.99999999999977
+    },
+    "kalshi_home_prob": 0.81,
+    "kalshi_away_prob": 0.2,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Mike Conley",
+        "status": "Out",
+        "injury": "Achilles",
+        "position": "N/A"
+      },
+      {
+        "player": "Bones Hyland",
+        "status": "Day-To-Day",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Anthony Edwards",
+        "status": "Day-To-Day",
+        "injury": "Foot",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Drew Eubanks",
+        "status": "Out",
+        "injury": "Thumb",
+        "position": "N/A"
+      },
+      {
+        "player": "Keon Ellis",
+        "status": "Day-To-Day",
+        "injury": "Wrist",
+        "position": "N/A"
+      },
+      {
+        "player": "Dennis Schroder",
+        "status": "Out",
+        "injury": "Hip",
+        "position": "N/A"
+      },
+      {
+        "player": "Domantas Sabonis",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 3.680439305294294,
+    "away_injury_impact": 7.551541061443712,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_NOP@CHI": {
+    "home_team": "CHI",
+    "away_team": "NOP",
+    "game_date": "2025-12-14",
+    "game_time": "00:00:00",
+    "home_win_prob": 0.3835519552230835,
+    "away_win_prob": 0.6164480447769165,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "NOP",
+        "edge": 0.2763119903551478,
+        "model_prob": 0.6164480447769165,
+        "market_prob": 0.3401360544217687,
+        "odds": 194,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "CHI",
+        "edge": -0.30588903856573635,
+        "model_prob": 0.3835519552230835,
+        "market_prob": 0.6894409937888198,
+        "odds": -222,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "NOP",
+      "edge": 0.2763119903551478,
+      "model_prob": 0.6164480447769165,
+      "market_prob": 0.3401360544217687,
+      "odds": 194,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": -0.02290653577379631,
+      "ewma_tov_diff": -0.028366072284401286,
+      "ewma_orb_diff": 0.009956215798448464,
+      "ewma_pace_diff": -2.677158411127948,
+      "ewma_vol_3p_diff": 6.711271407438375,
+      "home_ewma_3p_pct": 0.33659962581040975,
+      "away_ewma_3p_pct": 0.3591295424400181,
+      "away_ewma_tov_pct": 0.10818508045196766,
+      "home_orb": 0.2650585281450744,
+      "away_orb": 0.25510231234662595,
+      "away_ewma_fta_rate": 0.2589347511420268,
+      "ewma_foul_synergy_home": 25.279386535657387,
+      "ewma_foul_synergy_away": 25.89347511420268,
+      "total_foul_environment": 51.17286164986007,
+      "ewma_chaos_home": 12.370400774382896,
+      "ewma_net_chaos": 12.97446135673394,
+      "home_rest_days": 1,
+      "away_rest_days": 2,
+      "rest_advantage": -1,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1456.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": -6.285420415094256,
+      "injury_impact_abs": 12.316416426337112,
+      "injury_shock_home": 3.015498005621428,
+      "injury_shock_away": 9.300918420715684,
+      "injury_shock_diff": -6.285420415094256,
+      "home_star_missing": 0,
+      "away_star_missing": 1,
+      "star_mismatch": -1,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 44.00000000000023,
+      "def_elo_diff": 70.0
+    },
+    "kalshi_home_prob": 0.69,
+    "kalshi_away_prob": 0.34,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Dalen Terry",
+        "status": "Day-To-Day",
+        "injury": "Hand",
+        "position": "N/A"
+      },
+      {
+        "player": "Kevin Huerter",
+        "status": "Out",
+        "injury": "Thigh",
+        "position": "N/A"
+      },
+      {
+        "player": "Ayo Dosunmu",
+        "status": "Day-To-Day",
+        "injury": "Thumb",
+        "position": "N/A"
+      },
+      {
+        "player": "Coby White",
+        "status": "Day-To-Day",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Noa Essengue",
+        "status": "Out",
+        "injury": "Shoulder",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Zion Williamson",
+        "status": "Out",
+        "injury": "Thigh",
+        "position": "N/A"
+      },
+      {
+        "player": "Dejounte Murray",
+        "status": "Out",
+        "injury": "Achilles",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 3.015498005621428,
+    "away_injury_impact": 9.300918420715684,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_LAL@PHX": {
+    "home_team": "PHX",
+    "away_team": "LAL",
+    "game_date": "2025-12-14",
+    "game_time": "01:00:00",
+    "home_win_prob": 0.24930024147033691,
+    "away_win_prob": 0.7506997585296631,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "LAL",
+        "edge": 0.16222239227451907,
+        "model_prob": 0.7506997585296631,
+        "market_prob": 0.588477366255144,
+        "odds": -143,
+        "stake": 0.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "PHX",
+        "edge": -0.2115292516172207,
+        "model_prob": 0.24930024147033691,
+        "market_prob": 0.4608294930875576,
+        "odds": 117,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "LAL",
+      "edge": 0.16222239227451907,
+      "model_prob": 0.7506997585296631,
+      "market_prob": 0.588477366255144,
+      "odds": -143,
+      "stake": 0.0
+    },
+    "features": {
+      "ewma_efg_diff": -0.06254502864452471,
+      "ewma_tov_diff": -0.006986967998961147,
+      "ewma_orb_diff": 0.035910509344525,
+      "ewma_pace_diff": 1.7263986946393004,
+      "ewma_vol_3p_diff": -0.1849349467297472,
+      "home_ewma_3p_pct": 0.3286526843857687,
+      "away_ewma_3p_pct": 0.3954685596597001,
+      "away_ewma_tov_pct": 0.121570255389468,
+      "home_orb": 0.2587805040721284,
+      "away_orb": 0.22286999472760338,
+      "away_ewma_fta_rate": 0.30883939224028173,
+      "ewma_foul_synergy_home": 21.369749431269405,
+      "ewma_foul_synergy_away": 30.883939224028172,
+      "total_foul_environment": 52.25368865529758,
+      "ewma_chaos_home": 18.86160590636735,
+      "ewma_net_chaos": 18.30750334106994,
+      "home_rest_days": 3,
+      "away_rest_days": 3,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1520.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": 6.406688546937734,
+      "injury_impact_abs": 10.482846632208123,
+      "injury_shock_home": 8.444767589572928,
+      "injury_shock_away": 2.038079042635194,
+      "injury_shock_diff": 6.406688546937734,
+      "home_star_missing": 1,
+      "away_star_missing": 0,
+      "star_mismatch": 1,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": -60.0,
+      "def_elo_diff": 63.99999999999977
+    },
+    "kalshi_home_prob": 0.46,
+    "kalshi_away_prob": 0.59,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Isaiah Livers",
+        "status": "Out",
+        "injury": "Hip",
+        "position": "N/A"
+      },
+      {
+        "player": "Dillon Brooks",
+        "status": "Day-To-Day",
+        "injury": "Achilles",
+        "position": "N/A"
+      },
+      {
+        "player": "Devin Booker",
+        "status": "Out",
+        "injury": "Groin",
+        "position": "N/A"
+      },
+      {
+        "player": "Koby Brea",
+        "status": "Out",
+        "injury": "Concussion",
+        "position": "N/A"
+      },
+      {
+        "player": "Jalen Green",
+        "status": "Out",
+        "injury": "Hamstring",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Maxi Kleber",
+        "status": "Out",
+        "injury": "Back",
+        "position": "N/A"
+      },
+      {
+        "player": "Austin Reaves",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 8.444767589572928,
+    "away_injury_impact": 2.038079042635194,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-14_GSW@POR": {
+    "home_team": "POR",
+    "away_team": "GSW",
+    "game_date": "2025-12-14",
+    "game_time": "02:00:00",
+    "home_win_prob": 0.549475908279419,
+    "away_win_prob": 0.45052409172058105,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "POR",
+        "edge": 0.1692477713972897,
+        "model_prob": 0.549475908279419,
+        "market_prob": 0.38022813688212925,
+        "odds": 163,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "GSW",
+        "edge": -0.18846507795450917,
+        "model_prob": 0.45052409172058105,
+        "market_prob": 0.6389891696750902,
+        "odds": -177,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "POR",
+      "edge": 0.1692477713972897,
+      "model_prob": 0.549475908279419,
+      "market_prob": 0.38022813688212925,
+      "odds": 163,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": -0.01830320882141523,
+      "ewma_tov_diff": -0.01953959800474861,
+      "ewma_orb_diff": 0.012859585078471014,
+      "ewma_pace_diff": 4.209353970768035,
+      "ewma_vol_3p_diff": -3.0230245872052777,
+      "home_ewma_3p_pct": 0.3353457903448086,
+      "away_ewma_3p_pct": 0.3574876012512254,
+      "away_ewma_tov_pct": 0.1281918489797825,
+      "home_orb": 0.2937334868658566,
+      "away_orb": 0.2808739017873856,
+      "away_ewma_fta_rate": 0.22356887487278293,
+      "ewma_foul_synergy_home": 31.552094194596926,
+      "ewma_foul_synergy_away": 22.356887487278293,
+      "total_foul_environment": 53.90898168187522,
+      "ewma_chaos_home": 15.094439801903436,
+      "ewma_net_chaos": 14.572559450627491,
+      "home_rest_days": 2,
+      "away_rest_days": 1,
+      "rest_advantage": 1,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1479.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": 9.279062659918097,
+      "injury_impact_abs": 16.19720505304329,
+      "injury_shock_home": 12.738133856480694,
+      "injury_shock_away": 3.459071196562596,
+      "injury_shock_diff": 9.279062659918097,
+      "home_star_missing": 1,
+      "away_star_missing": 0,
+      "star_mismatch": 1,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 25.919999999999998,
+      "season_progress": 0.3176470588235294,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 38.00000000000023,
+      "def_elo_diff": -88.0
+    },
+    "kalshi_home_prob": 0.38,
+    "kalshi_away_prob": 0.64,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Robert Williams III",
+        "status": "Day-To-Day",
+        "injury": "Illness",
+        "position": "N/A"
+      },
+      {
+        "player": "Yang Hansen",
+        "status": "Day-To-Day",
+        "injury": "Face",
+        "position": "N/A"
+      },
+      {
+        "player": "Matisse Thybulle",
+        "status": "Out",
+        "injury": "Thumb",
+        "position": "N/A"
+      },
+      {
+        "player": "Jrue Holiday",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Donovan Clingan",
+        "status": "Out",
+        "injury": "Lower Leg",
+        "position": "N/A"
+      },
+      {
+        "player": "Scoot Henderson",
+        "status": "Out",
+        "injury": "Hamstring",
+        "position": "N/A"
+      },
+      {
+        "player": "Blake Wesley",
+        "status": "Out",
+        "injury": "Foot",
+        "position": "N/A"
+      },
+      {
+        "player": "Damian Lillard",
+        "status": "Out",
+        "injury": "Achilles",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Al Horford",
+        "status": "Out",
+        "injury": "Back",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 12.738133856480694,
+    "away_injury_impact": 3.459071196562596,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-15_DET@BOS": {
+    "home_team": "BOS",
+    "away_team": "DET",
+    "game_date": "2025-12-15",
+    "game_time": "00:00:00",
+    "home_win_prob": 0.7398866415023804,
+    "away_win_prob": 0.26011335849761963,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "BOS",
+        "edge": 0.18041527586361383,
+        "model_prob": 0.7398866415023804,
+        "market_prob": 0.5594713656387665,
+        "odds": -127,
+        "stake": 76.74847191572175
+      },
+      {
+        "type": "Moneyline",
+        "pick": "DET",
+        "edge": -0.2300827199337529,
+        "model_prob": 0.26011335849761963,
+        "market_prob": 0.49019607843137253,
+        "odds": 104,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "BOS",
+      "edge": 0.18041527586361383,
+      "model_prob": 0.7398866415023804,
+      "market_prob": 0.5594713656387665,
+      "odds": -127,
+      "stake": 76.74847191572175
+    },
+    "features": {
+      "ewma_efg_diff": 0.020313179859507646,
+      "ewma_tov_diff": 0.021068904085777593,
+      "ewma_orb_diff": -0.00741896817692278,
+      "ewma_pace_diff": -6.175908388800067,
+      "ewma_vol_3p_diff": 13.732307069321521,
+      "home_ewma_3p_pct": 0.38658123074486267,
+      "away_ewma_3p_pct": 0.36625798805452237,
+      "away_ewma_tov_pct": 0.1395781328570115,
+      "home_orb": 0.28831289112000885,
+      "away_orb": 0.29573185929693163,
+      "away_ewma_fta_rate": 0.33774443710074015,
+      "ewma_foul_synergy_home": 21.774106845397508,
+      "ewma_foul_synergy_away": 33.77444371007402,
+      "total_foul_environment": 55.54855055547152,
+      "ewma_chaos_home": 18.88052123747165,
+      "ewma_net_chaos": 15.4962863047838,
+      "home_rest_days": 3,
+      "away_rest_days": 2,
+      "rest_advantage": 1,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1571.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": 5.959966073515682,
+      "injury_impact_abs": 5.959966073515682,
+      "injury_shock_home": 5.959966073515682,
+      "injury_shock_away": 0.0,
+      "injury_shock_diff": 5.959966073515682,
+      "home_star_missing": 1,
+      "away_star_missing": 0,
+      "star_mismatch": 1,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 26.4,
+      "season_progress": 0.3235294117647059,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 112.00000000000023,
+      "def_elo_diff": -72.00000000000023
+    },
+    "kalshi_home_prob": 0.56,
+    "kalshi_away_prob": 0.49,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Amari Williams",
+        "status": "Day-To-Day",
+        "injury": "Hand",
+        "position": "N/A"
+      },
+      {
+        "player": "Ron Harper Jr.",
+        "status": "Day-To-Day",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Chris Boucher",
+        "status": "Day-To-Day",
+        "injury": "Illness",
+        "position": "N/A"
+      },
+      {
+        "player": "Jayson Tatum",
+        "status": "Out",
+        "injury": "Achilles",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Isaac Jones",
+        "status": "Day-To-Day",
+        "injury": "Knee",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 5.959966073515682,
+    "away_injury_impact": 0.0,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-15_TOR@MIA": {
+    "home_team": "MIA",
+    "away_team": "TOR",
+    "game_date": "2025-12-15",
+    "game_time": "00:30:00",
+    "home_win_prob": 0.5301547050476074,
+    "away_win_prob": 0.4698452949523926,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "TOR",
+        "edge": 0.12970924053062388,
+        "model_prob": 0.4698452949523926,
+        "market_prob": 0.3401360544217687,
+        "odds": 194,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "MIA",
+        "edge": -0.13981229165206255,
+        "model_prob": 0.5301547050476074,
+        "market_prob": 0.66996699669967,
+        "odds": -203,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "TOR",
+      "edge": 0.12970924053062388,
+      "model_prob": 0.4698452949523926,
+      "market_prob": 0.3401360544217687,
+      "odds": 194,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": 0.012968022873542817,
+      "ewma_tov_diff": 0.023558385637478405,
+      "ewma_orb_diff": -0.041749778172755464,
+      "ewma_pace_diff": 1.9422068534038175,
+      "ewma_vol_3p_diff": -0.02043562390086251,
+      "home_ewma_3p_pct": 0.33436967238311543,
+      "away_ewma_3p_pct": 0.34020043521449084,
+      "away_ewma_tov_pct": 0.1367431922459532,
+      "home_orb": 0.23992683408765467,
+      "away_orb": 0.28167661226041013,
+      "away_ewma_fta_rate": 0.21968093936927457,
+      "ewma_foul_synergy_home": 26.968530655710136,
+      "ewma_foul_synergy_away": 21.968093936927456,
+      "total_foul_environment": 48.93662459263759,
+      "ewma_chaos_home": 12.765131256342903,
+      "ewma_net_chaos": 15.30496021928289,
+      "home_rest_days": 5,
+      "away_rest_days": 5,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1542.4333333333332,
+      "altitude_game": 0,
+      "injury_impact_diff": -2.005334328574496,
+      "injury_impact_abs": 5.1166174293876905,
+      "injury_shock_home": 1.5556415504065972,
+      "injury_shock_away": 3.5609758789810932,
+      "injury_shock_diff": -2.005334328574496,
+      "home_star_missing": 0,
+      "away_star_missing": 0,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 26.4,
+      "season_progress": 0.3235294117647059,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 4.000000000000227,
+      "def_elo_diff": 20.0
+    },
+    "kalshi_home_prob": 0.67,
+    "kalshi_away_prob": 0.34,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Pelle Larsson",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Terry Rozier",
+        "status": "Out",
+        "injury": "Not Injury Related",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "A.J. Lawson",
+        "status": "Day-To-Day",
+        "injury": "Hip",
+        "position": "N/A"
+      },
+      {
+        "player": "Jamison Battle",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Immanuel Quickley",
+        "status": "Out",
+        "injury": "Illness",
+        "position": "N/A"
+      },
+      {
+        "player": "RJ Barrett",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 1.5556415504065972,
+    "away_injury_impact": 3.5609758789810932,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-15_DAL@UTA": {
+    "home_team": "UTA",
+    "away_team": "DAL",
+    "game_date": "2025-12-15",
+    "game_time": "02:00:00",
+    "home_win_prob": 0.6906425356864929,
+    "away_win_prob": 0.3093574643135071,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "UTA",
+        "edge": 0.2004464572551204,
+        "model_prob": 0.6906425356864929,
+        "market_prob": 0.49019607843137253,
+        "odds": 104,
+        "stake": 110.0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "DAL",
+        "edge": -0.24019208523604252,
+        "model_prob": 0.3093574643135071,
+        "market_prob": 0.5495495495495496,
+        "odds": -122,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "UTA",
+      "edge": 0.2004464572551204,
+      "model_prob": 0.6906425356864929,
+      "market_prob": 0.49019607843137253,
+      "odds": 104,
+      "stake": 110.0
+    },
+    "features": {
+      "ewma_efg_diff": -0.02526035624817058,
+      "ewma_tov_diff": -0.0073130474486208935,
+      "ewma_orb_diff": 0.0326622524091488,
+      "ewma_pace_diff": 3.0981893869533934,
+      "ewma_vol_3p_diff": 5.009243264635547,
+      "home_ewma_3p_pct": 0.3687212212741568,
+      "away_ewma_3p_pct": 0.3866641057361215,
+      "away_ewma_tov_pct": 0.1182773358467454,
+      "home_orb": 0.25993383302580103,
+      "away_orb": 0.22727158061665223,
+      "away_ewma_fta_rate": 0.22636584697237164,
+      "ewma_foul_synergy_home": 27.672767136727106,
+      "ewma_foul_synergy_away": 22.636584697237165,
+      "total_foul_environment": 50.30935183396427,
+      "ewma_chaos_home": 18.795250150674136,
+      "ewma_net_chaos": 16.038197285980623,
+      "home_rest_days": 2,
+      "away_rest_days": 2,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1429.4333333333332,
+      "altitude_game": 1,
+      "injury_impact_diff": -7.2771750425598345,
+      "injury_impact_abs": 13.236321745342392,
+      "injury_shock_home": 2.979573351391279,
+      "injury_shock_away": 10.256748393951113,
+      "injury_shock_diff": -7.2771750425598345,
+      "home_star_missing": 0,
+      "away_star_missing": 1,
+      "star_mismatch": -1,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 26.4,
+      "season_progress": 0.3235294117647059,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 116.00000000000023,
+      "def_elo_diff": -182.0
+    },
+    "kalshi_home_prob": 0.49,
+    "kalshi_away_prob": 0.55,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Georges Niang",
+        "status": "Out",
+        "injury": "Foot",
+        "position": "N/A"
+      },
+      {
+        "player": "Walker Kessler",
+        "status": "Out",
+        "injury": "Shoulder",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Kyrie Irving",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "D'Angelo Russell",
+        "status": "Day-To-Day",
+        "injury": "Illness",
+        "position": "N/A"
+      },
+      {
+        "player": "Daniel Gafford",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Dereck Lively II",
+        "status": "Out",
+        "injury": "Foot",
+        "position": "N/A"
+      },
+      {
+        "player": "Dante Exum",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 2.979573351391279,
+    "away_injury_impact": 10.256748393951113,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-15_HOU@DEN": {
+    "home_team": "DEN",
+    "away_team": "HOU",
+    "game_date": "2025-12-15",
+    "game_time": "02:30:00",
+    "home_win_prob": 0.6978554725646973,
+    "away_win_prob": 0.30214452743530273,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "DEN",
+        "edge": 0.15868496565225487,
+        "model_prob": 0.6978554725646973,
+        "market_prob": 0.5391705069124424,
+        "odds": -117,
+        "stake": 95.8905065059662
+      },
+      {
+        "type": "Moneyline",
+        "pick": "HOU",
+        "edge": -0.2573268382034638,
+        "model_prob": 0.30214452743530273,
+        "market_prob": 0.5594713656387665,
+        "odds": -127,
+        "stake": 0
+      }
+    ],
+    "best_bet": {
+      "type": "Moneyline",
+      "pick": "DEN",
+      "edge": 0.15868496565225487,
+      "model_prob": 0.6978554725646973,
+      "market_prob": 0.5391705069124424,
+      "odds": -117,
+      "stake": 95.8905065059662
+    },
+    "features": {
+      "ewma_efg_diff": 0.06246296313676192,
+      "ewma_tov_diff": 0.0370561638577734,
+      "ewma_orb_diff": -0.10669696065204962,
+      "ewma_pace_diff": 0.40726090167260054,
+      "ewma_vol_3p_diff": 4.464135784616637,
+      "home_ewma_3p_pct": 0.42478282154332375,
+      "away_ewma_3p_pct": 0.3707230765890234,
+      "away_ewma_tov_pct": 0.15096783081200207,
+      "home_orb": 0.22985644500906385,
+      "away_orb": 0.33655340566111347,
+      "away_ewma_fta_rate": 0.25334318687508817,
+      "ewma_foul_synergy_home": 28.558814805488336,
+      "ewma_foul_synergy_away": 25.334318687508816,
+      "total_foul_environment": 53.89313349299715,
+      "ewma_chaos_home": 12.82415771333464,
+      "ewma_net_chaos": 13.434251264297366,
+      "home_rest_days": 3,
+      "away_rest_days": 3,
+      "rest_advantage": 0,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1585.433333333333,
+      "altitude_game": 1,
+      "injury_impact_diff": -0.39012338678802694,
+      "injury_impact_abs": 7.111658238507159,
+      "injury_shock_home": 3.3607674258595663,
+      "injury_shock_away": 3.7508908126475933,
+      "injury_shock_diff": -0.39012338678802694,
+      "home_star_missing": 0,
+      "away_star_missing": 0,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 26.4,
+      "season_progress": 0.3235294117647059,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 51.99999999999977,
+      "def_elo_diff": -118.0
+    },
+    "kalshi_home_prob": 0.54,
+    "kalshi_away_prob": 0.56,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Christian Braun",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Tamar Bates",
+        "status": "Day-To-Day",
+        "injury": "Foot",
+        "position": "N/A"
+      },
+      {
+        "player": "Julian Strawther",
+        "status": "Out",
+        "injury": "Back",
+        "position": "N/A"
+      },
+      {
+        "player": "Aaron Gordon",
+        "status": "Out",
+        "injury": "Hamstring",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Tari Eason",
+        "status": "Out",
+        "injury": "Oblique",
+        "position": "N/A"
+      },
+      {
+        "player": "Dorian Finney-Smith",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Fred VanVleet",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 3.3607674258595663,
+    "away_injury_impact": 3.7508908126475933,
+    "predicted_total": null,
+    "is_final": false
+  },
+  "2025-12-15_MEM@LAC": {
+    "home_team": "LAC",
+    "away_team": "MEM",
+    "game_date": "2025-12-15",
+    "game_time": "03:30:00",
+    "home_win_prob": 0.5588151812553406,
+    "away_win_prob": 0.4411848187446594,
+    "all_bets": [
+      {
+        "type": "Moneyline",
+        "pick": "MEM",
+        "edge": -0.009265631705791033,
+        "model_prob": 0.4411848187446594,
+        "market_prob": 0.45045045045045046,
+        "odds": 122,
+        "stake": 0
+      },
+      {
+        "type": "Moneyline",
+        "pick": "LAC",
+        "edge": -0.050559818744659424,
+        "model_prob": 0.5588151812553406,
+        "market_prob": 0.609375,
+        "odds": -156,
+        "stake": 0
+      }
+    ],
+    "best_bet": null,
+    "features": {
+      "ewma_efg_diff": -0.011448001216425197,
+      "ewma_tov_diff": 0.005020836789098926,
+      "ewma_orb_diff": -0.03092622369724793,
+      "ewma_pace_diff": -4.7873356646893654,
+      "ewma_vol_3p_diff": 1.5222070043831053,
+      "home_ewma_3p_pct": 0.33173724273379523,
+      "away_ewma_3p_pct": 0.3700000105473611,
+      "away_ewma_tov_pct": 0.13701615493970237,
+      "home_orb": 0.2284612815359656,
+      "away_orb": 0.2593875052332135,
+      "away_ewma_fta_rate": 0.26473830719606944,
+      "ewma_foul_synergy_home": 28.739169114719093,
+      "ewma_foul_synergy_away": 26.473830719606944,
+      "total_foul_environment": 55.21299983432604,
+      "ewma_chaos_home": 12.283113949824097,
+      "ewma_net_chaos": 13.564233122836573,
+      "home_rest_days": 3,
+      "away_rest_days": 2,
+      "rest_advantage": 1,
+      "fatigue_mismatch": 0,
+      "home_back_to_back": 0,
+      "away_back_to_back": 0,
+      "home_3in4": 0,
+      "away_3in4": 0,
+      "home_composite_elo": 1447.433333333333,
+      "altitude_game": 0,
+      "injury_impact_diff": -0.6393794152404704,
+      "injury_impact_abs": 10.097028587035489,
+      "injury_shock_home": 4.7288245858975095,
+      "injury_shock_away": 5.36820400113798,
+      "injury_shock_diff": -0.6393794152404704,
+      "home_star_missing": 1,
+      "away_star_missing": 1,
+      "star_mismatch": 0,
+      "season_year": 2025,
+      "season_year_normalized": 0.9995064165844028,
+      "games_into_season": 26.4,
+      "season_progress": 0.3235294117647059,
+      "endgame_phase": 0.0,
+      "season_month": 12,
+      "is_season_opener": 0.0,
+      "off_elo_diff": 37.99999999999977,
+      "def_elo_diff": -82.0
+    },
+    "kalshi_home_prob": 0.61,
+    "kalshi_away_prob": 0.45,
+    "kalshi_total_line": null,
+    "odds_source": "Kalshi",
+    "has_real_odds": true,
+    "home_injuries": [
+      {
+        "player": "Derrick Jones Jr.",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Bradley Beal",
+        "status": "Out",
+        "injury": "Hip",
+        "position": "N/A"
+      }
+    ],
+    "away_injuries": [
+      {
+        "player": "Brandon Clarke",
+        "status": "Out",
+        "injury": "Knee",
+        "position": "N/A"
+      },
+      {
+        "player": "Javon Small",
+        "status": "Out",
+        "injury": "Toe",
+        "position": "N/A"
+      },
+      {
+        "player": "John Konchar",
+        "status": "Out",
+        "injury": "Thumb",
+        "position": "N/A"
+      },
+      {
+        "player": "Zach Edey",
+        "status": "Out",
+        "injury": "Ankle",
+        "position": "N/A"
+      },
+      {
+        "player": "Ty Jerome",
+        "status": "Out",
+        "injury": "Calf",
+        "position": "N/A"
+      },
+      {
+        "player": "Scotty Pippen Jr.",
+        "status": "Out",
+        "injury": "Toe",
+        "position": "N/A"
+      }
+    ],
+    "home_injury_impact": 4.7288245858975095,
+    "away_injury_impact": 5.36820400113798,
+    "predicted_total": null
+  }
+}

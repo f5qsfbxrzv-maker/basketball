@@ -79,6 +79,16 @@ def get_whitelist():
         # Measures variance/volatility.
         'ewma_chaos_home',          # Is the home team consistent or erratic?
         'ewma_net_chaos',           # Matchup volatility
+        
+        # === 7. SEASON CONTEXT (REQUIRED BY PRODUCTION MODEL) ===
+        # Captures timing effects throughout the season
+        'season_year',              # Which season (2024, 2025, etc.)
+        'season_year_normalized',   # Normalized year for model stability
+        'is_season_opener',         # First week of season flag
+        'games_into_season',        # Game number (1-82 regular season)
+        'season_progress',          # 0.0 (start) to 1.0 (end) of season
+        'endgame_phase',            # Last 2 weeks of season (playoff positioning)
+        'season_month',             # Month of the season (10=Oct, 4=Apr)
     ]
 
 # Expose as FEATURE_WHITELIST for backwards compatibility

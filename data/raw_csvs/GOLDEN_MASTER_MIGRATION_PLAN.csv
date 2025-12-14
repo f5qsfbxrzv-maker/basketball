@@ -1,0 +1,15 @@
+source,target,type,priority
+V2/v2/services/nba_stats_collector_v2.py,src/ingestion/nba_stats_collector.py,CODE,1
+V2/v2/features/feature_calculator_v5.py,src/processing/feature_calculator.py,CODE,1
+V2/v2/features/off_def_elo_system.py,src/processing/elo_system.py,CODE,1
+V2/v2/features/injury_replacement_model.py,src/processing/injury_model.py,CODE,1
+V2/v2/models/ml_model_trainer.py,src/training/train_nba_model.py,CODE,1
+V2/v2/models/advanced_models.py,src/training/advanced_models.py,CODE,1
+V2/v2/core/prediction_engine.py,src/prediction/prediction_engine.py,CODE,1
+V2/v2/core/calibration_fitter.py,src/core/calibration_fitter.py,CODE,1
+V2/v2/core/calibration_logger.py,src/core/calibration_logger.py,CODE,1
+V2/v2/core/kelly_optimizer.py,src/core/kelly_optimizer.py,CODE,1
+V2/training_data/training_data_final.csv,data/processed/training_data_final.csv,DATA,2
+V2/data/raw_odds_ehallmar/moneyline_history_2023_24.csv,data/raw/moneyline_2023_24.csv,DATA,2
+V2/data/raw_odds_ehallmar/nba_moneyline_2024_25.csv,data/raw/moneyline_2024_25.csv,DATA,2
+Find all .db files,data/database/nba_betting.db,DATA,2

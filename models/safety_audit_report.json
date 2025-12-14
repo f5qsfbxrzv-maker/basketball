@@ -1,0 +1,65 @@
+{
+  "audit_date": "2025-12-12T13:28:22.439505",
+  "verdict": "PASS_WITH_CAUTIONS",
+  "total_features": 43,
+  "suspicious_features": [],
+  "feature_categories": {
+    "temporal": [
+      "is_season_opener",
+      "season_year",
+      "season_year_normalized",
+      "games_into_season",
+      "season_progress",
+      "season_month"
+    ],
+    "elo": [
+      "home_composite_elo",
+      "off_elo_diff",
+      "def_elo_diff"
+    ],
+    "statistical": [
+      "ewma_efg_diff",
+      "ewma_tov_diff",
+      "ewma_orb_diff",
+      "ewma_pace_diff",
+      "ewma_vol_3p_diff",
+      "home_ewma_3p_pct",
+      "away_ewma_3p_pct",
+      "away_ewma_tov_pct",
+      "home_orb",
+      "away_orb",
+      "away_ewma_fta_rate",
+      "ewma_foul_synergy_home",
+      "ewma_foul_synergy_away",
+      "total_foul_environment",
+      "ewma_chaos_home",
+      "ewma_net_chaos",
+      "home_rest_days",
+      "away_rest_days",
+      "rest_advantage",
+      "fatigue_mismatch",
+      "home_back_to_back",
+      "away_back_to_back",
+      "home_3in4",
+      "away_3in4",
+      "altitude_game",
+      "injury_impact_diff",
+      "injury_impact_abs",
+      "injury_shock_home",
+      "injury_shock_away",
+      "injury_shock_diff",
+      "home_star_missing",
+      "away_star_missing",
+      "star_mismatch",
+      "endgame_phase"
+    ]
+  },
+  "top_features": [],
+  "recommendations": [
+    "Paper trade for 2 weeks before live betting",
+    "Use 25% Kelly fraction initially",
+    "Maximum 2% bankroll per bet",
+    "Track opening vs closing line movement",
+    "Log all predictions and outcomes for recalibration"
+  ]
+}

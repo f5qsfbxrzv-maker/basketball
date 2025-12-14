@@ -1,4 +1,4 @@
-"""
+﻿"""
 FEATURE CALCULATOR - GOLD STANDARD EXTRACTION ENGINE (v5.0 OPTIMIZED)
 The "Physics Engine" for the Self-Learning ML Model.
 
@@ -16,18 +16,18 @@ OPTIMIZATION:
 - Supports exponential decay for recency weighting
 
 ARCHITECTURE:
-- calculate_game_features() → Raw differentials for ML Model
-- calculate_weighted_score() → Baseline "Eye Test" for GUI display ONLY
+- calculate_game_features() ΓåÆ Raw differentials for ML Model
+- calculate_weighted_score() ΓåÆ Baseline "Eye Test" for GUI display ONLY
   (ML model ignores hardcoded weights and learns optimal weights from data)
 
 INTEGRATION:
 - Compatible with nba_stats_collector.py (nba_api based)
 - Works with dynamic_elo_calculator.py for ELO differentials
-- Feeds ml_model_trainer.py (Stacked Generalization: XGBoost + RF + LightGBM → LogisticRegression)
+- Feeds ml_model_trainer.py (Stacked Generalization: XGBoost + RF + LightGBM ΓåÆ LogisticRegression)
 - Designed for NBA_Dashboard_Enhanced_v5.py integration
 
 FEATURE PRUNING:
-- SHAP-based whitelist reduces 107 → 33 features
+- SHAP-based whitelist reduces 107 ΓåÆ 33 features
 - Filters out collinear noise (ewma_foul_rate vs foul_rate)
 - Surfaces injury signal from rank #69 to top 5
 """
@@ -113,9 +113,9 @@ class FeatureCalculatorV5:
         
         # --- IN-MEMORY DATA CACHES ---
         # These hold the entire database in RAM for instant access
-        # ⚠️ CRITICAL: team_stats is DEPRECATED - use game_advanced_stats with date filtering!
+        # ΓÜá∩╕Å CRITICAL: team_stats is DEPRECATED - use game_advanced_stats with date filtering!
         self.team_stats_df = pd.DataFrame()  # DEPRECATED - causes data leakage
-        self.game_advanced_stats_df = pd.DataFrame()  # ✓ CORRECT - game-by-game with dates
+        self.game_advanced_stats_df = pd.DataFrame()  # Γ£ô CORRECT - game-by-game with dates
         self.game_logs_df = pd.DataFrame()
         self.game_results_df = pd.DataFrame()
         self.player_stats_df = pd.DataFrame()  # Player impact (PIE) cache for injury weighting
@@ -184,13 +184,13 @@ class FeatureCalculatorV5:
                     self.logger.info(f"Loaded {len(self.game_advanced_stats_df)} game advanced stat records")
                 except Exception as e:
                     self.logger.warning(f"game_advanced_stats load failed: {e}")
-                    self.logger.warning("⚠️ CRITICAL: Cannot calculate features without game_advanced_stats!")
+                    self.logger.warning("ΓÜá∩╕Å CRITICAL: Cannot calculate features without game_advanced_stats!")
 
                 # --- Team Stats (DEPRECATED - DO NOT USE for predictions) ---
                 # This table has FULL SEASON averages with NO date filtering = DATA LEAKAGE
                 try:
                     self.team_stats_df = pd.read_sql_query("SELECT * FROM team_stats", conn)
-                    self.logger.warning(f"⚠️ Loaded team_stats ({len(self.team_stats_df)} rows) - DEPRECATED, use game_advanced_stats instead")
+                    self.logger.warning(f"ΓÜá∩╕Å Loaded team_stats ({len(self.team_stats_df)} rows) - DEPRECATED, use game_advanced_stats instead")
                 except Exception as e:
                     self.logger.info(f"team_stats not loaded (OK - should use game_advanced_stats): {e}")
 
@@ -208,7 +208,7 @@ class FeatureCalculatorV5:
                     # fallback: try to read whole table (may be empty)
                     self.game_results_df = pd.read_sql_query("SELECT * FROM game_results", conn)
                 elif gr_count > 20000:
-                    # Large history detected — load only the most recent N rows to bound memory use
+                    # Large history detected ΓÇö load only the most recent N rows to bound memory use
                     self.logger.info(f"game_results too large ({gr_count} rows). Loading recent 20000 rows only to limit memory.")
                     self.game_results_df = pd.read_sql_query(
                         "SELECT * FROM game_results ORDER BY game_date DESC LIMIT 20000", conn
@@ -262,7 +262,7 @@ class FeatureCalculatorV5:
                     else:
                         self.player_stats_df = pd.DataFrame()
                         if pcount > 0:
-                            self.logger.info(f"player_stats table present but large ({pcount} rows) — skipping full load")
+                            self.logger.info(f"player_stats table present but large ({pcount} rows) ΓÇö skipping full load")
                 except Exception as e:
                     self.logger.warning(f"Player stats not available: {e}")
 
@@ -281,7 +281,7 @@ class FeatureCalculatorV5:
 
     def get_team_stats_as_of_date(self, team_abb: str, as_of_date: str, lookback_games: int = 10) -> Dict[str, float]:
         """
-        ✅ CORRECT WAY: Calculate team stats using game_advanced_stats WITH date filtering
+        Γ£à CORRECT WAY: Calculate team stats using game_advanced_stats WITH date filtering
         
         This prevents data leakage by only using games BEFORE as_of_date.
         Also calculates opponent stats using "mirror" rows (same game_id, different team).
@@ -295,7 +295,7 @@ class FeatureCalculatorV5:
             Dictionary with team stats AND opponent stats (opp_efg_pct, opp_tov_pct, etc.)
         """
         if self.game_advanced_stats_df.empty:
-            self.logger.warning(f"⚠️ game_advanced_stats not loaded - cannot calculate stats for {team_abb}")
+            self.logger.warning(f"ΓÜá∩╕Å game_advanced_stats not loaded - cannot calculate stats for {team_abb}")
             return {}
         
         # Convert as_of_date to datetime if string or date object
@@ -541,7 +541,7 @@ class FeatureCalculatorV5:
         Extract RAW features for ML Model (Stacked Generalization).
         
         This is the core "Physics Engine" that calculates unbiased statistical signals.
-        The ML model (XGBoost + RF + LightGBM → LogisticRegression) learns optimal
+        The ML model (XGBoost + RF + LightGBM ΓåÆ LogisticRegression) learns optimal
         weights from these raw differentials using TimeSeriesSplit validation.
         
         Identity Comparison Logic:
@@ -935,7 +935,7 @@ class FeatureCalculatorV5:
         """
         Generate BASELINE predictions for GUI "Eye Test" display.
         
-        ⚠️ IMPORTANT: This is NOT used for actual betting decisions.
+        ΓÜá∩╕Å IMPORTANT: This is NOT used for actual betting decisions.
         The ML model (ml_model_trainer.py) learns optimal weights from raw features
         and produces the ACTUAL win probability via Stacked Generalization.
         
@@ -1207,7 +1207,7 @@ class FeatureCalculatorV5:
         # Take last 20 games for EWMA calculation
         recent = team_games.tail(20)
         
-        # Calculate EWMA (span=10 means alpha ≈ 0.18, giving ~50% weight to last 3.8 games)
+        # Calculate EWMA (span=10 means alpha Γëê 0.18, giving ~50% weight to last 3.8 games)
         ewma_stats = {
             'efg_pct': recent['efg_pct'].ewm(span=span).mean().iloc[-1],
             'tov_pct': recent['tov_pct'].ewm(span=span).mean().iloc[-1],
@@ -1517,9 +1517,9 @@ class FeatureCalculatorV5:
         NO HARDCODED PLAYER NAMES - fully mathematical and self-adjusting.
         
         This implements the "2-Stage Slope" Dynamic Gravity Model:
-        - Stage 1 (Z ≤ 1.0): Average/role players → 1.0x baseline
-        - Stage 2 (1.0 < Z ≤ 2.5): Star Zone → Aggressive ramp (guards/wings)
-        - Stage 3 (Z > 2.5): MVP Zone → Continued slope (statistical giants)
+        - Stage 1 (Z Γëñ 1.0): Average/role players ΓåÆ 1.0x baseline
+        - Stage 2 (1.0 < Z Γëñ 2.5): Star Zone ΓåÆ Aggressive ramp (guards/wings)
+        - Stage 3 (Z > 2.5): MVP Zone ΓåÆ Continued slope (statistical giants)
         
         CALIBRATED CONSTANTS (from actual data - Dec 2024):
         - Mean PIE: 0.0855 (7,714 rotation players, PIE >= 0.05)
@@ -1531,14 +1531,14 @@ class FeatureCalculatorV5:
             league_std_pie: Standard deviation of PIE (calibrated: 0.0230)
             
         Returns:
-            Multiplier for injury impact (1.0x baseline → 5.25x+ for MVPs)
+            Multiplier for injury impact (1.0x baseline ΓåÆ 5.25x+ for MVPs)
             
         Examples (with calibrated constants):
-            - PIE 0.086 (Average/Z=0.0) → 1.00x
-            - PIE 0.125 (Brunson/Z=1.72) → 1.96x ⭐ Auto-discovered
-            - PIE 0.140 (LeBron/Z=2.39) → 2.85x
-            - PIE 0.171 (Luka/Z=3.70) → 4.80x 
-            - PIE 0.184 (Giannis/Z=4.27) → 5.66x (capped at 4.5x)
+            - PIE 0.086 (Average/Z=0.0) ΓåÆ 1.00x
+            - PIE 0.125 (Brunson/Z=1.72) ΓåÆ 1.96x Γ¡É Auto-discovered
+            - PIE 0.140 (LeBron/Z=2.39) ΓåÆ 2.85x
+            - PIE 0.171 (Luka/Z=3.70) ΓåÆ 4.80x 
+            - PIE 0.184 (Giannis/Z=4.27) ΓåÆ 5.66x (capped at 4.5x)
         """
         # Protect against division by zero
         if league_std_pie == 0:
@@ -1547,22 +1547,22 @@ class FeatureCalculatorV5:
         # Calculate Z-score (statistical dominance)
         z_score = (player_pie - league_avg_pie) / league_std_pie
         
-        # STAGE 1: AVERAGE & ROLE PLAYERS (Z ≤ 1.0)
-        # PIE ~0.109 or less → Replacement-level impact
+        # STAGE 1: AVERAGE & ROLE PLAYERS (Z Γëñ 1.0)
+        # PIE ~0.109 or less ΓåÆ Replacement-level impact
         if z_score <= 1.0:
             return 1.0
         
-        # STAGE 2: THE STAR ZONE (1.0 < Z ≤ 2.5)
+        # STAGE 2: THE STAR ZONE (1.0 < Z Γëñ 2.5)
         # Captures: Brunson (1.7), Haliburton (1.9), LeBron (2.4), Curry (2.4+)
         # Aggressive ramp to catch guards/wings who drive winning despite lower PIE
-        # Slope: +1.33 per sigma → Z=2.5 reaches 3.0x multiplier
+        # Slope: +1.33 per sigma ΓåÆ Z=2.5 reaches 3.0x multiplier
         elif z_score <= 2.5:
             return 1.0 + ((z_score - 1.0) * 1.33)
         
         # STAGE 3: THE MVP ZONE (Z > 2.5)
         # Captures: SGA (2.7), Luka (3.7), Embiid (4.0), Jokic (4.1), Giannis (4.3)
         # Continue from 3.0x base with gentler slope to prevent runaway values
-        # Slope: +1.5 per sigma → Z=4.0 (Jokic) = 5.25x
+        # Slope: +1.5 per sigma ΓåÆ Z=4.0 (Jokic) = 5.25x
         else:
             base_star_boost = 3.0  # Continuation from Stage 2 peak
             mvp_boost = (z_score - 2.5) * 1.5
@@ -1651,8 +1651,8 @@ class FeatureCalculatorV5:
                     if gravity_multiplier > 2.0:
                         z_score = (pie - LEAGUE_AVG_PIE) / LEAGUE_STD_PIE
                         self.logger.debug(
-                            f"🌟 SUPERSTAR GRAVITY: {player_name} | "
-                            f"PIE: {pie:.3f} | Z: {z_score:.2f}σ | "
+                            f"≡ƒîƒ SUPERSTAR GRAVITY: {player_name} | "
+                            f"PIE: {pie:.3f} | Z: {z_score:.2f}╧â | "
                             f"Mult: {gravity_multiplier:.2f}x | Impact: {total_impact:.2f}"
                         )
                     
@@ -1743,7 +1743,7 @@ if __name__ == "__main__":
     
     # Print cache stats
     stats = calc.get_cache_stats()
-    print("\n📊 Cache Statistics:")
+    print("\n≡ƒôè Cache Statistics:")
     for key, value in stats.items():
         print(f"  {key}: {value}")
     
@@ -1756,12 +1756,12 @@ if __name__ == "__main__":
         games_back=10
     )
     
-    print("\n🔢 Sample Features:")
+    print("\n≡ƒöó Sample Features:")
     for key, value in list(features.items())[:10]:
         print(f"  {key}: {value:.4f}" if isinstance(value, float) else f"  {key}: {value}")
     
     # Test prediction
     predictions = calc.calculate_weighted_score(features)
-    print("\n🎯 Predictions:")
+    print("\n≡ƒÄ» Predictions:")
     for key, value in predictions.items():
         print(f"  {key}: {value:.2f}")

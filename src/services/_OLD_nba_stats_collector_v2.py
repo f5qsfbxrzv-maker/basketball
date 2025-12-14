@@ -11,7 +11,26 @@ import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 import warnings
-from v2.logger_setup import get_structured_adapter, classify_error
+import logging
+
+# Try to import structured logger, fall back to standard logging
+try:
+    from v2.logger_setup import get_structured_adapter, classify_error
+except ImportError:
+    class DummyLogger:
+        def event(self, level, message, category=''):
+            print(f"[{level.upper()}] {message}")
+        def info(self, message):
+            print(f"[INFO] {message}")
+        def warning(self, message):
+            print(f"[WARNING] {message}")
+        def error(self, message):
+            print(f"[ERROR] {message}")
+    
+    def get_structured_adapter(component='', prediction_version=''):
+        return DummyLogger()
+    def classify_error(e):
+        return 'error'
 
 # Official nba_api library
 from nba_api.stats.endpoints import leaguegamelog, leaguedashteamstats
@@ -139,32 +158,32 @@ class NBAStatsCollectorV2:
             return
         
         with sqlite3.connect(self.db_path) as conn:
-            # Use INSERT OR REPLACE to update existing records (preserve historical data)
-            cursor = conn.cursor()
-            
             # Add season column
             df = df.copy()
             df['season'] = season
             
-            # Save all columns nba_api gives us
-            # Delete only the specific TEAM_IDs for this season (not entire season history)
+            # Try to update existing records, or just create table if it doesn't exist
             try:
-                # Check if records exist for this season
+                # Check if table exists
+                cursor = conn.cursor()
                 cursor.execute("SELECT COUNT(*) FROM team_stats WHERE season = ?", (season,))
                 existing_count = cursor.fetchone()[0]
                 
                 if existing_count > 0:
-                    # Delete only the teams we're about to update (not all historical data)
+                    # Delete only the teams we're about to update
                     team_ids = df['TEAM_ID'].unique().tolist()
                     placeholders = ','.join('?' * len(team_ids))
                     cursor.execute(f"DELETE FROM team_stats WHERE season = ? AND TEAM_ID IN ({placeholders})", 
                                  [season] + team_ids)
                     updated = cursor.rowcount
-                    self.event_logger.event('info', f"Updating {updated} team_stats for {season} (preserving historical data)", category='data_integrity')
+                    self.event_logger.event('info', f"Updating {updated} team_stats for {season}", category='data_integrity')
                 
-                # Now insert the fresh data
+                # Insert the fresh data
                 df.to_sql('team_stats', conn, if_exists='append', index=False)
-                self.event_logger.event('info', f"Saved {len(df)} team_stats for {season}", category='data_integrity')
+            except sqlite3.OperationalError:
+                # Table doesn't exist, create it
+                df.to_sql('team_stats', conn, if_exists='replace', index=False)
+                self.event_logger.event('info', f"Created team_stats table with {len(df)} rows", category='data_integrity')
             except Exception as e:
                 self.event_logger.event('error', f"team_stats write failed: {e}", category='data_integrity')
                 raise
@@ -203,33 +222,28 @@ class NBAStatsCollectorV2:
         self.event_logger.event('info', f"Fetching Player Impact Stats for {season}...", category='network')
         try:
             from nba_api.stats.endpoints import leaguedashplayerstats
-            # Some nfl/nba_api versions differ in accepted kwargs. Try the full, then a simplified fallback.
-            try:
-                stats = leaguedashplayerstats.LeagueDashPlayerStats(
-                    season=season,
-                    season_type_all_star='Regular Season',
-                    measure_type_detailed='Advanced',
-                    per_mode_detailed='PerGame'
-                )
-            except TypeError:
-                # Fallback to a simpler argument set supported by older/newer nba_api versions
-                stats = leaguedashplayerstats.LeagueDashPlayerStats(
-                    season=season,
-                    season_type_all_star='Regular Season',
-                    per_mode_detailed='PerGame'
-                )
+            # Use Advanced measure type which includes PIE
+            stats = leaguedashplayerstats.LeagueDashPlayerStats(
+                season=season,
+                season_type_all_star='Regular Season',
+                measure_type_detailed_defense='Advanced'
+            )
             df = stats.get_data_frames()[0]
-            # Normalize columns of interest
-            cols_map = {
-                'PLAYER_ID': 'player_id',
-                'PLAYER_NAME': 'player_name',
-                'TEAM_ID': 'team_id',
-                'TEAM_ABBREVIATION': 'team_abbreviation',
-                'PIE': 'pie',
-                'USG_PCT': 'usg_pct',
-                'NET_RATING': 'net_rating'
-            }
-            subset = df[list(cols_map.keys())].rename(columns=cols_map)
+            
+            # Check what columns we have
+            available_cols = df.columns.tolist()
+            self.event_logger.event('info', f"Available player columns: {len(available_cols)}", category='network')
+            
+            # Select columns we need (PIE should be available in Advanced stats)
+            cols_to_keep = ['PLAYER_ID', 'PLAYER_NAME', 'TEAM_ID', 'TEAM_ABBREVIATION', 
+                           'PIE', 'USG_PCT', 'NET_RATING']
+            
+            # Filter to only columns that exist
+            existing_cols = [col for col in cols_to_keep if col in available_cols]
+            subset = df[existing_cols].copy()
+            
+            # Rename to lowercase
+            subset.columns = [c.lower() for c in subset.columns]
             subset['season'] = season
             with sqlite3.connect(self.db_path) as conn:
                 subset.to_sql('player_stats', conn, if_exists='replace', index=False)
@@ -431,31 +445,33 @@ class NBAStatsCollectorV2:
             return
         
         with sqlite3.connect(self.db_path) as conn:
-            # Use selective DELETE + INSERT to update existing records (preserve historical data)
-            cursor = conn.cursor()
-            
             # Add season column
             df = df.copy()
             df['season'] = season
             
-            # Check how many records exist for this season
-            cursor.execute("SELECT COUNT(*) FROM game_logs WHERE season = ?", (season,))
-            existing_count = cursor.fetchone()[0]
+            try:
+                # Check how many records exist for this season
+                cursor = conn.cursor()
+                cursor.execute("SELECT COUNT(*) FROM game_logs WHERE season = ?", (season,))
+                existing_count = cursor.fetchone()[0]
+                
+                if existing_count > 0:
+                    # Delete only the specific GAME_IDs we're about to update
+                    game_ids = df['GAME_ID'].unique().tolist()
+                    if game_ids:
+                        placeholders = ','.join('?' * len(game_ids))
+                        cursor.execute(f"DELETE FROM game_logs WHERE GAME_ID IN ({placeholders})", game_ids)
+                        deleted = cursor.rowcount
+                        self.event_logger.event('info', f"Updating {deleted} game_logs", category='data_integrity')
+                
+                # Insert the data
+                df.to_sql('game_logs', conn, if_exists='append', index=False)
+            except sqlite3.OperationalError:
+                # Table doesn't exist, create it
+                df.to_sql('game_logs', conn, if_exists='replace', index=False)
+                self.event_logger.event('info', f"Created game_logs table with {len(df)} rows", category='data_integrity')
             
-            if existing_count > 0:
-                # Delete only the specific GAME_IDs we're about to update (not entire season)
-                game_ids = df['GAME_ID'].unique().tolist()
-                if game_ids:
-                    placeholders = ','.join('?' * len(game_ids))
-                    cursor.execute(f"DELETE FROM game_logs WHERE GAME_ID IN ({placeholders})", game_ids)
-                    deleted = cursor.rowcount
-                    self.event_logger.event('info', f"Updating {deleted} game_logs (preserving {existing_count - deleted} historical records)", category='data_integrity')
-            else:
-                self.event_logger.event('info', f"Inserting {len(df)} new game_logs for {season}", category='data_integrity')
-            
-            # CRITICAL: Calculate PACE for each game with SAFE division
-            # Pace = 48 * ((Team Possessions + Opp Possessions) / (2 * (Minutes / 5)))
-            # Estimate possessions from box score:
+            conn.commit()
             # Poss ≈ FGA + 0.44*FTA - OREB + TOV
             if all(col in df.columns for col in ['FGA', 'FTA', 'OREB', 'TOV', 'MIN']):
                 # Calculate estimated possessions
