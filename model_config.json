@@ -1,0 +1,79 @@
+{
+  "model": {
+    "name": "Trial 1306 - Production Model",
+    "version": "1.0.0",
+    "path": "models/xgboost_22features_trial1306_20251215_212306.json",
+    "params_path": "models/trial1306_params_20251215_212306.json",
+    "training_date": "2024-12-15",
+    "features_count": 22,
+    "validation_log_loss": 0.6222,
+    "training_auc": 0.7342,
+    "training_accuracy": 0.6769
+  },
+  "betting_thresholds": {
+    "favorite_edge_minimum": 0.02,
+    "underdog_edge_minimum": 0.10,
+    "favorite_odds_max_decimal": 2.0,
+    "kelly_fraction": 0.25,
+    "description": "Optimal thresholds from grid search: 49.7% ROI on 286 bets (2023-24 backtest)"
+  },
+  "data": {
+    "training_data": "data/training_data_matchup_with_injury_advantage_FIXED.csv",
+    "training_games": 12205,
+    "training_period": "2015-2024",
+    "feature_version": "v5_22features"
+  },
+  "backtest_results": {
+    "season_2023_24": {
+      "total_bets": 541,
+      "win_rate": 0.773,
+      "profit_units": 162.41,
+      "roi": 0.3002
+    },
+    "season_2024_25": {
+      "total_bets": 1072,
+      "win_rate": 0.6931,
+      "profit_units": 102.87,
+      "roi": 0.096
+    },
+    "combined": {
+      "total_bets": 1613,
+      "win_rate": 0.715,
+      "profit_units": 265.28,
+      "roi": 0.1645
+    }
+  },
+  "required_features": [
+    "home_composite_elo",
+    "away_composite_elo",
+    "off_elo_diff",
+    "def_elo_diff",
+    "net_fatigue_score",
+    "ewma_efg_diff",
+    "ewma_pace_diff",
+    "ewma_tov_diff",
+    "ewma_orb_diff",
+    "ewma_vol_3p_diff",
+    "injury_matchup_advantage",
+    "ewma_chaos_home",
+    "ewma_foul_synergy_home",
+    "total_foul_environment",
+    "league_offensive_context",
+    "season_progress",
+    "pace_efficiency_interaction",
+    "projected_possession_margin",
+    "three_point_matchup",
+    "net_free_throw_advantage",
+    "star_power_leverage",
+    "offense_vs_defense_matchup"
+  ],
+  "system_requirements": {
+    "python_version": ">=3.10",
+    "key_packages": {
+      "xgboost": ">=2.0.0",
+      "pandas": ">=2.0.0",
+      "numpy": ">=1.24.0",
+      "scikit-learn": ">=1.3.0"
+    }
+  }
+}
