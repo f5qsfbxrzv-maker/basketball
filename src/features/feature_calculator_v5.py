@@ -654,34 +654,64 @@ class FeatureCalculatorV5:
         features['away_star_missing'] = 1 if away_injury >= STAR_THRESHOLD else 0
         features['star_mismatch'] = features['home_star_missing'] - features['away_star_missing']
         
-        # Add legacy single ELO differential
-        if self.elo_calculator:
-            # Convert abbreviations to full names for ELO lookup
-            home_full = self.team_abbrev_map.get(home_team, home_team)
-            away_full = self.team_abbrev_map.get(away_team, away_team)
-            features['elo_diff'] = self.elo_calculator.get_rating_differential(
-                home_full, away_full, home_team=home_full
-            )
-        else:
-            features['elo_diff'] = 0
-
-        # Add advanced Off/Def ELO differentials (composite, offensive, defensive)
+        # 4. CONSOLIDATED INJURY LEVERAGE (Single "Elite" Feature)
+        # Combines: Baseline PIE differential + Shock (new injuries) + Star mismatch
+        # Derived from logistic regression on 12,205 games
+        # Weights: 13% baseline / 38% shock / 49% star power
+        # Positive = Home advantage (away more injured), Negative = Home disadvantage
+        features['injury_leverage'] = (
+            0.008127 * features['injury_impact_diff']    # Baseline PIE differential (13%)
+          - 0.023904 * features['injury_shock_diff']     # Shock - surprise injuries (38%)
+          + 0.031316 * features['star_mismatch']         # Star binary flags (49%)
+        )
+        
+        # Remove individual components (signal now in injury_leverage)
+        del features['injury_impact_diff']
+        del features['injury_shock_diff']
+        del features['star_mismatch']
+        
+        # ====================================================================
+        # SYNDICATE ELO MATCHUP ADVANTAGES (Tier 1 "Elite" Features)
+        # ====================================================================
+        # Why Differentials? XGBoost shouldn't learn subtraction - 1600 vs 1700 
+        # is the same matchup as 1400 vs 1500. Pre-computing the difference 
+        # gives the "pure signal" directly.
+        # ====================================================================
+        
         if getattr(self, 'offdef_elo_system', None):
             try:
-                elo_pack = self.offdef_elo_system.get_differentials(season, home_team, away_team)
-                # Ensure keys present
-                features['off_elo_diff'] = elo_pack.get('off_elo_diff', 0)
-                features['def_elo_diff'] = elo_pack.get('def_elo_diff', 0)
-                features['composite_elo_diff'] = elo_pack.get('composite_elo_diff', 0)
+                # Get raw ratings (not differentials)
+                home_ratings = self.offdef_elo_system.get_rating(season, home_team)
+                away_ratings = self.offdef_elo_system.get_rating(season, away_team)
+                
+                home_off = home_ratings.get('off_elo', 1500)
+                home_def = home_ratings.get('def_elo', 1500)
+                home_composite = home_ratings.get('composite', 1500)
+                
+                away_off = away_ratings.get('off_elo', 1500)
+                away_def = away_ratings.get('def_elo', 1500)
+                away_composite = away_ratings.get('composite', 1500)
+                
+                # SYNDICATE MATCHUP FEATURES (3 "Elite" signals)
+                # 1. Can the home team score against away defense?
+                features['off_matchup_advantage'] = home_off - away_def
+                
+                # 2. Can the home team stop the away offense?
+                features['def_matchup_advantage'] = home_def - away_off
+                
+                # 3. Overall power ranking with home court baked in (+100 ELO)
+                HOME_COURT_ADVANTAGE = 100
+                features['net_composite_advantage'] = (home_composite + HOME_COURT_ADVANTAGE) - away_composite
+                
             except Exception as e:
-                self.logger.warning(f"Off/Def ELO differential failed: {e}")
-                features.setdefault('off_elo_diff', 0)
-                features.setdefault('def_elo_diff', 0)
-                features.setdefault('composite_elo_diff', 0)
+                self.logger.warning(f"Off/Def ELO matchup features failed: {e}")
+                features.setdefault('off_matchup_advantage', 0)
+                features.setdefault('def_matchup_advantage', 0)
+                features.setdefault('net_composite_advantage', 0)
         else:
-            features['off_elo_diff'] = 0
-            features['def_elo_diff'] = 0
-            features['composite_elo_diff'] = 0
+            features['off_matchup_advantage'] = 0
+            features['def_matchup_advantage'] = 0
+            features['net_composite_advantage'] = 0
         
         # Add SOS differential
         home_sos = self.sos_map.get(home_team, 0)
@@ -1080,16 +1110,35 @@ class FeatureCalculatorV5:
                 'ewma_net_chaos': 0
             }
         
-        # Shooting efficiency diff (eFG%)
-        features['ewma_efg_diff'] = home_ewma.get('efg_pct', 0.5) - away_ewma.get('efg_pct', 0.5)
+        # SYNDICATE MATCHUP FRICTION FEATURES: Team Strength vs Opponent Weakness
+        # These capture interactions that ELO can't see (home offense vs away defense)
         
-        # Turnover control diff
-        features['ewma_tov_diff'] = away_ewma.get('tov_pct', 0.135) - home_ewma.get('tov_pct', 0.135)
+        # 1. Effective Shooting Gap: Home shooting vs Away defense, then reverse
+        home_shooting_advantage = home_ewma.get('efg_pct', 0.5) - away_ewma.get('opp_efg_allowed', 0.52)
+        away_shooting_advantage = away_ewma.get('efg_pct', 0.5) - home_ewma.get('opp_efg_allowed', 0.52)
+        features['effective_shooting_gap'] = home_shooting_advantage - away_shooting_advantage
         
-        # Rebounding diff
-        features['ewma_orb_diff'] = home_ewma.get('orb_pct', 0.25) - away_ewma.get('orb_pct', 0.25)
+        # 2. Turnover Pressure: Forcing turnovers vs committing them
+        home_turnover_pressure = away_ewma.get('tov_pct', 0.135) + home_ewma.get('stl_pct', 0.08)
+        away_turnover_pressure = home_ewma.get('tov_pct', 0.135) + away_ewma.get('stl_pct', 0.08)
+        features['turnover_pressure'] = home_turnover_pressure - away_turnover_pressure
         
-        # Pace diff
+        # 3. Rebound Friction: Offensive boards vs opponent defensive rebounding
+        home_rebound_advantage = home_ewma.get('orb_pct', 0.25) - away_ewma.get('opp_orb_allowed', 0.25)
+        away_rebound_advantage = away_ewma.get('orb_pct', 0.25) - home_ewma.get('opp_orb_allowed', 0.25)
+        features['rebound_friction'] = home_rebound_advantage - away_rebound_advantage
+        
+        # 4. Total Rebound Control: Offensive + Defensive boards combined
+        home_total_rebound = home_ewma.get('orb_pct', 0.25) + home_ewma.get('drb_pct', 0.75)
+        away_total_rebound = away_ewma.get('orb_pct', 0.25) + away_ewma.get('drb_pct', 0.75)
+        features['total_rebound_control'] = home_total_rebound - away_total_rebound
+        
+        # 5. Whistle Leverage: Free throw generation vs opponent foul rate
+        home_whistle = home_ewma.get('fta_rate', 0.20) + away_ewma.get('foul_rate', 0.20)
+        away_whistle = away_ewma.get('fta_rate', 0.20) + home_ewma.get('foul_rate', 0.20)
+        features['whistle_leverage'] = home_whistle - away_whistle
+        
+        # Pace diff (tempo control, not a matchup friction)
         features['ewma_pace_diff'] = home_ewma.get('pace', 100) - away_ewma.get('pace', 100)
         
         # 3-point volume diff
@@ -1102,6 +1151,23 @@ class FeatureCalculatorV5:
         features['home_orb'] = home_ewma.get('orb_pct', 0.25)
         features['away_orb'] = away_ewma.get('orb_pct', 0.25)
         features['away_ewma_fta_rate'] = away_ewma.get('fta_rate', 0.24)
+        
+        # VOLUME-ADJUSTED EFFICIENCY: eFG% × Projected Possessions
+        # Raw points potential (better than ELO for offense vs defense matchups)
+        # Projected possessions based on team pace vs opponent pace
+        avg_game_possessions = 100.0  # Typical NBA game
+        home_pace_factor = home_ewma.get('pace', 100) / avg_game_possessions
+        away_pace_factor = away_ewma.get('pace', 100) / avg_game_possessions
+        
+        # Home volume-adjusted efficiency (considers away's pace too)
+        projected_home_possessions = avg_game_possessions * (home_pace_factor + away_pace_factor) / 2
+        home_volume_efficiency = home_ewma.get('efg_pct', 0.5) * projected_home_possessions
+        
+        # Away volume-adjusted efficiency
+        projected_away_possessions = avg_game_possessions * (away_pace_factor + home_pace_factor) / 2
+        away_volume_efficiency = away_ewma.get('efg_pct', 0.5) * projected_away_possessions
+        
+        features['volume_efficiency_diff'] = home_volume_efficiency - away_volume_efficiency
         
         # Foul synergy (placeholder - requires play-by-play data)
         features['ewma_foul_synergy_home'] = home_ewma.get('fta_rate', 0.24) * 100
@@ -1208,10 +1274,16 @@ class FeatureCalculatorV5:
         recent = team_games.tail(20)
         
         # Calculate EWMA (span=10 means alpha Γëê 0.18, giving ~50% weight to last 3.8 games)
+        # SYNDICATE UPGRADE: Add DRB%, STL%, foul rate, opponent stats
         ewma_stats = {
             'efg_pct': recent['efg_pct'].ewm(span=span).mean().iloc[-1],
             'tov_pct': recent['tov_pct'].ewm(span=span).mean().iloc[-1],
             'orb_pct': recent['orb_pct'].ewm(span=span).mean().iloc[-1],
+            'drb_pct': recent['drb_pct'].ewm(span=span).mean().iloc[-1] if 'drb_pct' in recent.columns else 0.75,
+            'stl_pct': recent['stl_pct'].ewm(span=span).mean().iloc[-1] if 'stl_pct' in recent.columns else 0.08,
+            'foul_rate': recent['foul_rate'].ewm(span=span).mean().iloc[-1] if 'foul_rate' in recent.columns else 0.20,
+            'opp_efg_allowed': recent['opp_efg_allowed'].ewm(span=span).mean().iloc[-1] if 'opp_efg_allowed' in recent.columns else 0.52,
+            'opp_orb_allowed': recent['opp_orb_allowed'].ewm(span=span).mean().iloc[-1] if 'opp_orb_allowed' in recent.columns else 0.25,
             'pace': recent['pace'].ewm(span=span).mean().iloc[-1],
             'fg3a_per_100': recent['fg3a_per_100'].ewm(span=span).mean().iloc[-1] if 'fg3a_per_100' in recent.columns else 30,
             'fg3_pct': recent['fg3_pct'].ewm(span=span).mean().iloc[-1] if 'fg3_pct' in recent.columns else 0.35,
@@ -1355,11 +1427,25 @@ class FeatureCalculatorV5:
                     features['home_composite_elo'] = home_team_elo.composite
                 else:
                     features['home_composite_elo'] = 1500  # Fallback to baseline
+                
+                # Get away team's ELO rating as of game_date
+                away_team_elo = self.offdef_elo_system.get_latest(
+                    away_team, 
+                    season=season,
+                    before_date=str(game_dt.date())
+                )
+                
+                if away_team_elo:
+                    features['away_composite_elo'] = away_team_elo.composite
+                else:
+                    features['away_composite_elo'] = 1500  # Fallback to baseline
             except Exception as e:
                 self.logger.warning(f"Failed to get composite ELO: {e}")
                 features['home_composite_elo'] = 1500
+                features['away_composite_elo'] = 1500
         else:
             features['home_composite_elo'] = 1500  # Fallback if ELO system not available
+            features['away_composite_elo'] = 1500
         
         return features
     

@@ -21,9 +21,10 @@ from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTabWidget, QTableWidget, QTableWidgetItem, QPushButton, QLabel,
     QSpinBox, QDoubleSpinBox, QTextEdit, QGroupBox,
-    QHeaderView, QMessageBox, QProgressBar, QDialog, QGridL   QLineEdit, QScrollArea
+    QHeaderView, QMessageBox, QProgressBar, QDialog, QGridLayout, QCheckBox,
+    QLineEdit, QScrollArea, QDateEdit
 )
-from PyQt6.QtCore import Qt, QTimer, QThread, pyqtSignal
+from PyQt6.QtCore import Qt, QTimer, QThread, pyqtSignal, QDate
 from PyQt6.QtGui import QFont, QColor
 import pandas as pd
 import numpy as np
@@ -41,33 +42,84 @@ from config.settings import (
     ISOTONIC_CALIBRATOR, PLATT_CALIBRATOR
 )
 
-# Use centralized config paths
-MODEL_PATH = MONEYLINE_MODEL
+# Import TRIAL 1306 Production Config (2% fav / 10% dog - 49.7% ROI)
+try:
+    from trial1306_config import (
+        TRIAL1306_MODEL_PATH,
+        TRIAL1306_FEATURES,
+        TRIAL1306_FAVORITE_EDGE,
+        TRIAL1306_UNDERDOG_EDGE,
+        TRIAL1306_ODDS_SPLIT,
+        TRIAL1306_KELLY_FRACTION,
+        TRIAL1306_VERSION,
+        TRIAL1306_BACKTEST_ROI
+    )
+    FAVORITE_EDGE_THRESHOLD = TRIAL1306_FAVORITE_EDGE
+    UNDERDOG_EDGE_THRESHOLD = TRIAL1306_UNDERDOG_EDGE
+    ODDS_SPLIT_THRESHOLD = TRIAL1306_ODDS_SPLIT
+    STRATEGY_KELLY_FRACTION = TRIAL1306_KELLY_FRACTION
+    MODEL_VERSION = TRIAL1306_VERSION
+    print(f"[OK] Loaded Trial 1306: {FAVORITE_EDGE_THRESHOLD*100:.1f}% fav / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% dog (ROI: {TRIAL1306_BACKTEST_ROI*100:.1f}%)")
+except ImportError:
+    print("[WARNING] trial1306_config not found, using legacy config")
+    FAVORITE_EDGE_THRESHOLD = 0.02  # 2.0%
+    UNDERDOG_EDGE_THRESHOLD = 0.10  # 10.0%
+    ODDS_SPLIT_THRESHOLD = 2.00
+    STRATEGY_KELLY_FRACTION = 0.25
+    MODEL_VERSION = "legacy"
+    TRIAL1306_FEATURES = []  # Will need manual specification
+
+# Use Trial 1306 model path
+try:
+    MODEL_PATH = Path(TRIAL1306_MODEL_PATH)
+    if not MODEL_PATH.exists():
+        print(f"[WARNING] Trial 1306 model not found at {TRIAL1306_MODEL_PATH}, falling back to v6_ml")
+        MODEL_PATH = MONEYLINE_MODEL
+except:
+    MODEL_PATH = MONEYLINE_MODEL
+
 TOTAL_MODEL_PATH = TOTALS_MODEL
 BANKROLL_SETTINGS_FILE = PROJECT_ROOT / "bankroll_settings.json"
 DATABASE_PATH = CONFIG_DB_PATH
 PREDICTIONS_CACHE_FILE = PROJECT_ROOT / "predictions_cache.json"
-MIN_EDGE = 0.03
+MIN_EDGE = 0.02  # Trial 1306 minimum threshold (2% for favorites)
 MAX_EDGE = 1.00
-KELLY_FRACTION = 0.50
+KELLY_FRACTION = STRATEGY_KELLY_FRACTION  # Use production Kelly (0.25)
 MAX_BET_PCT = 0.05
 BANKROLL = 10000.0
 
 # Try importing optional dependencies
 try:
-    # Use FeatureCalculatorLive for LIVE PRODUCTION (keeps v5 intact for backtesting)
+    # Use regular feature calculator (v5 is production-ready)
     import sys
     sys.path.insert(0, 'src')
-    from features.feature_calculator_live import FeatureCalculatorV5 as FeatureCalculator
-    from espn_schedule_service_live import ESPNScheduleService
+    sys.path.insert(0, 'src/features')
+    sys.path.insert(0, 'src/services')
+    
+    from src.features.feature_calculator_v5 import FeatureCalculatorV5 as FeatureCalculator
     from injury_impact_live import calculate_team_injury_impact_simple
-    from src.services.live_injury_updater import LiveInjuryUpdater
+    
+    # LiveInjuryUpdater is optional
+    try:
+        from src.services.live_injury_updater import LiveInjuryUpdater
+    except ImportError:
+        print("[WARNING] LiveInjuryUpdater not available, using basic injury data")
+        LiveInjuryUpdater = None
+    
+    # Use nba_api for schedule (built-in, no ESPN needed)
+    from nba_api.live.nba.endpoints import scoreboard
+    from nba_api.stats.static import teams as nba_teams
+    
     PREDICTION_ENGINE_AVAILABLE = True
-    print("[OK] Using FeatureCalculatorLive (LIVE PRODUCTION - v5 preserved for backtesting)")
+    print("[OK] Loaded prediction engine with feature_calculator_v5")
 except ImportError as e:
     PREDICTION_ENGINE_AVAILABLE = False
-    print(f"[ERROR] Could not load FeatureCalculatorV5: {e}")
-    print(f"[WARNING] Prediction engine not available: {e}")
+    print(f"[ERROR] Could not load prediction engine: {e}")
+    print(f"[WARNING] Prediction engine not available")
+    import traceback
+    traceback.print_exc()
+    FeatureCalculator = None
+    LiveInjuryUpdater = None
 
 try:
     from src.core.paper_trading_tracker import PaperTradingTracker
@@ -76,40 +128,120 @@ except ImportError:
     PAPER_TRADING_AVAILABLE = False
     print("[WARNING] paper_trading_tracker not available")
 
+# Import new enhanced systems
+try:
+    from src.core.bet_tracker import BetTracker
+    BET_TRACKER_AVAILABLE = True
+    print("[OK] BetTracker loaded")
+except ImportError:
+    BET_TRACKER_AVAILABLE = False
+    BetTracker = None
+    print("[WARNING] BetTracker not available")
+
+try:
+    from src.services.live_odds_fetcher import LiveOddsFetcher
+    LIVE_ODDS_AVAILABLE = True
+    print("[OK] LiveOddsFetcher loaded")
+except ImportError as e:
+    LIVE_ODDS_AVAILABLE = False
+    LiveOddsFetcher = None
+    print(f"[WARNING] LiveOddsFetcher not available: {e}")
+    import traceback
+    traceback.print_exc()
+
+try:
+    from src.services.espn_schedule_service import ESPNScheduleService
+    ESPN_SCHEDULE_AVAILABLE = True
+    print("[OK] ESPNScheduleService loaded")
+except ImportError as e:
+    ESPN_SCHEDULE_AVAILABLE = False
+    ESPNScheduleService = None
+    print(f"[WARNING] ESPNScheduleService not available: {e}")
+
+try:
+    from src.core.daily_prediction_logger import DailyPredictionLogger
+    DAILY_LOGGER_AVAILABLE = True
+    print("[OK] DailyPredictionLogger loaded")
+except ImportError:
+    DAILY_LOGGER_AVAILABLE = False
+    DailyPredictionLogger = None
+    print("[WARNING] DailyPredictionLogger not available")
+
 
 class NBAPredictionEngine:
-    """Production prediction engine using FeatureCalculatorV5 with all injury/shock features"""
+    """Production prediction engine using Trial 1306 with 22 features"""
     
     def __init__(self):
         self.bankroll = BANKROLL
         self.predictions_cache = {}
         
         if PREDICTION_ENGINE_AVAILABLE:
-            # Load the PRODUCTION model (Dec 12, 2025 - 36.7% ROI, 70.8% win rate)
+            # Load Trial 1306 PRODUCTION model (22 features, 49.7% ROI)
             if not MODEL_PATH.exists():
                 raise FileNotFoundError(f"Model not found: {MODEL_PATH}")
             
-            # Load XGBoost model from JSON
+            # Load XGBoost model (Trial 1306 uses .json format)
             import xgboost as xgb
-            self.model = xgb.Booster()
+            self.model = xgb.XGBClassifier()
             self.model.load_model(str(MODEL_PATH))
-            self.features = list(self.model.feature_names)
+            
+            # Use Trial 1306's 22 features (in correct order)
+            if TRIAL1306_FEATURES:
+                self.features = TRIAL1306_FEATURES
+                print(f"[OK] Using Trial 1306 feature list: {len(self.features)} features")
+            else:
+                # Fallback to model's feature names if config not loaded
+                try:
+                    self.features = list(self.model.get_booster().feature_names)
+                except:
+                    self.features = TRIAL1306_FEATURES  # Use hardcoded list
+            
+            print(f"[OK] Loaded Trial 1306 model: {MODEL_PATH.name}")
+            print(f"[OK] Features: {len(self.features)} (should be 22)")
+            print(f"[OK] Thresholds: {FAVORITE_EDGE_THRESHOLD*100:.1f}% FAV / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% DOG")
+            print(f"[OK] Expected ROI: {TRIAL1306_BACKTEST_ROI*100:.1f}% (grid search optimized)")
             
             # Use consolidated database for all services
             db_path = str(DATABASE_PATH)
             self.feature_calculator = FeatureCalculator(db_path=db_path)
-            self.injury_updater = LiveInjuryUpdater(db_path=db_path)
-            self.espn_schedule = ESPNScheduleService(db_path=db_path)
+            if LiveInjuryUpdater is not None:
+                self.injury_updater = LiveInjuryUpdater(db_path=db_path)
+            else:
+                self.injury_updater = None
             self.injury_service = None  # Not used - we have feature_calculator
-            print(f"[OK] Loaded PRODUCTION model (Dec 12): {len(self.features)} features including {len([f for f in self.features if 'injury' in f.lower() or 'shock' in f.lower()])} injury/shock features")
             
-            # Load total model if available
+            # Load total model if available (not used in Trial 1306, but keep for compatibility)
             if TOTAL_MODEL_PATH.exists():
                 self.total_model = joblib.load(TOTAL_MODEL_PATH)
                 print(f"[OK] Loaded total model: {TOTAL_MODEL_PATH.name}")
             else:
                 self.total_model = None
                 print(f"[WARNING] Total model not found: {TOTAL_MODEL_PATH}")
+            
+            # Initialize enhanced systems
+            if BET_TRACKER_AVAILABLE:
+                self.bet_tracker = BetTracker(db_path=db_path)
+                print("[OK] BetTracker initialized")
+            else:
+                self.bet_tracker = None
+            
+            if LIVE_ODDS_AVAILABLE:
+                self.odds_fetcher = LiveOddsFetcher()
+                print("[OK] LiveOddsFetcher initialized")
+            else:
+                self.odds_fetcher = None
+            
+            if ESPN_SCHEDULE_AVAILABLE:
+                self.schedule_service = ESPNScheduleService(db_path=str(db_path))
+                print("[OK] ESPNScheduleService initialized")
+            else:
+                self.schedule_service = None
+            
+            if DAILY_LOGGER_AVAILABLE:
+                self.daily_logger = DailyPredictionLogger(db_path=db_path)
+                print("[OK] DailyPredictionLogger initialized")
+            else:
+                self.daily_logger = None
         else:
             self.model = None
             self.total_model = None
@@ -189,70 +321,104 @@ class NBAPredictionEngine:
             if not self.model or not self.feature_calculator:
                 return {'error': 'Model not available'}
             
-            # Update live injuries from ESPN before prediction
-            try:
-                injury_count = self.injury_updater.update_active_injuries()
-                print(f"[OK] Updated {injury_count} live injuries from ESPN")
-            except Exception as inj_err:
-                print(f"[WARNING] Could not update live injuries: {inj_err}")
-                import traceback
-                traceback.print_exc()
+            # Update live injuries from ESPN before prediction (if available)
+            if self.injury_updater is not None:
+                try:
+                    injury_count = self.injury_updater.update_active_injuries()
+                    print(f"[OK] Updated {injury_count} live injuries from ESPN")
+                except Exception as inj_err:
+                    print(f"[WARNING] Could not update live injuries: {inj_err}")
+            else:
+                print(f"[INFO] Using cached injury data (LiveInjuryUpdater not available)")
             
-            # Get real market odds from multi-source service
-            try:
-                from multi_source_odds_service import MultiSourceOddsService
-                odds_svc = MultiSourceOddsService()
-                game_dt = datetime.strptime(game_date, '%Y-%m-%d') if isinstance(game_date, str) else game_date
-                odds_data = odds_svc.get_game_odds(home_team, away_team, game_dt)
-                
-                # Extract American odds and Kalshi probabilities
-                home_ml_odds = odds_data.get('home_ml_odds', -110)
-                away_ml_odds = odds_data.get('away_ml_odds', -110)
-                
-                # Default to -110 if None returned
-                if home_ml_odds is None:
+            # Get real market odds from LiveOddsFetcher (Kalshi API)
+            kalshi_home_prob = None
+            kalshi_away_prob = None
+            yes_price = None
+            no_price = None
+            odds_source = 'Default'
+            has_real_odds = False
+            home_ml_odds = -110
+            away_ml_odds = -110
+            
+            # Try to get live odds from Kalshi
+            # Attempt to initialize odds fetcher if not already done
+            if not self.odds_fetcher and LIVE_ODDS_AVAILABLE:
+                try:
+                    from src.services.live_odds_fetcher import LiveOddsFetcher
+                    self.odds_fetcher = LiveOddsFetcher()
+                    print(f"[ODDS] LiveOddsFetcher initialized for {away_team} @ {home_team}")
+                except Exception as init_err:
+                    print(f"[WARNING] Could not initialize LiveOddsFetcher: {init_err}")
+            
+            if self.odds_fetcher and hasattr(self.odds_fetcher, 'kalshi_client') and self.odds_fetcher.kalshi_client:
+                try:
+                    print(f"[ODDS] Fetching live odds for {away_team} @ {home_team} on {game_date}...")
+                    odds_data = self.odds_fetcher.get_moneyline_odds(home_team, away_team, game_date)
+                    
+                    home_ml_odds = odds_data.get('home_ml', -110)
+                    away_ml_odds = odds_data.get('away_ml', -110)
+                    yes_price = odds_data.get('yes_price')
+                    no_price = odds_data.get('no_price')
+                    odds_source = odds_data.get('source', 'unknown')
+                    
+                    # VALIDATED ODDS QUALITY CHECK
+                    odds_valid = self.is_valid_odds(home_ml_odds, away_ml_odds)
+                    has_real_odds = (odds_source == 'kalshi' and yes_price is not None)
+                    
+                    if not odds_valid:
+                        print(f"[WARNING ODDS] Extreme odds filtered: {home_ml_odds}/{away_ml_odds}")
+                        has_real_odds = False
+                    
+                    # Calculate fair probabilities from Kalshi prices
+                    if yes_price and no_price:
+                        kalshi_home_prob, kalshi_away_prob = self.odds_fetcher.remove_vig(home_ml_odds, away_ml_odds)
+                    
+                    print(f"[ODDS] {away_team} @ {home_team}: {odds_source} | {home_ml_odds}/{away_ml_odds}")
+                    
+                except Exception as e:
+                    print(f"[WARNING] LiveOddsFetcher error: {e}")
+                    import traceback
+                    traceback.print_exc()
                     home_ml_odds = -110
-                if away_ml_odds is None:
                     away_ml_odds = -110
-                
-                kalshi_home_prob = odds_data.get('kalshi_home_prob')
-                kalshi_away_prob = odds_data.get('kalshi_away_prob')
-                odds_source = odds_data.get('source', 'Unknown')
-                has_real_odds = (odds_source == 'Kalshi' and kalshi_home_prob is not None)
-                
-                # VALIDATED ODDS QUALITY CHECK (from forensic audit)
-                odds_valid = self.is_valid_odds(home_ml_odds, away_ml_odds)
-                if not odds_valid:
-                    print(f"[WARNING ODDS] Extreme odds filtered: {home_ml_odds}/{away_ml_odds}")
-                    has_real_odds = False  # Mark as invalid for filtering
-                
-                print(f"[DEBUG ODDS] {away_team} @ {home_team}: source={odds_source}, valid={odds_valid}, has_real_odds={has_real_odds}")
-                print(f"[DEBUG ODDS]   home_ml={home_ml_odds}, away_ml={away_ml_odds}")
-                print(f"[DEBUG ODDS]   kalshi_home_prob={kalshi_home_prob}, kalshi_away_prob={kalshi_away_prob}")
-            except Exception as e:
-                print(f"[WARNING] Could not get odds: {e}")
-                home_ml_odds = -110
-                away_ml_odds = -110
-                kalshi_home_prob = None
-                kalshi_away_prob = None
-                odds_source = 'Error'
-                has_real_odds = False
+                    odds_source = 'default'
+            else:
+                if not self.odds_fetcher:
+                    print(f"[INFO] LiveOddsFetcher not available (self.odds_fetcher is None)")
+                elif not hasattr(self.odds_fetcher, 'kalshi_client'):
+                    print(f"[INFO] LiveOddsFetcher has no kalshi_client attribute")
+                elif not self.odds_fetcher.kalshi_client:
+                    print(f"[INFO] LiveOddsFetcher kalshi_client is None")
+                print(f"[INFO] Using -110 defaults for {away_team} @ {home_team}")
             
             # Extract features using FeatureCalculatorV5
+            # Trial 1306 expects 22 features (includes injury_matchup_advantage as single composite)
             features_dict = self.feature_calculator.calculate_game_features(
                 home_team=home_team,
                 away_team=away_team,
                 game_date=game_date if isinstance(game_date, str) else game_date.strftime('%Y-%m-%d')
             )
             
-            # Convert to DataFrame and DMatrix for XGBoost Booster
-            import xgboost as xgb
+            # Convert to DataFrame for XGBoost
             X = pd.DataFrame([features_dict])
-            X = X[self.features]  # Use self.features not feature_names_in_
-            dmatrix = xgb.DMatrix(X)
+            
+            # Trial 1306 uses injury_matchup_advantage (single optimized composite)
+            # Ensure all 22 required features are present
+            missing_features = [f for f in self.features if f not in X.columns]
+            if missing_features:
+                print(f"[WARNING] Missing {len(missing_features)} features: {missing_features[:5]}...")
+                # Add missing features with default value 0
+                for feat in missing_features:
+                    X[feat] = 0.0
+            
+            # Filter to only the 22 features Trial 1306 expects (in correct order)
+            X = X[self.features]
+            
+            print(f"[INFO] Prepared {len(X.columns)} features for Trial 1306: {X.columns.tolist()[:5]}...")
             
             # Get model probability (home team win probability)
-            home_prob = float(self.model.predict(dmatrix)[0])
+            home_prob = float(self.model.predict_proba(X)[0, 1])
             away_prob = 1 - home_prob
             
             # Calculate edges using American odds
@@ -265,11 +431,29 @@ class NBAPredictionEngine:
             print(f"[DEBUG] {away_team} @ {home_team}: model_home={home_prob:.4f}, market_home={home_ml_prob:.4f}, home_edge={home_edge:.4f}")
             print(f"[DEBUG]   model_away={away_prob:.4f}, market_away={away_ml_prob:.4f}, away_edge={away_edge:.4f}")
             
-            # Calculate stakes
-            home_stake = self.kelly_stake(home_edge, home_ml_odds)
-            away_stake = self.kelly_stake(away_edge, away_ml_odds)
+            # Apply SPLIT THRESHOLD LOGIC (Production Strategy)
+            # Favorites (odds < 2.00): require 1.0% edge
+            # Underdogs (odds >= 2.00): require 15.0% edge
             
-            # Build bets
+            home_decimal = self.american_to_decimal(home_ml_odds)
+            away_decimal = self.american_to_decimal(away_ml_odds)
+            
+            # Determine if home/away are favorites or underdogs
+            home_is_favorite = home_decimal < ODDS_SPLIT_THRESHOLD
+            away_is_favorite = away_decimal < ODDS_SPLIT_THRESHOLD
+            
+            # Apply appropriate threshold
+            home_threshold = FAVORITE_EDGE_THRESHOLD if home_is_favorite else UNDERDOG_EDGE_THRESHOLD
+            away_threshold = FAVORITE_EDGE_THRESHOLD if away_is_favorite else UNDERDOG_EDGE_THRESHOLD
+            
+            home_qualifies = home_edge >= home_threshold
+            away_qualifies = away_edge >= away_threshold
+            
+            # Calculate stakes (only for qualifying bets)
+            home_stake = self.kelly_stake(home_edge, home_ml_odds, home_prob) if home_qualifies else 0
+            away_stake = self.kelly_stake(away_edge, away_ml_odds, away_prob) if away_qualifies else 0
+            
+            # Build bets with classification
             all_bets = [
                 {
                     'type': 'Moneyline',
@@ -278,7 +462,10 @@ class NBAPredictionEngine:
                     'model_prob': home_prob,
                     'market_prob': home_ml_prob,
                     'odds': home_ml_odds,
-                    'stake': home_stake
+                    'stake': home_stake,
+                    'bet_class': 'FAVORITE' if home_is_favorite else 'UNDERDOG',
+                    'threshold': home_threshold,
+                    'qualifies': home_qualifies
                 },
                 {
                     'type': 'Moneyline',
@@ -287,12 +474,15 @@ class NBAPredictionEngine:
                     'model_prob': away_prob,
                     'market_prob': away_ml_prob,
                     'odds': away_ml_odds,
-                    'stake': away_stake
+                    'stake': away_stake,
+                    'bet_class': 'FAVORITE' if away_is_favorite else 'UNDERDOG',
+                    'threshold': away_threshold,
+                    'qualifies': away_qualifies
                 }
             ]
             
             all_bets.sort(key=lambda x: x['edge'], reverse=True)
-            best_bet = all_bets[0] if all_bets[0]['edge'] >= MIN_EDGE else None
+            best_bet = all_bets[0] if all_bets[0]['qualifies'] else None
             
             # Get injured players from database (for display)
             home_injuries = []
@@ -385,9 +575,15 @@ class NBAPredictionEngine:
                 try:
                     X_total = pd.DataFrame([features_dict])
                     if hasattr(self.total_model, 'feature_names_in_'):
-                        # Filter to only features the total model expects
-                        total_features = [f for f in self.total_model.feature_names_in_ if f in features_dict]
-                        X_total = X_total[total_features]
+                        # Add missing features with defaults (same as moneyline model)
+                        missing_total_features = [f for f in self.total_model.feature_names_in_ if f not in X_total.columns]
+                        if missing_total_features:
+                            print(f"[INFO] Adding {len(missing_total_features)} missing features to total model")
+                            for feat in missing_total_features:
+                                X_total[feat] = 0  # Add with default value
+                        
+                        # Reorder to match model expectations
+                        X_total = X_total[self.total_model.feature_names_in_]
                     total_prediction = self.total_model.predict(X_total)[0]
                 except Exception as e:
                     print(f"[WARNING] Total model prediction failed: {e}")
@@ -404,14 +600,16 @@ class NBAPredictionEngine:
                 'features': features_dict,
                 'kalshi_home_prob': kalshi_home_prob,
                 'kalshi_away_prob': kalshi_away_prob,
-                'kalshi_total_line': odds_data.get('total'),  # Add totals line from odds service
+                'kalshi_total_line': None,  # Not used in Trial 1306
                 'odds_source': odds_source,
                 'has_real_odds': has_real_odds,
                 'home_injuries': home_injuries,
                 'away_injuries': away_injuries,
-                'home_injury_impact': home_injury_impact,  # PIE-based impact score
-                'away_injury_impact': away_injury_impact,  # PIE-based impact score
-                'predicted_total': total_prediction
+                'home_injury_impact': home_injury_impact,
+                'away_injury_impact': away_injury_impact,
+                'predicted_total': total_prediction,
+                'yes_price': yes_price,
+                'no_price': no_price
             }
             
             # Cache the prediction
@@ -419,8 +617,49 @@ class NBAPredictionEngine:
             self.predictions_cache[cache_key] = result
             self.save_predictions_cache()
             
-            # Log to paper trading tracker if available and there's a best bet
-            if PAPER_TRADING_AVAILABLE and best_bet and best_bet['edge'] >= MIN_EDGE:
+            # Log bet to BetTracker if there's a qualifying bet
+            if self.bet_tracker and best_bet and best_bet.get('qualifies', False):
+                try:
+                    picked_team = best_bet['pick']
+                    is_home = (picked_team == home_team)
+                    
+                    # Get fair probability from vig removal
+                    if kalshi_home_prob and kalshi_away_prob:
+                        fair_prob = kalshi_home_prob if is_home else kalshi_away_prob
+                    else:
+                        fair_prob = best_bet['market_prob']
+                    
+                    # Log to Trial 1306 bet tracker
+                    logged = self.bet_tracker.log_bet(
+                        game_date=game_date,
+                        home_team=home_team,
+                        away_team=away_team,
+                        bet_type='Moneyline',
+                        predicted_winner=picked_team,
+                        model_probability=best_bet['model_prob'],
+                        fair_probability=fair_prob,
+                        market_odds=best_bet['odds'],
+                        edge=best_bet['edge'],
+                        stake_amount=best_bet['stake'],
+                        bankroll=self.bankroll,
+                        kelly_fraction=0.25,  # Quarter Kelly
+                        threshold_type=best_bet['bet_class'],
+                        market_source=odds_source,
+                        yes_price=yes_price,
+                        no_price=no_price,
+                        home_elo=features_dict.get('home_composite_elo'),
+                        away_elo=features_dict.get('away_composite_elo'),
+                        injury_advantage=features_dict.get('injury_matchup_advantage')
+                    )
+                    
+                    if logged:
+                        print(f"[BET TRACKED] {picked_team} {best_bet['bet_class']} @ {best_bet['odds']}")
+                    
+                except Exception as e:
+                    print(f"[WARNING] Could not log bet to tracker: {e}")
+            
+            # Legacy paper trading tracker (keep for backward compatibility)
+            if PAPER_TRADING_AVAILABLE and best_bet and best_bet.get('qualifies', False):
                 try:
                     from paper_trading_tracker import PaperTradingTracker
                     tracker = PaperTradingTracker()
@@ -431,13 +670,31 @@ class NBAPredictionEngine:
                         away_team=away_team,
                         prediction_result=result,
                         features=features_dict,
-                        bankroll=10000.0,  # Default bankroll
-                        model_version="v6.0",
-                        notes=f"Edge: {best_bet['edge']:.1%}, Bet: {best_bet['pick']}"
+                        bankroll=10000.0,
+                        model_version="Trial1306",
+                        notes=f"Edge: {best_bet['edge']:.1%}, {best_bet['bet_class']}, Threshold: {best_bet['threshold']:.1%}"
                     )
-                    print(f"[LOGGED] Prediction #{prediction_id} logged: {best_bet['pick']} (edge: {best_bet['edge']:.1%})")
+                    print(f"[LOGGED] Legacy tracker #{prediction_id}")
                 except Exception as e:
-                    print(f"[WARNING] Could not log prediction: {e}")
+                    print(f"[WARNING] Legacy tracker failed: {e}")
+            
+            # Log ALL predictions to daily logger (bet or not) for model performance tracking
+            if self.daily_logger:
+                try:
+                    self.daily_logger.log_prediction(
+                        game_date=game_date,
+                        home_team=home_team,
+                        away_team=away_team,
+                        model_home_prob=home_prob,
+                        model_away_prob=away_prob,
+                        home_odds=home_ml_odds,
+                        away_odds=away_ml_odds,
+                        odds_source=odds_source,
+                        best_bet=best_bet,
+                        features=features_dict
+                    )
+                except Exception as e:
+                    print(f"[WARNING] Daily logger failed: {e}")
             
             return result
             
@@ -447,30 +704,38 @@ class NBAPredictionEngine:
             return {'error': f'Prediction failed: {str(e)}'}
     
     def odds_to_prob(self, american_odds: int) -> float:
-        """Convert American odds to implied probability"""
+        """Convert American odds to implied probability (with vig)"""
         if american_odds > 0:
             return 100 / (american_odds + 100)
         else:
             return abs(american_odds) / (abs(american_odds) + 100)
     
-    def kelly_stake(self, edge: float, odds: int) -> float:
-        """Calculate Kelly criterion stake"""
+    def american_to_decimal(self, american_odds: int) -> float:
+        """Convert American odds to decimal odds"""
+        if american_odds > 0:
+            return (american_odds / 100) + 1
+        else:
+            return (100 / abs(american_odds)) + 1
+    
+    def kelly_stake(self, edge: float, odds: int, win_prob: float) -> float:
+        """Calculate Kelly criterion stake (production formula)"""
         if edge <= 0:
             return 0
         
-        if odds > 0:
-            b = odds / 100
-        else:
-            b = 100 / abs(odds)
+        # Convert to decimal odds
+        decimal_odds = self.american_to_decimal(odds)
+        b = decimal_odds - 1  # Net odds
         
-        p = edge + (1 - edge) / 2  # Approximate win prob
+        # Use actual model win probability (not approximation)
+        p = win_prob
         q = 1 - p
         
-        kelly_fraction = (b * p - q) / b
-        kelly_fraction = max(0, kelly_fraction)
+        # Kelly formula: f* = (bp - q) / b
+        full_kelly = (b * p - q) / b
+        full_kelly = max(0, full_kelly)
         
-        # Apply half-Kelly and max bet limits
-        stake = kelly_fraction * KELLY_FRACTION * self.bankroll
+        # Apply fractional Kelly and max bet limits
+        stake = full_kelly * KELLY_FRACTION * self.bankroll
         stake = min(stake, self.bankroll * MAX_BET_PCT)
         
         return stake
@@ -530,6 +795,56 @@ class GameDetailDialog(QDialog):
             
             prob_group.setLayout(prob_layout)
             layout.addWidget(prob_group)
+            
+            # Market Odds (Kalshi)
+            odds_group = QGroupBox("Market Odds (Kalshi)")
+            odds_layout = QGridLayout()
+            
+            odds_layout.addWidget(QLabel("<b>Team</b>"), 0, 0)
+            odds_layout.addWidget(QLabel("<b>Implied Probability</b>"), 0, 1)
+            odds_layout.addWidget(QLabel("<b>Price</b>"), 0, 2)
+            odds_layout.addWidget(QLabel("<b>Source</b>"), 0, 3)
+            
+            kalshi_home_prob = self.prediction.get('kalshi_home_prob')
+            kalshi_away_prob = self.prediction.get('kalshi_away_prob')
+            yes_price = self.prediction.get('yes_price')
+            no_price = self.prediction.get('no_price')
+            odds_source = self.prediction.get('odds_source', 'Unknown')
+            
+            # Home team odds
+            odds_layout.addWidget(QLabel(f"<b>{self.prediction.get('home_team', 'Home')}</b>"), 1, 0)
+            if kalshi_home_prob is not None:
+                odds_layout.addWidget(QLabel(f"<span style='color: #3498db;'>{kalshi_home_prob:.1%}</span>"), 1, 1)
+            else:
+                odds_layout.addWidget(QLabel("<span style='color: gray;'>N/A</span>"), 1, 1)
+            
+            if yes_price is not None:
+                odds_layout.addWidget(QLabel(f"{yes_price}¢"), 1, 2)
+            else:
+                odds_layout.addWidget(QLabel("<span style='color: gray;'>N/A</span>"), 1, 2)
+            
+            # Away team odds
+            odds_layout.addWidget(QLabel(f"<b>{self.prediction.get('away_team', 'Away')}</b>"), 2, 0)
+            if kalshi_away_prob is not None:
+                odds_layout.addWidget(QLabel(f"<span style='color: #e74c3c;'>{kalshi_away_prob:.1%}</span>"), 2, 1)
+            else:
+                odds_layout.addWidget(QLabel("<span style='color: gray;'>N/A</span>"), 2, 1)
+            
+            if no_price is not None:
+                odds_layout.addWidget(QLabel(f"{no_price}¢"), 2, 2)
+            else:
+                odds_layout.addWidget(QLabel("<span style='color: gray;'>N/A</span>"), 2, 2)
+            
+            # Source (spans both rows)
+            source_label = QLabel(f"<b>{odds_source.upper()}</b>")
+            if odds_source == 'kalshi':
+                source_label.setStyleSheet("color: #27ae60; font-weight: bold;")
+            else:
+                source_label.setStyleSheet("color: #95a5a6; font-weight: bold;")
+            odds_layout.addWidget(source_label, 1, 3, 2, 1)
+            
+            odds_group.setLayout(odds_layout)
+            layout.addWidget(odds_group)
             
             # All Available Bets
             bets_group = QGroupBox("Available Bets (Sorted by Edge)")
@@ -976,20 +1291,48 @@ class PredictionsTab(QWidget):
     def init_ui(self):
         layout = QVBoxLayout()
         
+        # Model Info Panel (Trial 1306)
+        model_info = QGroupBox("📊 Trial 1306 Production Model")
+        model_info_layout = QHBoxLayout()
+        try:
+            version_text = f"Version: {MODEL_VERSION} | Features: 22 | Thresholds: {FAVORITE_EDGE_THRESHOLD*100:.1f}% FAV / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% DOG"
+            roi_text = f"Expected ROI: {TRIAL1306_BACKTEST_ROI*100:.1f}% | Kelly: {KELLY_FRACTION*100:.0f}%"
+        except:
+            version_text = "Version: Unknown | Features: Unknown | Thresholds: Unknown"
+            roi_text = "Expected ROI: Unknown | Kelly: Unknown"
+        
+        model_info_label = QLabel(f"{version_text} | {roi_text}")
+        model_info_label.setStyleSheet("color: #2ecc71; font-weight: bold; padding: 5px;")
+        model_info_layout.addWidget(model_info_label)
+        model_info.setLayout(model_info_layout)
+        layout.addWidget(model_info)
+        
         # Controls
         controls = QHBoxLayout()
         
-        controls.addWidget(QLabel("Days Ahead:"))
+        # Date picker
+        controls.addWidget(QLabel("Select Date:"))
+        self.date_picker = QDateEdit()
+        self.date_picker.setCalendarPopup(True)
+        self.date_picker.setDate(QDate.currentDate())
+        self.date_picker.setDisplayFormat("yyyy-MM-dd")
+        self.date_picker.setToolTip("Select specific date to view games")
+        self.date_picker.dateChanged.connect(self.on_date_changed)
+        controls.addWidget(self.date_picker)
+        
+        controls.addWidget(QLabel("Days to Show:"))
         self.days_spin = QSpinBox()
         self.days_spin.setRange(1, 14)
-        self.days_spin.setValue(1)
+        self.days_spin.setValue(1)  # Default to 1 day (today only)
+        self.days_spin.setToolTip("Number of days to load starting from selected date")
         controls.addWidget(self.days_spin)
         
-        controls.addWidget(QLabel("Min Edge %:"))
+        controls.addWidget(QLabel("Display Filter (Min Edge %):"))
         self.edge_spin = QDoubleSpinBox()
         self.edge_spin.setRange(0, 100)
-        self.edge_spin.setValue(3.0)
+        self.edge_spin.setValue(0.0)  # Default to 0 to show all qualified bets
         self.edge_spin.setSingleStep(0.5)
+        self.edge_spin.setToolTip("Filter table display only (Trial 1306 uses 2%/10% thresholds for bet qualification)")
         self.edge_spin.valueChanged.connect(self.update_table)
         controls.addWidget(self.edge_spin)
         
@@ -1028,9 +1371,9 @@ class PredictionsTab(QWidget):
         
         # Predictions table
         self.table = QTableWidget()
-        self.table.setColumnCount(12)
+        self.table.setColumnCount(13)  # Added Class column
         self.table.setHorizontalHeaderLabels([
-            'Date', 'Time', 'Matchup', 'Best Bet', 'Type', 'Edge', 'Prob', 'Stake', 'Odds', 'Action', 'Wager $', 'Log Bet'
+            'Date', 'Time', 'Matchup', 'Best Bet', 'Type', 'Class', 'Edge', 'Prob', 'Stake', 'Odds', 'Action', 'Wager $', 'Log Bet'
         ])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.table.setSortingEnabled(True)
@@ -1259,12 +1602,21 @@ class PredictionsTab(QWidget):
             self.auto_refresh_timer.stop()
             self.status_label.setText("")
     
+    def on_date_changed(self):
+        """Handle date picker change - auto refresh when date changes"""
+        print(f"[DATE] Selected date changed to: {self.date_picker.date().toString('yyyy-MM-dd')}")
+        # Optionally auto-refresh when date changes
+        # self.refresh_predictions()
+    
     def refresh_predictions(self):
-        """Load predictions using ESPN API for full schedule support"""
+        """Load predictions using ESPN schedule service (includes selected date + future days)"""
         self.status_label.setText("⏳ Loading predictions...")
-        self.predictions = []
         
-        # Get days_ahead from spinner
+        # CRITICAL: Clear predictions AND current_predictions to force fresh data
+        self.predictions = []
+        self.current_predictions = []
+        
+        # Get days_ahead from spinner (includes today as day 0)
         days_ahead = self.days_spin.value()
         
         try:
@@ -1272,18 +1624,72 @@ class PredictionsTab(QWidget):
                 self.status_label.setText("❌ Prediction engine not available")
                 return
             
-            # Use ESPN schedule API for all dates (supports future games)
-            all_games = []
-            for offset in range(days_ahead):
-                target_date = (datetime.now() + timedelta(days=offset)).strftime('%Y-%m-%d')
-                games = self.predictor.espn_schedule.fetch_games_for_date(target_date)
-                all_games.extend(games)
+            # Get games using ESPN schedule service
+            from datetime import datetime, timedelta
             
-            if not all_games:
-                self.status_label.setText(f"No games found in next {days_ahead} day(s)")
+            all_games = []
+            
+            # Get selected date from date picker
+            selected_qdate = self.date_picker.date()
+            start_date = datetime(selected_qdate.year(), selected_qdate.month(), selected_qdate.day())
+            today = datetime.now().strftime('%Y-%m-%d')
+            
+            print(f"\n{'='*60}")
+            print(f"[REFRESH] Starting game fetch - Current date: {today}")
+            print(f"[REFRESH] Selected start date: {start_date.strftime('%Y-%m-%d')}")
+            print(f"[REFRESH] Days to fetch: {days_ahead}")
+            print(f"{'='*60}\n")
+            
+            # Fetch games using ESPN schedule service
+            if ESPN_SCHEDULE_AVAILABLE and hasattr(self.predictor, 'schedule_service') and self.predictor.schedule_service:
+                for day_offset in range(days_ahead):
+                    target_date = start_date + timedelta(days=day_offset)
+                    target_date_str = target_date.strftime('%Y-%m-%d')
+                    
+                    day_label = "TODAY" if target_date_str == today else f"{target_date_str}"
+                    print(f"[ESPN] Fetching games for {day_label}...")
+                    
+                    try:
+                        games = self.predictor.schedule_service.fetch_games_for_date(target_date_str, save_to_db=True)
+                        
+                        for game in games:
+                            print(f"[ESPN]   ✓ {game['away_team']} @ {game['home_team']} on {game['game_date']} at {game['game_time']}")
+                            all_games.append({
+                                'home_team': game['home_team'],
+                                'away_team': game['away_team'],
+                                'game_date': game['game_date'],
+                                'game_time': game['game_time']
+                            })
+                        
+                        print(f"[ESPN] Found {len(games)} games for {target_date_str}\n")
+                    except Exception as api_err:
+                        print(f"[WARNING] ESPN error for {target_date_str}: {api_err}")
+                        import traceback
+                        traceback.print_exc()
+            else:
+                print("[ERROR] ESPN schedule service not available")
+                self.status_label.setText("❌ ESPN schedule service not available")
                 return
             
-            print(f"[ESPN SCHEDULE] Found {len(all_games)} games in next {days_ahead} day(s)")
+            print(f"{'='*60}")
+            print(f"[SCHEDULE] TOTAL GAMES FOUND: {len(all_games)}")
+            
+            # Show breakdown by date
+            if all_games:
+                from collections import defaultdict
+                games_by_date = defaultdict(int)
+                for game in all_games:
+                    games_by_date[game['game_date']] += 1
+                
+                print(f"[SCHEDULE] Breakdown by date:")
+                for date in sorted(games_by_date.keys()):
+                    date_label = " (TODAY)" if date == today else ""
+                    print(f"[SCHEDULE]   {date}{date_label}: {games_by_date[date]} games")
+            print(f"{'='*60}\n")
+            
+            if not all_games:
+                self.status_label.setText(f"No games found for next {days_ahead} day(s)")
+                return
             
             # Get predictions for each game
             for game in all_games:
@@ -1291,12 +1697,13 @@ class PredictionsTab(QWidget):
                     # Check if game is completed
                     game_result = self._check_game_result(game['home_team'], game['away_team'], game['game_date'])
                     
+                    # Prediction will fetch live odds internally via LiveOddsFetcher
                     pred = self.predictor.predict_game(
                         home_team=game['home_team'],
                         away_team=game['away_team'],
                         game_date=game['game_date'],
                         game_time=game.get('game_time', 'TBD'),
-                        home_ml_odds=-110,
+                        home_ml_odds=-110,  # Defaults, will be overridden by LiveOddsFetcher
                         away_ml_odds=-110
                     )
                     if 'error' not in pred:
@@ -1339,7 +1746,8 @@ class PredictionsTab(QWidget):
         show_all = self.show_all_checkbox.isChecked()
         kalshi_only = self.kalshi_only_checkbox.isChecked()
         
-        print(f"[DEBUG] update_table called: show_all={show_all}, min_edge={min_edge:.1%}, total_predictions={len(self.predictions)}")
+        print(f"\n[TABLE UPDATE] show_all={show_all}, min_edge={min_edge:.1%}, kalshi_only={kalshi_only}")
+        print(f"[TABLE UPDATE] Total predictions to filter: {len(self.predictions)}")
         
         # Filter predictions
         filtered = []
@@ -1347,14 +1755,17 @@ class PredictionsTab(QWidget):
             best_bet = pred.get('best_bet')
             all_bets = pred.get('all_bets', [])
             
+            game_label = f"{pred['away_team']} @ {pred['home_team']} ({pred.get('game_date', 'N/A')})"
+            
             # Filter by Kalshi markets only if enabled
             if kalshi_only and not pred.get('has_real_odds', False):
+                print(f"[TABLE UPDATE]   ✗ Filtered out {game_label} (no Kalshi odds)")
                 continue
             
             if show_all:
-                # Show all games, even without positive edge
+                # Show ALL games regardless of edge or qualifying status
                 filtered.append(pred)
-                print(f"[DEBUG] Show all: Added {pred['away_team']} @ {pred['home_team']}")
+                print(f"[TABLE UPDATE]   ✓ Show All: {game_label}")
             elif best_bet:
                 # Handle edge as string or float
                 edge = best_bet.get('edge', 0)
@@ -1366,7 +1777,9 @@ class PredictionsTab(QWidget):
                 
                 if edge >= min_edge:
                     filtered.append(pred)
-                    print(f"[DEBUG] Edge filter: Added {pred['away_team']} @ {pred['home_team']} (edge={edge:.1%})")
+                    print(f"[TABLE UPDATE]   ✓ Edge filter: {game_label} (edge={edge:.1%} >= {min_edge:.1%})")
+                else:
+                    print(f"[TABLE UPDATE]   ✗ Edge too low: {game_label} (edge={edge:.1%} < {min_edge:.1%})")
         
         # Sort by edge
         def sort_key(x):
@@ -1399,7 +1812,11 @@ class PredictionsTab(QWidget):
         self.current_predictions = filtered
         
         self.table.setRowCount(len(filtered))
-        print(f"[DEBUG] Displaying {len(filtered)} predictions in table")
+        print(f"[TABLE UPDATE] Final display: {len(filtered)} games in table")
+        if filtered:
+            dates = set([p.get('game_date', 'N/A') for p in filtered])
+            print(f"[TABLE UPDATE] Dates shown: {sorted(dates)}")
+        print()
         
         total_stake = 0
         bet_count = 0
@@ -1428,8 +1845,8 @@ class PredictionsTab(QWidget):
                 matchup_item.setForeground(QColor(135, 206, 250))  # Light blue for upcoming
             matchup_item.setFont(QFont("Arial", 9, QFont.Weight.Bold))
             matchup_item.setToolTip("Double-click for detailed breakdown")
-            # Store prediction index in item data to handle sorting correctly
-            matchup_item.setData(Qt.ItemDataRole.UserRole, row)
+            # Store actual prediction object in item data for reliable retrieval
+            matchup_item.setData(Qt.ItemDataRole.UserRole, pred)
             self.table.setItem(row, 2, matchup_item)
             
             if best_bet:
@@ -1446,6 +1863,18 @@ class PredictionsTab(QWidget):
                 type_item = QTableWidgetItem(best_bet['type'])
                 type_item.setForeground(QColor(255, 255, 255))
                 self.table.setItem(row, 4, type_item)
+                
+                # Class (FAVORITE / UNDERDOG)
+                bet_class = best_bet.get('bet_class', 'UNKNOWN')
+                class_item = QTableWidgetItem(bet_class)
+                class_item.setForeground(QColor(255, 255, 255))
+                if bet_class == 'FAVORITE':
+                    class_item.setBackground(QColor(0, 51, 102))  # Navy blue for favorites
+                else:
+                    class_item.setBackground(QColor(128, 0, 128))  # Purple for underdogs
+                class_item.setFont(QFont("Arial", 9, QFont.Weight.Bold))
+                class_item.setToolTip(f"Threshold: {best_bet.get('threshold', 0):.1%}")
+                self.table.setItem(row, 5, class_item)
                 
                 # Edge with gradient color system
                 edge_pct = best_bet['edge']
@@ -1472,7 +1901,7 @@ class PredictionsTab(QWidget):
                 else:  # 3-5% = Acceptable (darker green)
                     edge_item.setBackground(QColor(0, 100, 0))  # Very dark green
                 
-                self.table.setItem(row, 5, edge_item)
+                self.table.setItem(row, 6, edge_item)  # Column 6 (was 5)
                 
                 # Prob
                 model_prob = best_bet['model_prob']
@@ -1483,7 +1912,7 @@ class PredictionsTab(QWidget):
                         model_prob = 0.0
                 prob_item = QTableWidgetItem(f"{model_prob:.1%}")
                 prob_item.setForeground(QColor(255, 255, 255))
-                self.table.setItem(row, 6, prob_item)
+                self.table.setItem(row, 7, prob_item)  # Column 7 (was 6)
                 
                 # Stake
                 stake = best_bet['stake']
@@ -1494,44 +1923,54 @@ class PredictionsTab(QWidget):
                         stake = 0.0
                 stake_item = QTableWidgetItem(f"${stake:.2f}")
                 stake_item.setForeground(QColor(255, 255, 255))
-                self.table.setItem(row, 7, stake_item)
+                self.table.setItem(row, 8, stake_item)  # Column 8 (was 7)
                 
                 # Add to total stake (use the cleaned stake value)
                 total_stake += stake
                 
-                # Odds - display Kalshi decimal probability
-                kalshi_home_prob = pred.get('kalshi_home_prob')
-                kalshi_away_prob = pred.get('kalshi_away_prob')
+                # Odds - display Kalshi price (cents) and American odds
+                yes_price = pred.get('yes_price')
+                no_price = pred.get('no_price')
+                odds_source = pred.get('odds_source', 'default')
                 
-                # Show Kalshi implied probability in decimal format (0.67)
-                if best_bet['pick'] == pred['home_team'] and kalshi_home_prob is not None:
-                    odds_str = f"{kalshi_home_prob:.2f}"
-                elif best_bet['pick'] == pred['away_team'] and kalshi_away_prob is not None:
-                    odds_str = f"{kalshi_away_prob:.2f}"
+                # Show Kalshi price for the bet pick
+                if best_bet['pick'] == pred['home_team']:
+                    if yes_price is not None and odds_source == 'kalshi':
+                        odds_str = f"{yes_price}\u00a2 ({best_bet['odds']:+d})"
+                    else:
+                        odds_str = f"{best_bet['odds']:+d}"
+                elif best_bet['pick'] == pred['away_team']:
+                    if no_price is not None and odds_source == 'kalshi':
+                        odds_str = f"{no_price}\u00a2 ({best_bet['odds']:+d})"
+                    else:
+                        odds_str = f"{best_bet['odds']:+d}"
                 else:
-                    odds_str = "TBD"
+                    odds_str = f"{best_bet['odds']:+d}"
                 
                 odds_item = QTableWidgetItem(odds_str)
                 odds_item.setForeground(QColor(255, 255, 255))
-                self.table.setItem(row, 8, odds_item)
+                # Highlight Kalshi odds in green
+                if odds_source == 'kalshi' and (yes_price or no_price):
+                    odds_item.setBackground(QColor(0, 100, 0))
+                self.table.setItem(row, 9, odds_item)  # Column 9 (was 8)
                 
                 # Button
                 place_btn = QPushButton("📝 Details")
                 place_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold;")
                 place_btn.clicked.connect(lambda checked, p=pred: self.show_game_details_from_button(p))
-                self.table.setCellWidget(row, 9, place_btn)
+                self.table.setCellWidget(row, 10, place_btn)  # Column 10 (was 9)
                 
                 # Wager input
                 wager_input = QLineEdit()
                 wager_input.setPlaceholderText("$")
                 wager_input.setMaximumWidth(80)
-                self.table.setCellWidget(row, 10, wager_input)
+                self.table.setCellWidget(row, 11, wager_input)  # Column 11 (was 10)
                 
                 # Log Bet button
                 log_bet_btn = QPushButton("💾 Log")
                 log_bet_btn.setStyleSheet("background-color: #4CAF50; color: white; font-weight: bold;")
                 log_bet_btn.clicked.connect(lambda checked, p=pred: self.log_bet_from_button(p))
-                self.table.setCellWidget(row, 11, log_bet_btn)
+                self.table.setCellWidget(row, 12, log_bet_btn)  # Column 12 (was 11)
             else:
                 # No positive edge bet - show game info without bet details
                 # Best Bet column - show highest edge pick even if negative
@@ -1547,51 +1986,65 @@ class PredictionsTab(QWidget):
                     type_item.setForeground(QColor(200, 200, 200))
                     self.table.setItem(row, 4, type_item)
                     
+                    # Class - show N/A
+                    class_item = QTableWidgetItem("N/A")
+                    class_item.setForeground(QColor(200, 200, 200))
+                    self.table.setItem(row, 5, class_item)
+                    
                     # Edge (negative or low)
                     edge_item = QTableWidgetItem(f"{highest_edge_bet['edge']:+.1%}")
                     edge_item.setForeground(QColor(200, 200, 200))
-                    self.table.setItem(row, 5, edge_item)
+                    self.table.setItem(row, 6, edge_item)
                     
                     # Prob
                     prob_item = QTableWidgetItem(f"{highest_edge_bet['model_prob']:.1%}")
                     prob_item.setForeground(QColor(200, 200, 200))
-                    self.table.setItem(row, 6, prob_item)
+                    self.table.setItem(row, 7, prob_item)
                     
                     # Stake - N/A
                     stake_item = QTableWidgetItem("N/A")
                     stake_item.setForeground(QColor(200, 200, 200))
-                    self.table.setItem(row, 7, stake_item)
+                    self.table.setItem(row, 8, stake_item)
                     
-                    # Odds
-                    kalshi_home_prob = pred.get('kalshi_home_prob')
-                    kalshi_away_prob = pred.get('kalshi_away_prob')
-                    if highest_edge_bet['pick'] == pred['home_team'] and kalshi_home_prob is not None:
-                        odds_str = f"{kalshi_home_prob:.2f}"
-                    elif highest_edge_bet['pick'] == pred['away_team'] and kalshi_away_prob is not None:
-                        odds_str = f"{kalshi_away_prob:.2f}"
+                    # Odds - show Kalshi price if available
+                    yes_price = pred.get('yes_price')
+                    no_price = pred.get('no_price')
+                    odds_source = pred.get('odds_source', 'default')
+                    
+                    if highest_edge_bet['pick'] == pred['home_team']:
+                        if yes_price is not None and odds_source == 'kalshi':
+                            odds_str = f"{yes_price}¢ ({highest_edge_bet['odds']:+d})"
+                        else:
+                            odds_str = f"{highest_edge_bet['odds']:+d}"
+                    elif highest_edge_bet['pick'] == pred['away_team']:
+                        if no_price is not None and odds_source == 'kalshi':
+                            odds_str = f"{no_price}¢ ({highest_edge_bet['odds']:+d})"
+                        else:
+                            odds_str = f"{highest_edge_bet['odds']:+d}"
                     else:
-                        odds_str = "TBD"
+                        odds_str = f"{highest_edge_bet['odds']:+d}"
+                    
                     odds_item = QTableWidgetItem(odds_str)
                     odds_item.setForeground(QColor(200, 200, 200))
-                    self.table.setItem(row, 8, odds_item)
+                    self.table.setItem(row, 9, odds_item)
                 
-                # Button
+                # Button (column 10)
                 view_btn = QPushButton("👁️ View")
                 view_btn.setStyleSheet("background-color: #6c757d; color: white;")
                 view_btn.clicked.connect(lambda checked, p=pred: self.show_game_details_from_button(p))
-                self.table.setCellWidget(row, 9, view_btn)
+                self.table.setCellWidget(row, 10, view_btn)
                 
-                # Wager input
+                # Wager input (column 11)
                 wager_input = QLineEdit()
                 wager_input.setPlaceholderText("$")
                 wager_input.setMaximumWidth(80)
-                self.table.setCellWidget(row, 10, wager_input)
+                self.table.setCellWidget(row, 11, wager_input)
                 
-                # Log Bet button
+                # Log Bet button (column 12)
                 log_bet_btn = QPushButton("💾 Log")
                 log_bet_btn.setStyleSheet("background-color: #4CAF50; color: white; font-weight: bold;")
                 log_bet_btn.clicked.connect(lambda checked, p=pred: self.log_bet_from_button(p))
-                self.table.setCellWidget(row, 11, log_bet_btn)
+                self.table.setCellWidget(row, 12, log_bet_btn)
         
         # Update summary
         bankroll_pct = (total_stake / self.predictor.bankroll) * 100 if self.predictor.bankroll > 0 else 0
@@ -1599,6 +2052,7 @@ class PredictionsTab(QWidget):
             f"📊 Total Games: {len(filtered)} | "
             f"🎯 Recommended Bets: {bet_count} | "
             f"💰 Total Stake: ${total_stake:.2f} ({bankroll_pct:.1f}% of bankroll) | "
+            f"⚙️ Strategy: {FAVORITE_EDGE_THRESHOLD*100:.1f}% FAV / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% DOG | "
             f"💡 Double-click any game for full breakdown"
         )
     
@@ -1749,26 +2203,16 @@ class PredictionsTab(QWidget):
     def show_game_details(self, row, col):
         """Show detailed game info on double-click"""
         try:
-            # Get the actual prediction index from the item data (handles sorting)
+            # Get prediction object directly from item data
             item = self.table.item(row, 2)  # Matchup column
             if item:
-                pred_index = item.data(Qt.ItemDataRole.UserRole)
-                if pred_index is not None and pred_index < len(self.current_predictions):
-                    pred = self.current_predictions[pred_index]
+                pred = item.data(Qt.ItemDataRole.UserRole)
+                if pred and isinstance(pred, dict):
                     dialog = GameDetailDialog(pred, self)
                     dialog.exec()
                     return
             
-            # Fallback: try to find prediction by matchup text
-            if item:
-                matchup_text = item.text()
-                for pred in self.current_predictions:
-                    if f"{pred['away_team']} @ {pred['home_team']}" in matchup_text:
-                        dialog = GameDetailDialog(pred, self)
-                        dialog.exec()
-                        return
-            
-            # Last resort: use row index if within bounds
+            # Fallback: use row index if within bounds
             if row < len(self.current_predictions):
                 pred = self.current_predictions[row]
                 dialog = GameDetailDialog(pred, self)
@@ -2041,15 +2485,16 @@ class SettingsTab(QWidget):
             injury_features = [f for f in self.predictor.features if 'injury' in f.lower() or 'shock' in f.lower() or 'star' in f.lower()]
             model_name = MODEL_PATH.stem
             info_text = f"""
-<b>Model:</b> {model_name} (Dec 12, 2025 PRODUCTION)<br>
+<b>Model:</b> {model_name} - Trial 1306 (PRODUCTION)<br>
 <b>Features:</b> {num_features} Features (Including {len(injury_features)} injury/shock features)<br>
 <b>Feature Calculator:</b> FeatureCalculatorV5 (PRODUCTION)<br>
-<b>Model Performance:</b> 36.7% ROI, 70.8% win rate<br>
+<b>Validated Performance:</b> <font color='#90EE90'><b>49.7% ROI</b></font> (2%/10% thresholds)<br>
+<b>Bet Thresholds:</b> {FAVORITE_EDGE_THRESHOLD*100:.1f}% Favorites / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% Underdogs<br>
 <b>Database:</b> {DATABASE_PATH.name}<br>
 <b>Last Updated:</b> {datetime.now().strftime('%Y-%m-%d')}<br>
 <br>
 <b>Bankroll File:</b> {BANKROLL_SETTINGS_FILE.name}<br>
-<b>Status:</b> ✓ Production Model Loaded (All Injury Features Active)
+<b>Status:</b> ✓ Trial 1306 Production Model Loaded (All Systems Active)
 """
         else:
             info_text = "<b>Status:</b> Predictor not loaded"
@@ -2079,20 +2524,15 @@ class SettingsTab(QWidget):
         kelly_layout.addStretch()
         risk_layout.addLayout(kelly_layout)
         
-        # Minimum Advantage %
-        min_edge_layout = QHBoxLayout()
-        min_edge_layout.addWidget(QLabel("<b>Minimum Edge %:</b>"))
-        self.min_edge_spin = QDoubleSpinBox()
-        self.min_edge_spin.setRange(0.0, 0.50)
-        self.min_edge_spin.setSingleStep(0.01)
-        self.min_edge_spin.setValue(MIN_EDGE)
-        self.min_edge_spin.setDecimals(2)
-        self.min_edge_spin.setSuffix("%")
-        self.min_edge_spin.valueChanged.connect(self.update_risk_settings)
-        min_edge_layout.addWidget(self.min_edge_spin)
-        min_edge_layout.addWidget(QLabel("(Minimum edge to place bet)"))
-        min_edge_layout.addStretch()
-        risk_layout.addLayout(min_edge_layout)
+        # Trial 1306 Thresholds (Informational - Built into Model)
+        threshold_layout = QHBoxLayout()
+        threshold_layout.addWidget(QLabel("<b>Trial 1306 Bet Thresholds:</b>"))
+        threshold_info = QLabel(f"<font color='#90EE90'>{FAVORITE_EDGE_THRESHOLD*100:.1f}% for Favorites | {UNDERDOG_EDGE_THRESHOLD*100:.1f}% for Underdogs</font>")
+        threshold_info.setStyleSheet("font-weight: bold;")
+        threshold_layout.addWidget(threshold_info)
+        threshold_layout.addWidget(QLabel("<font color='gray'>(Built into model, not adjustable)</font>"))
+        threshold_layout.addStretch()
+        risk_layout.addLayout(threshold_layout)
         
         # Maximum Wager %
         max_wager_layout = QHBoxLayout()
@@ -2186,24 +2626,22 @@ class SettingsTab(QWidget):
     def update_risk_display(self):
         """Update the current risk settings display"""
         kelly = self.kelly_spin.value() if hasattr(self, 'kelly_spin') else KELLY_FRACTION
-        min_edge = self.min_edge_spin.value() if hasattr(self, 'min_edge_spin') else MIN_EDGE
         max_wager = self.max_wager_spin.value() if hasattr(self, 'max_wager_spin') else MAX_BET_PCT
         
+        # Trial 1306 uses built-in thresholds (2% fav / 10% dog)
         self.risk_display.setText(
-            f"Current: Kelly {kelly:.0%} | Min Edge {min_edge:.1%} | Max Wager {max_wager:.1%} of bankroll"
+            f"Current: Kelly {kelly:.0%} | Thresholds: {FAVORITE_EDGE_THRESHOLD*100:.1f}% FAV / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% DOG | Max Wager {max_wager:.1%} of bankroll"
         )
     
     def save_risk_settings(self):
         """Save risk management settings to file"""
-        global KELLY_FRACTION, MIN_EDGE, MAX_BET_PCT
+        global KELLY_FRACTION, MAX_BET_PCT
         
         new_kelly = self.kelly_spin.value()
-        new_min_edge = self.min_edge_spin.value()
         new_max_wager = self.max_wager_spin.value()
         
-        # Update global constants
+        # Update global constants (Trial 1306 thresholds are built-in and not saved)
         KELLY_FRACTION = new_kelly
-        MIN_EDGE = new_min_edge
         MAX_BET_PCT = new_max_wager
         
         # Save to bankroll settings file
@@ -2214,7 +2652,6 @@ class SettingsTab(QWidget):
                     settings = json.load(f)
             
             settings['kelly_fraction'] = new_kelly
-            settings['min_edge'] = new_min_edge
             settings['max_bet_pct'] = new_max_wager
             settings['last_updated'] = datetime.now().isoformat()
             
@@ -2227,8 +2664,8 @@ class SettingsTab(QWidget):
                 "Settings Saved",
                 f"Risk management settings updated:\n\n"
                 f"Kelly Criterion: {new_kelly:.0%}\n"
-                f"Minimum Edge: {new_min_edge:.1%}\n"
                 f"Maximum Wager: {new_max_wager:.1%} of bankroll\n\n"
+                f"Note: Trial 1306 thresholds ({FAVORITE_EDGE_THRESHOLD*100:.1f}%/{UNDERDOG_EDGE_THRESHOLD*100:.1f}%) are built-in"
                 f"Settings will apply to new predictions."
             )
         except Exception as e:
@@ -2284,9 +2721,20 @@ class MainWindow(QMainWindow):
         self.performance_tab = PerformanceTab()
         self.settings_tab = SettingsTab(self.predictor, self)
         
-        tabs.addTab(self.predictions_tab, "📊 Predictions")
-        tabs.addTab(self.performance_tab, "📈 Performance")
-        tabs.addTab(self.settings_tab, "⚙️ Settings")
+        # Add Trial 1306 Metrics Tab
+        try:
+            from src.dashboard.metrics_tab import MetricsTab
+            self.metrics_tab = MetricsTab(self.predictor)
+            tabs.addTab(self.predictions_tab, "📊 Predictions")
+            tabs.addTab(self.metrics_tab, "📈 Trial 1306 Metrics")
+            tabs.addTab(self.performance_tab, "📉 Legacy Performance")
+            tabs.addTab(self.settings_tab, "⚙️ Settings")
+            print("[OK] Trial 1306 Metrics tab loaded")
+        except Exception as e:
+            print(f"[WARNING] Could not load Metrics tab: {e}")
+            tabs.addTab(self.predictions_tab, "📊 Predictions")
+            tabs.addTab(self.performance_tab, "📈 Performance")
+            tabs.addTab(self.settings_tab, "⚙️ Settings")
         
         layout.addWidget(tabs)
         central.setLayout(layout)

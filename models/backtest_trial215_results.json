@@ -1,0 +1,26 @@
+{
+  "trial": 215,
+  "study": "nba_matchup_optimized_2000trials",
+  "backtest_date": "2025-12-15 08:44:19",
+  "train_samples": 10749,
+  "test_samples": 1456,
+  "test_logloss": 0.6266313581840951,
+  "test_auc": 0.6987253854227983,
+  "test_brier": 0.2185601932630275,
+  "best_threshold": 0.15,
+  "best_roi": 9.923669973884154,
+  "best_profit": 5031.300676759266,
+  "best_bets": 507,
+  "best_win_pct": 33.13609467455622,
+  "parameters": {
+    "learning_rate": 0.08209813077800787,
+    "max_depth": 3,
+    "min_child_weight": 31,
+    "gamma": 3.832903192660428,
+    "subsample": 0.747168073817956,
+    "colsample_bytree": 0.752717887208254,
+    "reg_lambda": 0.04147416210876145,
+    "reg_alpha": 0.006021201294594808,
+    "scale_pos_weight": 0.9622846385691185
+  }
+}

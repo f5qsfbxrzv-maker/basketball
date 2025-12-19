@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-12-14T14:25:49.601095",
+  "n_features": 37,
+  "n_trials": 2000,
+  "best_trial": 1402,
+  "logloss": 0.6577314471839031,
+  "auc": 0.6280052862093968,
+  "params": {
+    "learning_rate": 0.013386810662562493,
+    "max_depth": 3,
+    "min_child_weight": 18,
+    "subsample": 0.6970105837932676,
+    "colsample_bytree": 0.616286599809018,
+    "gamma": 1.6874118565790672,
+    "reg_alpha": 0.011653183374736519,
+    "reg_lambda": 0.11244784702299791
+  }
+}

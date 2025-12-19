@@ -10,15 +10,33 @@ INITIAL_ELO = 1500
 K_FACTOR = 20
 HOME_ADVANTAGE_ELO = 100
 
-# Off/Def ELO system constants
+# Off/Def ELO system constants - Syndicate Level
 OFF_ELO_BASELINE = 1500
 DEF_ELO_BASELINE = 1500
-SEASON_REGRESSION_FACTOR = 0.75  # Regress 25% toward mean between seasons
-REGULAR_SEASON_BASE_K = 20
-PLAYOFF_BASE_K = 30
-ELO_MARGIN_SCALE = 0.25  # Margin of victory scaling factor
-ELO_POINT_EXPECTATION_SCALE = 10  # Points per 100 ELO difference
+SEASON_REGRESSION_FACTOR = 0.75  # Regress 25% toward mean between seasons (75/25 reversion)
+SEASON_REGRESSION_TARGET = 1505  # Regress toward 1505, not 1500 (syndicate standard)
+
+# Auto-Regressive K-Factors (OPTIMIZED via Grid Search - Log-Loss Minimization)
+EARLY_SEASON_K = 15  # First 20 games (Gold Standard: stable learning rate)
+REGULAR_SEASON_BASE_K = 15  # Games 21+ (Gold Standard: minimizes log-loss)
+EARLY_SEASON_THRESHOLD = 20  # Switch from early to regular K after this many games
+PLAYOFF_BASE_K = 20  # Playoff K-factor (slightly higher reactivity)
+
+# Outcome Hammer (Win/Loss Weighting) - OPTIMIZED
+WIN_WEIGHT = 30.0  # Outcome hammer (Gold Standard: forces respect for W/L records)
+
+# Logarithmic Margin Dampening (fixes Brooklyn blowout issue) - OPTIMIZED
+LOG_MARGIN_DAMPENER = 0.5  # MOV_BIAS cap (prevents margin over-weighting)
+ELO_DIFF_SCALAR = 0.001  # Scales ELO difference impact on margin
+
+ELO_POINT_EXPECTATION_SCALE = 40.0  # Points per 100 ELO difference (OPTIMIZED: prevents explosion)
 LEAGUE_AVG_POINTS = 110  # League average offensive rating
+
+# Rest-Adjusted Home Court Advantage (Dynamic HCA)
+BASE_HCA = 55  # Base home court advantage
+B2B_PENALTY = -15  # Back-to-back game penalty
+THREE_IN_FOUR_PENALTY = -25  # 3 games in 4 nights penalty
+ALTITUDE_BONUS = 10  # Denver/Utah altitude advantage
 
 # Injury ELO adjustments
 INJURY_OFF_SHARE = 0.15  # Injury impact on offensive ELO (15% max)

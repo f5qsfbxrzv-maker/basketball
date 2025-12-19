@@ -16,9 +16,16 @@ from datetime import datetime
 from typing import Dict, Optional
 import logging
 
-# Import player impact values
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from player_impact_values import PLAYER_SPREAD_VALUES, calculate_injury_penalty
+# Import player impact values (optional - graceful degradation)
+try:
+    sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+    from player_impact_values import PLAYER_SPREAD_VALUES, calculate_injury_penalty
+    PLAYER_IMPACT_AVAILABLE = True
+except ImportError:
+    PLAYER_IMPACT_AVAILABLE = False
+    PLAYER_SPREAD_VALUES = {}
+    def calculate_injury_penalty(*args, **kwargs):
+        return 0.0
 
 logger = logging.getLogger(__name__)
 

@@ -1,0 +1,7 @@
+date,team,opponent,moneyline_decimal,mock_model_prob,scenario
+2025-12-16,BOS,DET,1.60,0.645,Safe Favorite - 2% edge should BET
+2025-12-16,LAL,PHX,1.50,0.670,Trap Favorite - 0.3% edge should REJECT
+2025-12-16,WAS,MIL,6.50,0.320,Jackpot Underdog - 16.6% edge should BET
+2025-12-16,CHA,BKN,4.00,0.300,Noise Underdog - 5% edge should REJECT
+2025-12-16,POR,GSW,9.00,0.270,Deep Longshot - 15.9% edge should BET
+2025-12-16,OKC,HOU,1.11,0.920,Mega Favorite - 1.9% edge should BET

@@ -1,0 +1,13 @@
+{
+  "model": "trial1306_22features_fixed_elo",
+  "test_period": "2024-25 season",
+  "total_bets": 1141,
+  "bets_won": 803,
+  "win_rate": 0.7037686240140227,
+  "total_staked": 1141.0,
+  "total_return": 107.22720984070065,
+  "roi_pct": 9.397652045635464,
+  "max_drawdown": 113.48405524546997,
+  "flat_bet_size": 1.0,
+  "timestamp": "20251215_213700"
+}

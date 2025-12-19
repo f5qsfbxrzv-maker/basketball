@@ -1,0 +1,25 @@
+{
+  "study_name": "nba_matchup_optimized_2000trials",
+  "completed": "2025-12-14 22:01:11",
+  "total_trials": 2227,
+  "best_trial": 1990,
+  "best_logloss": 0.6559739847623449,
+  "best_params": {
+    "learning_rate": 0.10517093664973347,
+    "max_depth": 3,
+    "min_child_weight": 31,
+    "gamma": 2.6289518646505914,
+    "subsample": 0.7121981996611145,
+    "colsample_bytree": 0.7296806510710304,
+    "reg_lambda": 0.10693116392071497,
+    "reg_alpha": 0.003325611584639899,
+    "scale_pos_weight": 0.984504337421191
+  },
+  "baseline_logloss": 0.627432,
+  "improvement_pct": -4.549016429245708,
+  "target": "target_moneyline_win",
+  "features": 24,
+  "samples": 12205,
+  "cv_folds": 5,
+  "dataset": "matchup_optimized"
+}

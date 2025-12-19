@@ -1,0 +1,66 @@
+{
+  "hyperparameters": {
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "random_state": 42,
+    "max_depth": 4,
+    "learning_rate": 0.020769259592467147,
+    "n_estimators": 159,
+    "min_child_weight": 5,
+    "subsample": 0.8243298701515044,
+    "colsample_bytree": 0.8674809459438881,
+    "gamma": 3.9188735594576967,
+    "reg_alpha": 1.5075507392154641,
+    "reg_lambda": 0.9080258302252286
+  },
+  "cv_log_loss": 0.6379580500562357,
+  "train_log_loss": 0.621367663002491,
+  "train_accuracy": 0.6576642335766424,
+  "feature_importance": [
+    {
+      "feature": "elo_diff",
+      "importance": 0.3508162200450897
+    },
+    {
+      "feature": "off_elo_diff",
+      "importance": 0.32715827226638794
+    },
+    {
+      "feature": "home_off_elo",
+      "importance": 0.05130315199494362
+    },
+    {
+      "feature": "home_def_elo",
+      "importance": 0.04960354417562485
+    },
+    {
+      "feature": "away_off_elo",
+      "importance": 0.048419687896966934
+    },
+    {
+      "feature": "home_composite_elo",
+      "importance": 0.04707933962345123
+    },
+    {
+      "feature": "def_elo_diff",
+      "importance": 0.04543277621269226
+    },
+    {
+      "feature": "away_composite_elo",
+      "importance": 0.041027601808309555
+    },
+    {
+      "feature": "away_def_elo",
+      "importance": 0.03915940225124359
+    }
+  ],
+  "optimization_date": "2025-12-17T23:21:12.487963",
+  "n_trials": 50,
+  "elo_parameters": {
+    "k_factor": 15.0,
+    "elo_scale": 40.0,
+    "win_weight": 30.0,
+    "mov_bias": 0.5
+  }
+}

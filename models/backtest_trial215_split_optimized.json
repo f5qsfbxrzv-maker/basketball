@@ -1,0 +1,22 @@
+{
+  "strategy": "split_maximize_units",
+  "favorites": {
+    "threshold": 0.01,
+    "bets": 257,
+    "win_rate": 65.36964980544747,
+    "units": 9.807334239899726,
+    "roi": 3.816083361828687
+  },
+  "underdogs": {
+    "threshold": 0.15,
+    "bets": 461,
+    "win_rate": 30.151843817787416,
+    "units": 46.18,
+    "roi": 10.017353579175705
+  },
+  "combined": {
+    "total_bets": 718,
+    "total_units": 55.987334239899724,
+    "total_roi": 7.797678863495783
+  }
+}

@@ -23,6 +23,42 @@ class LiveInjuryUpdater:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
         }
         
+        # Map ESPN team names to standard abbreviations/names
+        self.team_name_map = {
+            # ESPN display name → (Abbreviation, Full Name)
+            'Atlanta Hawks': ('ATL', 'Atlanta Hawks'),
+            'Boston Celtics': ('BOS', 'Boston Celtics'),
+            'Brooklyn Nets': ('BKN', 'Brooklyn Nets'),
+            'Charlotte Hornets': ('CHA', 'Charlotte Hornets'),
+            'Chicago Bulls': ('CHI', 'Chicago Bulls'),
+            'Cleveland Cavaliers': ('CLE', 'Cleveland Cavaliers'),
+            'Dallas Mavericks': ('DAL', 'Dallas Mavericks'),
+            'Denver Nuggets': ('DEN', 'Denver Nuggets'),
+            'Detroit Pistons': ('DET', 'Detroit Pistons'),
+            'Golden State Warriors': ('GSW', 'Golden State Warriors'),
+            'Houston Rockets': ('HOU', 'Houston Rockets'),
+            'Indiana Pacers': ('IND', 'Indiana Pacers'),
+            'LA Clippers': ('LAC', 'LA Clippers'),
+            'Los Angeles Clippers': ('LAC', 'LA Clippers'),
+            'Los Angeles Lakers': ('LAL', 'Los Angeles Lakers'),
+            'Memphis Grizzlies': ('MEM', 'Memphis Grizzlies'),
+            'Miami Heat': ('MIA', 'Miami Heat'),
+            'Milwaukee Bucks': ('MIL', 'Milwaukee Bucks'),
+            'Minnesota Timberwolves': ('MIN', 'Minnesota Timberwolves'),
+            'New Orleans Pelicans': ('NOP', 'New Orleans Pelicans'),
+            'New York Knicks': ('NYK', 'New York Knicks'),
+            'Oklahoma City Thunder': ('OKC', 'Oklahoma City Thunder'),
+            'Orlando Magic': ('ORL', 'Orlando Magic'),
+            'Philadelphia 76ers': ('PHI', 'Philadelphia 76ers'),
+            'Phoenix Suns': ('PHX', 'Phoenix Suns'),
+            'Portland Trail Blazers': ('POR', 'Portland Trail Blazers'),
+            'Sacramento Kings': ('SAC', 'Sacramento Kings'),
+            'San Antonio Spurs': ('SAS', 'San Antonio Spurs'),
+            'Toronto Raptors': ('TOR', 'Toronto Raptors'),
+            'Utah Jazz': ('UTA', 'Utah Jazz'),
+            'Washington Wizards': ('WAS', 'Washington Wizards')
+        }
+        
     def update_active_injuries(self) -> int:
         """
         Fetch current injuries from ESPN and update active_injuries table
@@ -43,8 +79,16 @@ class LiveInjuryUpdater:
             teams = data.get('injuries', [])
             
             for team_data in teams:
-                team_name = team_data.get('displayName', 'Unknown')
+                team_name_raw = team_data.get('displayName', 'Unknown')
                 team_id = team_data.get('id', 'Unknown')
+                
+                # Map to standard team name (use mapping or keep as-is)
+                team_mapping = self.team_name_map.get(team_name_raw)
+                if team_mapping:
+                    team_abbr, team_name = team_mapping
+                else:
+                    team_abbr = 'UNK'
+                    team_name = team_name_raw
                 
                 # Get injuries for this team
                 team_injuries = team_data.get('injuries', [])
@@ -65,7 +109,7 @@ class LiveInjuryUpdater:
                     if player_name and injury_status:
                         all_injuries.append({
                             'player_name': player_name,
-                            'team_name': team_name,
+                            'team_name': team_name,  # Use full name for consistency
                             'team_id': team_id,
                             'position': position,
                             'status': injury_status,

@@ -1,0 +1,6 @@
+{
+  "api_key": "YOUR_KALSHI_API_KEY_HERE",
+  "api_secret": "YOUR_KALSHI_API_SECRET_HERE",
+  "environment": "demo",
+  "comment": "Set environment to 'prod' for live trading"
+}

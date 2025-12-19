@@ -1,0 +1,28 @@
+{
+  "study_name": "nba_matchup_deep_trees_2000trials",
+  "completed": "2025-12-14 23:59:28",
+  "total_trials": 2000,
+  "pruned_trials": 39,
+  "completed_trials": 1961,
+  "best_trial": 686,
+  "best_logloss": 0.6591129995558641,
+  "best_params": {
+    "learning_rate": 0.01241895101070595,
+    "max_depth": 10,
+    "min_child_weight": 71,
+    "gamma": 0.1962740562073534,
+    "subsample": 0.841940748097137,
+    "colsample_bytree": 0.6952424253444123,
+    "reg_lambda": 0.6595182566936718,
+    "reg_alpha": 0.03360643687031214,
+    "scale_pos_weight": 0.9457632106771418
+  },
+  "baseline_logloss": 0.627432,
+  "improvement_pct": -5.049312045905233,
+  "strategy": "deep_trees_low_lr",
+  "target": "target_moneyline_win",
+  "features": 24,
+  "samples": 12205,
+  "cv_folds": 5,
+  "dataset": "matchup_optimized"
+}

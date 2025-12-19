@@ -1,4 +1,4 @@
-"""
+﻿"""
 Update Game Logs - Simple NBA API Data Collector
 Updates game_logs and game_advanced_stats tables with recent games
 """
@@ -19,7 +19,7 @@ try:
     from nba_api.stats.endpoints import leaguegamelog
     from nba_api.stats.static import teams
 except ImportError:
-    print("❌ ERROR: nba_api not installed")
+    print("âŒ ERROR: nba_api not installed")
     print("   Run: pip install nba-api")
     exit(1)
 
@@ -51,7 +51,7 @@ def update_game_logs(season: str = None, last_n_days: int = None):
     
     try:
         # Fetch game logs from NBA API
-        print("\n📥 Fetching game logs from NBA API...")
+        print("\nðŸ“¥ Fetching game logs from NBA API...")
         game_log = leaguegamelog.LeagueGameLog(
             season=season,
             season_type_all_star='Regular Season'
@@ -63,10 +63,10 @@ def update_game_logs(season: str = None, last_n_days: int = None):
         df = game_log.get_data_frames()[0]
         
         if df.empty:
-            print(f"⚠️  No games found for season {season}")
+            print(f"âš ï¸  No games found for season {season}")
             return
         
-        print(f"✅ Fetched {len(df):,} game records")
+        print(f"âœ… Fetched {len(df):,} game records")
         
         # Add game_date column (convert GAME_DATE string to date)
         df['game_date'] = pd.to_datetime(df['GAME_DATE']).dt.date
@@ -75,16 +75,16 @@ def update_game_logs(season: str = None, last_n_days: int = None):
         if last_n_days:
             cutoff_date = datetime.now().date() - timedelta(days=last_n_days)
             df = df[df['game_date'] >= cutoff_date]
-            print(f"📅 Filtered to last {last_n_days} days: {len(df):,} records")
+            print(f"ðŸ“… Filtered to last {last_n_days} days: {len(df):,} records")
         
         # Show date range
-        print(f"📊 Date Range: {df['game_date'].min()} to {df['game_date'].max()}")
+        print(f"ðŸ“Š Date Range: {df['game_date'].min()} to {df['game_date'].max()}")
         
         # Connect to database
         conn = sqlite3.connect(DB_PATH)
         
         # Save to database (replace existing data for this season)
-        print(f"\n💾 Saving to database: {DB_PATH}")
+        print(f"\nðŸ’¾ Saving to database: {DB_PATH}")
         
         # Delete existing records for this date range to avoid duplicates
         cursor = conn.cursor()
@@ -96,26 +96,26 @@ def update_game_logs(season: str = None, last_n_days: int = None):
             (str(min_date), str(max_date))
         )
         deleted = cursor.rowcount
-        print(f"🗑️  Deleted {deleted:,} existing records in date range")
+        print(f"ðŸ—‘ï¸  Deleted {deleted:,} existing records in date range")
         
         # Insert new records
         df.to_sql('game_logs', conn, if_exists='append', index=False)
-        print(f"✅ Inserted {len(df):,} new records")
+        print(f"âœ… Inserted {len(df):,} new records")
         
         # Show summary
         cursor.execute("SELECT COUNT(*), MIN(game_date), MAX(game_date) FROM game_logs")
         total, db_min, db_max = cursor.fetchone()
-        print(f"\n📊 DATABASE SUMMARY:")
+        print(f"\nðŸ“Š DATABASE SUMMARY:")
         print(f"   Total Records: {total:,}")
         print(f"   Date Range: {db_min} to {db_max}")
         
         conn.commit()
         conn.close()
         
-        print("\n✅ UPDATE COMPLETE")
+        print("\nâœ… UPDATE COMPLETE")
         
     except Exception as e:
-        print(f"\n❌ ERROR: {e}")
+        print(f"\nâŒ ERROR: {e}")
         import traceback
         traceback.print_exc()
 
@@ -165,7 +165,7 @@ def show_status():
     recent = cursor.fetchone()[0]
     print(f"  Last 7 Days: {recent:,} games")
     
-    print(f"\n📅 Current Date: {datetime.now().strftime('%Y-%m-%d')}")
+    print(f"\nðŸ“… Current Date: {datetime.now().strftime('%Y-%m-%d')}")
     print("=" * 70)
     
     conn.close()
@@ -186,3 +186,4 @@ if __name__ == "__main__":
         update_game_logs(season=args.season, last_n_days=args.last_n_days)
         print("\n")
         show_status()
+

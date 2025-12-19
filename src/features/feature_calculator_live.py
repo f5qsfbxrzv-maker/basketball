@@ -1358,11 +1358,25 @@ class FeatureCalculatorV5:
                     features['home_composite_elo'] = home_team_elo.composite
                 else:
                     features['home_composite_elo'] = 1500  # Fallback to baseline
+                
+                # Get away team's ELO rating as of game_date
+                away_team_elo = self.offdef_elo_system.get_latest(
+                    away_team, 
+                    season=season,
+                    before_date=str(game_dt.date())
+                )
+                
+                if away_team_elo:
+                    features['away_composite_elo'] = away_team_elo.composite
+                else:
+                    features['away_composite_elo'] = 1500  # Fallback to baseline
             except Exception as e:
                 self.logger.warning(f"Failed to get composite ELO: {e}")
                 features['home_composite_elo'] = 1500
+                features['away_composite_elo'] = 1500
         else:
             features['home_composite_elo'] = 1500  # Fallback if ELO system not available
+            features['away_composite_elo'] = 1500
         
         return features
     

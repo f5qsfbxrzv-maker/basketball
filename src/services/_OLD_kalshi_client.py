@@ -265,33 +265,43 @@ class KalshiClient:
             self.event_logger.event('error', f"Failed to get account info: {e}", category=classify_error(e))
             return {}
     
-    def get_nba_markets(self, status: str = 'open') -> List[Dict]:
+    def get_nba_markets(self, status: str = 'open', market_type: str = 'moneyline') -> List[Dict]:
         """
         Get NBA betting markets
         
         Args:
             status (str): Market status ('open', 'closed', 'settled')
+            market_type (str): Type of market ('moneyline', 'spread', 'total')
             
         Returns:
             list: NBA markets
         """
         self.refresh_token_if_needed()
         
+        # Map market type to series ticker
+        series_map = {
+            'moneyline': 'KXNBAGAME',
+            'spread': 'KXNBASPREAD',
+            'total': 'KXNBATOTAL'
+        }
+        
+        series_ticker = series_map.get(market_type, 'KXNBAGAME')
+        
         # Check cache first
-        cache_key = f"nba_markets_{status}"
+        cache_key = f"nba_markets_{status}_{market_type}"
         if (cache_key in self.markets_cache and 
             time.time() - self.markets_cache[cache_key].get('timestamp', 0) < self.cache_expiry):
             return self.markets_cache[cache_key]['data']
         
         try:
             params = {
-                'event_ticker': 'NBA',
+                'series_ticker': series_ticker,
                 'status': status,
                 'limit': 200
             }
             
-            response = self._make_request('GET', '/events', params=params)
-            markets = response.get('events', [])
+            response = self._make_request('GET', '/markets', params=params)
+            markets = response.get('markets', [])
             
             # Cache results
             self.markets_cache[cache_key] = {
@@ -299,7 +309,7 @@ class KalshiClient:
                 'timestamp': time.time()
             }
             
-            self.event_logger.event('info', f"Retrieved {len(markets)} NBA markets", category='network')
+            self.event_logger.event('info', f"Retrieved {len(markets)} NBA {market_type} markets", category='network')
             return markets
             
         except Exception as e:
