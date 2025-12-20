@@ -2845,20 +2845,22 @@ class MainWindow(QMainWindow):
         # Tabs
         tabs = QTabWidget()
         self.predictions_tab = PredictionsTab(self.predictor, self)
-        self.performance_tab = PerformanceTab()
         self.settings_tab = SettingsTab(self.predictor, self)
         
-        # Add Trial 1306 Metrics Tab
+        # Add Unified Analytics Tab (replaces Trial 1306 + Legacy Performance)
         try:
-            from src.dashboard.metrics_tab import MetricsTab
-            self.metrics_tab = MetricsTab(self.predictor)
+            from src.dashboard.analytics_tab import AnalyticsTab
+            self.analytics_tab = AnalyticsTab(self.predictor, self)
             tabs.addTab(self.predictions_tab, "📊 Predictions")
-            tabs.addTab(self.metrics_tab, "📈 Trial 1306 Metrics")
-            tabs.addTab(self.performance_tab, "📉 Legacy Performance")
+            tabs.addTab(self.analytics_tab, "📈 Analytics & Results")
             tabs.addTab(self.settings_tab, "⚙️ Settings")
-            print("[OK] Trial 1306 Metrics tab loaded")
+            print("[OK] Unified Analytics tab loaded")
         except Exception as e:
-            print(f"[WARNING] Could not load Metrics tab: {e}")
+            print(f"[WARNING] Could not load Analytics tab: {e}")
+            import traceback
+            traceback.print_exc()
+            # Fallback to legacy tabs
+            self.performance_tab = PerformanceTab()
             tabs.addTab(self.predictions_tab, "📊 Predictions")
             tabs.addTab(self.performance_tab, "📈 Performance")
             tabs.addTab(self.settings_tab, "⚙️ Settings")

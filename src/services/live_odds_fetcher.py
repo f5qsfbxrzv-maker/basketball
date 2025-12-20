@@ -107,11 +107,12 @@ class LiveOddsFetcher:
             print(f"[KALSHI] Error parsing credentials: {e}")
             return None, None
     
-    def get_moneyline_odds(self, home_team: str, away_team: str, game_date: str) -> Dict:
+    def get_moneyline_odds(self, home_team: str, away_team: str, game_date: str) -> Optional[Dict]:
         """
         Get moneyline odds for a game
         
         Returns:
+            Dict with odds if available, None if no real market data
             {
                 'home_ml': float (American odds),
                 'away_ml': float (American odds),
@@ -129,14 +130,9 @@ class LiveOddsFetcher:
             except Exception as e:
                 print(f"[KALSHI] Error fetching odds: {e}")
         
-        # Fallback to defaults (-110 both sides)
-        return {
-            'home_ml': -110,
-            'away_ml': -110,
-            'source': 'default',
-            'yes_price': 50.0,
-            'no_price': 50.0
-        }
+        # No default fallback - return None to indicate no real market data available
+        print(f"[ODDS] No real market odds available for {away_team} @ {home_team} on {game_date}")
+        return None
     
     def _fetch_from_kalshi(self, home_team: str, away_team: str, game_date: str) -> Optional[Dict]:
         """Fetch odds from Kalshi API using get_game_markets"""
@@ -148,13 +144,14 @@ class LiveOddsFetcher:
             markets = self.kalshi_client.get_game_markets(home_team, away_team, game_date)
             
             if markets:
-                home_yes_price = markets.get('home_ml_yes_price', 50)
-                away_yes_price = markets.get('away_ml_yes_price', 50)
-                home_ml = markets.get('home_ml', -110)
-                away_ml = markets.get('away_ml', -110)
+                home_yes_price = markets.get('home_ml_yes_price', 0)
+                away_yes_price = markets.get('away_ml_yes_price', 0)
+                home_ml = markets.get('home_ml')
+                away_ml = markets.get('away_ml')
                 
-                # Validate we got real prices (not 0 from closed markets)
-                if home_yes_price > 0 and away_yes_price > 0:
+                # Validate we got real data (all fields must be present and valid)
+                if (home_yes_price > 0 and away_yes_price > 0 and 
+                    home_ml is not None and away_ml is not None):
                     print(f"[KALSHI] Found odds: {home_team} {home_yes_price}c ({home_ml}) vs {away_team} {away_yes_price}c ({away_ml})")
                     return {
                         'home_ml': home_ml,
@@ -164,7 +161,7 @@ class LiveOddsFetcher:
                         'no_price': away_yes_price
                     }
                 else:
-                    print(f"[KALSHI] Market found but no liquidity (prices=0)")
+                    print(f"[KALSHI] Market found but invalid/missing data (home_ml={home_ml}, away_ml={away_ml}, prices={home_yes_price}/{away_yes_price})")
             else:
                 print(f"[KALSHI] No market found for {home_team} vs {away_team}")
             

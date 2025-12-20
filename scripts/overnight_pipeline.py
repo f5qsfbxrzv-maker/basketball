@@ -110,32 +110,3 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"\n❌ PIPELINE FAILED: {e}")
         raise
-    
-    # Step 3: Kelly backtest
-    if not run_script(
-        "scripts/kelly_backtest_36features.py",
-        "Kelly ROI Backtest"
-    ):
-        logger.error("Pipeline aborted: Backtest failed")
-        return
-    
-    # Step 4: Summary report
-    if not run_script(
-        "scripts/generate_summary_report.py",
-        "Summary Report Generation"
-    ):
-        logger.warning("Summary report failed (non-critical)")
-    
-    total_elapsed = time.time() - pipeline_start
-    
-    logger.info("\n" + "="*80)
-    logger.info("🎉 OVERNIGHT PIPELINE COMPLETED SUCCESSFULLY")
-    logger.info(f"Total time: {total_elapsed/3600:.2f} hours")
-    logger.info("="*80)
-    logger.info("\nCheck these files:")
-    logger.info("  - models/xgboost_36features_tuned.pkl (final model)")
-    logger.info("  - output/kelly_backtest_36features.csv (bet log)")
-    logger.info("  - output/overnight_pipeline_summary.md (report)")
-
-if __name__ == "__main__":
-    main()

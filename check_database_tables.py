@@ -1,24 +1,32 @@
 import sqlite3
-conn = sqlite3.connect('nba_betting_data.db')
+
+DB_PATH = r"data\live\nba_betting_data.db"
+conn = sqlite3.connect(DB_PATH)
 cur = conn.cursor()
 
-print("Tables in database:")
+# Get all tables
 cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+tables = cur.fetchall()
+
+print("=== ALL TABLES IN DATABASE ===")
+for table in tables:
+    table_name = table[0]
+    cur.execute(f"SELECT COUNT(*) FROM {table_name}")
+    count = cur.fetchone()[0]
+    print(f"{table_name}: {count} rows")
+
+print("\n=== CHECKING ACTIVE_INJURIES ===")
+cur.execute("SELECT COUNT(*) FROM active_injuries")
+print(f"Total injuries: {cur.fetchone()[0]}")
+
+cur.execute("SELECT team, COUNT(*) FROM active_injuries GROUP BY team ORDER BY COUNT(*) DESC LIMIT 10")
+print("\nTeams with most injuries:")
 for row in cur.fetchall():
-    print(f"  {row[0]}")
+    print(f"  {row[0]}: {row[1]} players")
 
-print("\nSeasons in game_results:")
-cur.execute("SELECT season, COUNT(*) FROM game_results GROUP BY season ORDER BY season")
+print("\n=== SAMPLE INJURY RECORDS ===")
+cur.execute("SELECT team, player_name, status, injury_type FROM active_injuries LIMIT 5")
 for row in cur.fetchall():
-    print(f"  {row[0]}: {row[1]} games")
-
-print("\nTotal games:")
-cur.execute("SELECT COUNT(*) FROM game_results")
-print(f"  {cur.fetchone()[0]} games")
-
-# Check if there are other tables with historical game data
-cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE '%game%'")
-game_tables = cur.fetchall()
-print(f"\nGame-related tables: {[t[0] for t in game_tables]}")
+    print(f"  {row[0]}: {row[1]} - {row[2]} ({row[3]})")
 
 conn.close()

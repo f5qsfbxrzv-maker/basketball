@@ -1,0 +1,184 @@
+{
+  "variant": "c",
+  "description": "Consolidate foul features (20 features: keep total_foul_environment)",
+  "timestamp": "2025-12-19T15:58:43.810693",
+  "n_features": 20,
+  "features": [
+    "home_composite_elo",
+    "away_composite_elo",
+    "off_elo_diff",
+    "def_elo_diff",
+    "net_fatigue_score",
+    "ewma_efg_diff",
+    "ewma_pace_diff",
+    "ewma_tov_diff",
+    "ewma_orb_diff",
+    "ewma_vol_3p_diff",
+    "injury_matchup_advantage",
+    "ewma_chaos_home",
+    "total_foul_environment",
+    "league_offensive_context",
+    "season_progress",
+    "pace_efficiency_interaction",
+    "projected_possession_margin",
+    "three_point_matchup",
+    "star_power_leverage",
+    "offense_vs_defense_matchup"
+  ],
+  "removed_features": [
+    "net_free_throw_advantage",
+    "ewma_foul_synergy_home"
+  ],
+  "hyperparameters": {
+    "max_depth": 3,
+    "min_child_weight": 25,
+    "gamma": 5.162427047142856,
+    "learning_rate": 0.010519422544676995,
+    "n_estimators": 9947,
+    "subsample": 0.6277685565263181,
+    "colsample_bytree": 0.6014538139159614,
+    "reg_alpha": 6.193992559265241,
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "random_state": 42
+  },
+  "cv_log_loss": 0.6318518506799778,
+  "cv_accuracy": 0.6406096361848574,
+  "cv_auc": 0.6872277923720918,
+  "train_log_loss": 0.6094401750296728,
+  "train_accuracy": 0.6626792298238426,
+  "train_auc": 0.7188218274913913,
+  "n_samples": 12205,
+  "fold_results": [
+    {
+      "fold": 1,
+      "log_loss": 0.6321652325288154,
+      "accuracy": 0.6352015732546706,
+      "auc": 0.6754352054073873,
+      "train_size": 2035,
+      "val_size": 2034
+    },
+    {
+      "fold": 2,
+      "log_loss": 0.6376909374248108,
+      "accuracy": 0.632251720747296,
+      "auc": 0.6797962481764016,
+      "train_size": 4069,
+      "val_size": 2034
+    },
+    {
+      "fold": 3,
+      "log_loss": 0.6391008403160279,
+      "accuracy": 0.632251720747296,
+      "auc": 0.681299130952439,
+      "train_size": 6103,
+      "val_size": 2034
+    },
+    {
+      "fold": 4,
+      "log_loss": 0.6328739966526113,
+      "accuracy": 0.6396263520157326,
+      "auc": 0.6790796138018361,
+      "train_size": 8137,
+      "val_size": 2034
+    },
+    {
+      "fold": 5,
+      "log_loss": 0.6174282464776233,
+      "accuracy": 0.6637168141592921,
+      "auc": 0.7205287635223941,
+      "train_size": 10171,
+      "val_size": 2034
+    }
+  ],
+  "feature_importance": [
+    {
+      "feature": "off_elo_diff",
+      "importance": 0.2096019983291626
+    },
+    {
+      "feature": "home_composite_elo",
+      "importance": 0.09439116716384888
+    },
+    {
+      "feature": "away_composite_elo",
+      "importance": 0.08829086273908615
+    },
+    {
+      "feature": "def_elo_diff",
+      "importance": 0.06351606547832489
+    },
+    {
+      "feature": "league_offensive_context",
+      "importance": 0.05348653346300125
+    },
+    {
+      "feature": "net_fatigue_score",
+      "importance": 0.043395716696977615
+    },
+    {
+      "feature": "ewma_pace_diff",
+      "importance": 0.03787589445710182
+    },
+    {
+      "feature": "ewma_efg_diff",
+      "importance": 0.03666611388325691
+    },
+    {
+      "feature": "injury_matchup_advantage",
+      "importance": 0.03449270501732826
+    },
+    {
+      "feature": "pace_efficiency_interaction",
+      "importance": 0.032761357724666595
+    },
+    {
+      "feature": "ewma_orb_diff",
+      "importance": 0.03273478522896767
+    },
+    {
+      "feature": "offense_vs_defense_matchup",
+      "importance": 0.03139801695942879
+    },
+    {
+      "feature": "ewma_chaos_home",
+      "importance": 0.03118891268968582
+    },
+    {
+      "feature": "total_foul_environment",
+      "importance": 0.03111642599105835
+    },
+    {
+      "feature": "season_progress",
+      "importance": 0.03094194084405899
+    },
+    {
+      "feature": "projected_possession_margin",
+      "importance": 0.03076154924929142
+    },
+    {
+      "feature": "three_point_matchup",
+      "importance": 0.029481077566742897
+    },
+    {
+      "feature": "star_power_leverage",
+      "importance": 0.02938992530107498
+    },
+    {
+      "feature": "ewma_tov_diff",
+      "importance": 0.029346348717808723
+    },
+    {
+      "feature": "ewma_vol_3p_diff",
+      "importance": 0.02916254848241806
+    }
+  ],
+  "baseline_comparison": {
+    "baseline_log_loss": 0.633,
+    "baseline_accuracy": 0.6389,
+    "delta_log_loss": -0.0011481493200221626,
+    "delta_accuracy": 0.0017096361848574215,
+    "within_tolerance": true
+  }
+}

@@ -13,10 +13,10 @@ sys.path.insert(0, '.')
 
 from src.features.off_def_elo_system import OffDefEloSystem
 
-DB_PATH = r"c:\Users\d76do\OneDrive\Documents\New Basketball Model\nba_betting_data.db"
+DB_PATH = r"data\live\nba_betting_data.db"
 
 print("=" * 80)
-print("INITIALIZING ELO RATINGS FOR 2024-25 SEASON")
+print("INITIALIZING ELO RATINGS FOR 2025-26 SEASON")
 print("=" * 80)
 
 # Get all NBA teams
@@ -25,13 +25,13 @@ team_abbrevs = [team['abbreviation'] for team in nba_teams]
 
 print(f"\n✅ Found {len(team_abbrevs)} NBA teams")
 
-# Download 2024-25 season games
-print("\n📥 Downloading 2024-25 season games from NBA API...")
+# Download 2025-26 season games
+print("\n📥 Downloading 2025-26 season games from NBA API...")
 print("   (This may take 30-60 seconds due to rate limiting...)")
 
 try:
     gamefinder = leaguegamefinder.LeagueGameFinder(
-        season_nullable='2024-25',
+        season_nullable='2025-26',
         season_type_nullable='Regular Season',
         league_id_nullable='00'
     )
@@ -72,7 +72,7 @@ try:
             'away_team': away_row['TEAM_ABBREVIATION'],
             'home_score': home_row['PTS'],
             'away_score': away_row['PTS'],
-            'season': '2024-25'
+            'season': '2025-26'
         })
         
         processed_ids.add(game_id)
@@ -134,7 +134,7 @@ try:
             records[home]['losses'] += 1
     
     print("\n" + "=" * 80)
-    print("TEAM RECORDS (2024-25)")
+    print("TEAM RECORDS (2025-26)")
     print("=" * 80)
     for team in sorted(records.keys()):
         rec = records[team]
@@ -148,7 +148,7 @@ try:
     elo_system = OffDefEloSystem(DB_PATH)
     
     # Initialize all teams
-    elo_system.initialize_season('2024-25', team_abbrevs)
+    elo_system.initialize_season('2025-26', team_abbrevs)
     print(f"✅ Initialized {len(team_abbrevs)} teams with baseline ELO (1500)")
     
     # Process games in chronological order
@@ -159,7 +159,7 @@ try:
             print(f"   Processed {i}/{len(sorted_games)} games...")
         
         elo_system.update_game(
-            season='2024-25',
+            season='2025-26',
             game_date=game['game_date'],
             home_team=game['home_team'],
             away_team=game['away_team'],
@@ -178,7 +178,7 @@ try:
     cursor.execute("""
         SELECT team, MAX(composite_elo) as elo, MAX(game_date) as last_game
         FROM elo_ratings
-        WHERE season = '2024-25'
+        WHERE season = '2025-26'
         GROUP BY team
         ORDER BY elo DESC
     """)

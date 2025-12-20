@@ -47,11 +47,8 @@ try:
 except Exception:
     MASTER_DB_PATH = "nba_betting_data.db"
 
-# Feature whitelist for SHAP-based pruning
-try:
-    from config.feature_whitelist import FEATURE_WHITELIST
-except ImportError:
-    FEATURE_WHITELIST = None  # Fall back to all features if not available
+# Feature whitelist disabled for MDP model (uses all 19 computed features)
+FEATURE_WHITELIST = None  # No filtering - return all computed features
 
 # Advanced Off/Def ELO system (optional)
 try:
@@ -202,22 +199,27 @@ class FeatureCalculatorV5:
                     except Exception:
                         return 0
 
-                # --- Game Results ---
-                gr_count = _table_count('game_results')
-                if gr_count == 0:
-                    # fallback: try to read whole table (may be empty)
-                    self.game_results_df = pd.read_sql_query("SELECT * FROM game_results", conn)
-                elif gr_count > 20000:
-                    # Large history detected ΓÇö load only the most recent N rows to bound memory use
-                    self.logger.info(f"game_results too large ({gr_count} rows). Loading recent 20000 rows only to limit memory.")
-                    self.game_results_df = pd.read_sql_query(
-                        "SELECT * FROM game_results ORDER BY game_date DESC LIMIT 20000", conn
-                    )
-                    # Restore chronological order
-                    if not self.game_results_df.empty:
-                        self.game_results_df = self.game_results_df.iloc[::-1].reset_index(drop=True)
-                else:
-                    self.game_results_df = pd.read_sql_query("SELECT * FROM game_results", conn)
+                # --- Game Results (Using game_logs as source) ---
+                # NOTE: game_results table doesn't exist in live DB, use game_logs instead
+                try:
+                    gr_count = _table_count('game_logs')
+                    if gr_count == 0:
+                        # fallback: try to read whole table (may be empty)
+                        self.game_results_df = pd.read_sql_query("SELECT * FROM game_logs", conn)
+                    elif gr_count > 20000:
+                        # Large history detected ΓÇö load only the most recent N rows to bound memory use
+                        self.logger.info(f"game_logs too large ({gr_count} rows). Loading recent 20000 rows only to limit memory.")
+                        self.game_results_df = pd.read_sql_query(
+                            "SELECT * FROM game_logs ORDER BY GAME_DATE DESC LIMIT 20000", conn
+                        )
+                        # Restore chronological order
+                        if not self.game_results_df.empty:
+                            self.game_results_df = self.game_results_df.iloc[::-1].reset_index(drop=True)
+                    else:
+                        self.game_results_df = pd.read_sql_query("SELECT * FROM game_logs", conn)
+                except Exception as e:
+                    self.logger.warning(f"game_logs load failed: {e}")
+                    self.game_results_df = pd.DataFrame()
 
                 if not self.game_results_df.empty:
                     date_col = 'GAME_DATE' if 'GAME_DATE' in self.game_results_df.columns else 'game_date'
@@ -373,6 +375,13 @@ class FeatureCalculatorV5:
             self.sos_map = {}
             return
         
+        # Check if game_results_df has the required columns (from original game_results table)
+        # game_logs schema doesn't have home_team/away_team, so skip SOS calculation
+        if 'home_team' not in self.game_results_df.columns or 'away_team' not in self.game_results_df.columns:
+            self.logger.warning("SOS calculation skipped: game_results_df missing home_team/away_team columns")
+            self.sos_map = {}
+            return
+        
         # Get mapping of Team -> Net Rating (use actual column names)
         if 'net_rating' in self.team_stats_df.columns:
             # Handle both 'team_name' and 'TEAM_NAME' column variations
@@ -390,85 +399,88 @@ class FeatureCalculatorV5:
                 (self.game_results_df['home_team'] == team) |
                 (self.game_results_df['away_team'] == team)
             ]
-            def get_pbp_features(self, game_id: str) -> dict:
-                """
-                Aggregate play-by-play features for a given game_id from pbp_logs table.
-                Returns a dict with possessions, scoring runs, clutch events, and event counts.
-                """
-                try:
-                    with sqlite3.connect(self.db_path) as conn:
-                        pbp_df = pd.read_sql_query(
-                            "SELECT * FROM pbp_logs WHERE game_id = ?", conn, params=(game_id,)
-                        )
-                except Exception as e:
-                    self.logger.warning(f"PBP feature extraction failed for {game_id}: {e}")
-                    return {
-                        'pbp_event_count': 0,
-                        'possessions': 0,
-                        'scoring_runs': 0,
-                        'clutch_events': 0
-                    }
-
-                if pbp_df.empty:
-                    return {
-                        'pbp_event_count': 0,
-                        'possessions': 0,
-                        'scoring_runs': 0,
-                        'clutch_events': 0
-                    }
-
-                # Possessions: count of change of possession events (NBA MSGTYPE 1, 2, 3, 4, 5, 6, 7)
-                possession_types = [1, 2, 3, 4, 5, 6, 7]
-                possessions = pbp_df[pbp_df['event_type'].isin(possession_types)].shape[0]
-
-                # Scoring runs: count runs of consecutive scoring events (MSGTYPE 1 = Made Shot, 3 = Free Throw)
-                scoring_types = [1, 3]
-                scoring_events = pbp_df[pbp_df['event_type'].isin(scoring_types)]
-                scoring_runs = 0
-                last_team = None
-                run_length = 0
-                for _, row in scoring_events.iterrows():
-                    desc = row['event_description']
-                    if 'makes' in desc or 'free throw' in desc:
-                        team = 'home' if row['home_score'] > row['away_score'] else 'away'
-                        if team == last_team:
-                            run_length += 1
-                        else:
-                            if run_length >= 3:
-                                scoring_runs += 1
-                            run_length = 1
-                            last_team = team
-                if run_length >= 3:
-                    scoring_runs += 1
-
-                # Clutch events: last 2 minutes of 4th quarter or OT, close score (<=5 points)
-                clutch_events = pbp_df[
-                    (pbp_df['period'] >= 4) &
-                    (pbp_df['clock'].str.startswith('00:')) &
-                    (abs(pbp_df['home_score'] - pbp_df['away_score']) <= 5)
-                ].shape[0]
-
-                return {
-                    'pbp_event_count': pbp_df.shape[0],
-                    'possessions': possessions,
-                    'scoring_runs': scoring_runs,
-                    'clutch_events': clutch_events
-                }
             
-            # Extract opponents list
+            if team_games.empty:
+                sos[team] = 0
+                continue
+            
+            # Get opponents for this team
             opponents = []
             for _, row in team_games.iterrows():
                 opp = row['away_team'] if row['home_team'] == team else row['home_team']
                 opponents.append(opp)
             
-            # Average their ratings
-            if opponents:
-                avg_opp_rating = np.mean([ratings.get(opp, 0) for opp in opponents])
-                sos[team] = avg_opp_rating
-            else:
-                sos[team] = 0
+            # Average opponent rating
+            opp_ratings = [ratings.get(opp, 0) for opp in opponents]
+            sos[team] = sum(opp_ratings) / len(opp_ratings) if opp_ratings else 0
         
         self.sos_map = sos
+
+    def get_pbp_features(self, game_id: str) -> dict:
+        """
+        Aggregate play-by-play features for a given game_id from pbp_logs table.
+        Returns a dict with possessions, scoring runs, clutch events, and event counts.
+        """
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                pbp_df = pd.read_sql_query(
+                    "SELECT * FROM pbp_logs WHERE game_id = ?", conn, params=(game_id,)
+                )
+        except Exception as e:
+            self.logger.warning(f"PBP feature extraction failed for {game_id}: {e}")
+            return {
+                'pbp_event_count': 0,
+                'possessions': 0,
+                'scoring_runs': 0,
+                'clutch_events': 0
+            }
+
+        if pbp_df.empty:
+            return {
+                'pbp_event_count': 0,
+                'possessions': 0,
+                'scoring_runs': 0,
+                'clutch_events': 0
+            }
+
+        # Possessions: count of change of possession events (NBA MSGTYPE 1, 2, 3, 4, 5, 6, 7)
+        possession_types = [1, 2, 3, 4, 5, 6, 7]
+        possessions = pbp_df[pbp_df['event_type'].isin(possession_types)].shape[0]
+
+        # Scoring runs: count runs of consecutive scoring events (MSGTYPE 1 = Made Shot, 3 = Free Throw)
+        scoring_types = [1, 3]
+        scoring_events = pbp_df[pbp_df['event_type'].isin(scoring_types)]
+        scoring_runs = 0
+        last_team = None
+        run_length = 0
+        for _, row in scoring_events.iterrows():
+            desc = row['event_description']
+            if 'makes' in desc or 'free throw' in desc:
+                team = 'home' if row['home_score'] > row['away_score'] else 'away'
+                if team == last_team:
+                    run_length += 1
+                else:
+                    if run_length >= 3:
+                        scoring_runs += 1
+                    run_length = 1
+                    last_team = team
+        if run_length >= 3:
+            scoring_runs += 1
+
+        # Clutch events: last 2 minutes of 4th quarter or OT, close score (<=5 points)
+        clutch_events = pbp_df[
+            (pbp_df['period'] >= 4) &
+            (pbp_df['clock'].str.startswith('00:')) &
+            (abs(pbp_df['home_score'] - pbp_df['away_score']) <= 5)
+        ].shape[0]
+
+        return {
+            'pbp_event_count': pbp_df.shape[0],
+            'possessions': possessions,
+            'scoring_runs': scoring_runs,
+            'clutch_events': clutch_events
+        }
+
         self.logger.info(f"Calculated SOS for {len(sos)} teams")
     
     def _initialize_elo_from_history(self, season: str = "2025-26"):
@@ -531,7 +543,7 @@ class FeatureCalculatorV5:
         self,
         home_team: str,
         away_team: str,
-        season: str = "2024-25",
+        season: str = "2025-26",
         use_recency: bool = True,
         games_back: int = 10,
         game_date: str = None,
@@ -552,7 +564,7 @@ class FeatureCalculatorV5:
         Args:
             home_team: Home team name
             away_team: Away team name
-            season: Season string (e.g., "2024-25")
+            season: Season string (e.g., "2025-26")
             use_recency: Whether to use recency-weighted stats
             games_back: Number of recent games for rolling average
             game_date: Date of game (YYYY-MM-DD format)
@@ -570,6 +582,9 @@ class FeatureCalculatorV5:
         """
         if game_date is None:
             game_date = datetime.now().strftime('%Y-%m-%d')
+            use_live_injuries = True  # Flag for live prediction mode
+        else:
+            use_live_injuries = False  # Historical mode
         
         current_date = datetime.strptime(game_date, '%Y-%m-%d')
         
@@ -612,10 +627,10 @@ class FeatureCalculatorV5:
 
         # Injury impact (value-weighted) differential
         # Use historical injuries if game_date provided (backtesting), else live injuries
-        if game_date:
-            injury_data = self._calculate_historical_injury_impact(home_team, away_team, game_date)
-        else:
+        if use_live_injuries:
             injury_data = self._calculate_injury_impact(home_team, away_team)
+        else:
+            injury_data = self._calculate_historical_injury_impact(home_team, away_team, game_date)
         
         features.update(injury_data)
         
@@ -665,10 +680,9 @@ class FeatureCalculatorV5:
           + 0.031316 * features['star_mismatch']         # Star binary flags (49%)
         )
         
-        # Remove individual components (signal now in injury_leverage)
+        # NOTE: Keep injury_shock_diff and star_mismatch for MDP model
+        # Only remove injury_impact_diff (redundant with injury_matchup_advantage)
         del features['injury_impact_diff']
-        del features['injury_shock_diff']
-        del features['star_mismatch']
         
         # ====================================================================
         # SYNDICATE ELO MATCHUP ADVANTAGES (Tier 1 "Elite" Features)
@@ -680,17 +694,19 @@ class FeatureCalculatorV5:
         
         if getattr(self, 'offdef_elo_system', None):
             try:
-                # Get raw ratings (not differentials)
-                home_ratings = self.offdef_elo_system.get_rating(season, home_team)
-                away_ratings = self.offdef_elo_system.get_rating(season, away_team)
+                # Get raw ratings (not differentials) using get_latest() method
+                # get_latest() returns TeamElo dataclass with off_elo, def_elo, composite properties
+                home_ratings = self.offdef_elo_system.get_latest(home_team, season, before_date=game_date)
+                away_ratings = self.offdef_elo_system.get_latest(away_team, season, before_date=game_date)
                 
-                home_off = home_ratings.get('off_elo', 1500)
-                home_def = home_ratings.get('def_elo', 1500)
-                home_composite = home_ratings.get('composite', 1500)
+                # Handle None return (team not found or no ratings before date)
+                home_off = home_ratings.off_elo if home_ratings else 1500
+                home_def = home_ratings.def_elo if home_ratings else 1500
+                home_composite = home_ratings.composite if home_ratings else 1500
                 
-                away_off = away_ratings.get('off_elo', 1500)
-                away_def = away_ratings.get('def_elo', 1500)
-                away_composite = away_ratings.get('composite', 1500)
+                away_off = away_ratings.off_elo if away_ratings else 1500
+                away_def = away_ratings.def_elo if away_ratings else 1500
+                away_composite = away_ratings.composite if away_ratings else 1500
                 
                 # SYNDICATE MATCHUP FEATURES (3 "Elite" signals)
                 # 1. Can the home team score against away defense?
@@ -723,6 +739,112 @@ class FeatureCalculatorV5:
         features['h_def_rating'] = home_stats.get('def_rating', 110)
         features['a_off_rating'] = away_stats.get('off_rating', 110)
         features['a_def_rating'] = away_stats.get('def_rating', 110)
+        
+        # ====================================================================
+        # MDP FEATURE ALIASES & MISSING COMPUTATIONS
+        # ====================================================================
+        # Map internal feature names to MDP model expected names
+        # MDP was trained on these exact feature names from training_data_MDP_with_margins.csv
+        
+        # ELO features: off_matchup_advantage/def_matchup_advantage → off_elo_diff/def_elo_diff
+        if 'off_matchup_advantage' in features:
+            features['off_elo_diff'] = features['off_matchup_advantage']
+        if 'def_matchup_advantage' in features:
+            features['def_elo_diff'] = features['def_matchup_advantage']
+        
+        # Composite ELO: Extract home composite from OffDefEloSystem
+        if getattr(self, 'offdef_elo_system', None):
+            try:
+                home_ratings = self.offdef_elo_system.get_latest(home_team, season, before_date=game_date)
+                features['home_composite_elo'] = home_ratings.composite if home_ratings else 1500
+            except:
+                features['home_composite_elo'] = 1500
+        else:
+            features['home_composite_elo'] = 1500
+        
+        # Possession margin: Volume efficiency diff → projected possession margin  
+        if 'volume_efficiency_diff' in features:
+            features['projected_possession_margin'] = features['volume_efficiency_diff']
+        else:
+            features['projected_possession_margin'] = 0
+        
+        # Three-point matchup: Use effective_shooting_gap or create from EWMA
+        if 'effective_shooting_gap' in features:
+            features['three_point_matchup'] = features['effective_shooting_gap']
+        elif 'home_ewma_3p_pct' in features and 'away_ewma_3p_pct' in features:
+            features['three_point_matchup'] = features['home_ewma_3p_pct'] - features['away_ewma_3p_pct']
+        else:
+            features['three_point_matchup'] = 0
+        
+        # EFG differential from EWMA
+        if 'effective_shooting_gap' in features:
+            features['ewma_efg_diff'] = features['effective_shooting_gap']
+        else:
+            features['ewma_efg_diff'] = 0
+        
+        # Free throw advantage: whistle_leverage → net_free_throw_advantage
+        if 'whistle_leverage' in features:
+            features['net_free_throw_advantage'] = features['whistle_leverage']
+        else:
+            features['net_free_throw_advantage'] = 0
+        
+        # Offense vs defense matchup: Use net_composite_advantage or compute
+        if 'net_composite_advantage' in features:
+            features['offense_vs_defense_matchup'] = features['net_composite_advantage']
+        else:
+            features['offense_vs_defense_matchup'] = 0
+        
+        # Pace-efficiency interaction: pace_diff × efg_diff
+        pace_diff = features.get('ewma_pace_diff', 0)
+        efg_diff = features.get('ewma_efg_diff', 0)
+        features['pace_efficiency_interaction'] = pace_diff * efg_diff / 100.0  # Normalize
+        
+        # Fatigue score: Use rest_days_diff if available
+        if 'rest_days_diff' in features:
+            features['net_fatigue_score'] = -features['rest_days_diff']  # Negative rest = fatigue
+        else:
+            features['net_fatigue_score'] = 0
+        
+        # Season progress: Calculate from game date
+        try:
+            season_start = datetime(int(season[:4]), 10, 15)  # NBA season starts ~Oct 15
+            season_end = datetime(int(season[:4]) + 1, 4, 15)  # Regular season ends ~Apr 15
+            total_days = (season_end - season_start).days
+            days_into_season = (current_date - season_start).days
+            features['season_progress'] = max(0, min(1, days_into_season / total_days))
+        except:
+            features['season_progress'] = 0.5
+        
+        # League offensive context: Use league-wide pace/efficiency baseline
+        # Placeholder: NBA average ORtg ~115 in 2024-25
+        LEAGUE_ORTG_2024 = 115.0
+        home_ortg = home_stats.get('off_rating', LEAGUE_ORTG_2024)
+        away_ortg = away_stats.get('off_rating', LEAGUE_ORTG_2024)
+        features['league_offensive_context'] = (home_ortg + away_ortg) / 2 - LEAGUE_ORTG_2024
+        
+        # Injury features: Create MDP-expected names from injury_leverage components
+        # MDP expects: injury_matchup_advantage, injury_shock_diff, star_power_leverage
+        
+        # injury_matchup_advantage: Direct PIE differential (before we deleted it)
+        # Recompute from raw injury impacts
+        home_injury = injury_data.get('home_injury_impact', 0)
+        away_injury = injury_data.get('away_injury_impact', 0)
+        features['injury_matchup_advantage'] = away_injury - home_injury  # Positive = home advantage
+        
+        # injury_shock_diff: Already computed above (before we deleted it)
+        # Recompute: shock = today's injury - EWMA baseline
+        home_ewma_inj = self._get_ewma_injury_impact(home_team, date_str)
+        away_ewma_inj = self._get_ewma_injury_impact(away_team, date_str)
+        injury_shock_home = home_injury - home_ewma_inj
+        injury_shock_away = away_injury - away_ewma_inj
+        features['injury_shock_diff'] = injury_shock_home - injury_shock_away
+        
+        # star_power_leverage: Star binary flags
+        STAR_THRESHOLD = 4.0
+        home_star_missing = 1 if home_injury >= STAR_THRESHOLD else 0
+        away_star_missing = 1 if away_injury >= STAR_THRESHOLD else 0
+        features['star_mismatch'] = home_star_missing - away_star_missing
+        features['star_power_leverage'] = features['star_mismatch']  # Alias for MDP
         
         # SHAP-based feature pruning: Filter to whitelist only
         if FEATURE_WHITELIST is not None:
@@ -837,27 +959,42 @@ class FeatureCalculatorV5:
         away_team: str,
         game_date: datetime
     ) -> Dict:
-        """Calculate rest day features from in-memory game results"""
-        if self.game_results_df.empty:
-            return {'rest_days_diff': 0, 'is_b2b_diff': 0}
+        """Calculate rest day features using ELO table (most current data source)"""
         
         def get_rest_days(team: str) -> int:
-            """Get days of rest for a team"""
-            # Filter games involving this team before the current date (use actual column names)
-            past_games = self.game_results_df[
-                ((self.game_results_df['home_team'] == team) |
-                 (self.game_results_df['away_team'] == team)) &
-                (self.game_results_df['game_date'] < game_date)
-            ]
-            
-            if past_games.empty:
-                return 7  # Default rest if no previous games
-            
-            last_game = past_games['game_date'].max()
-            rest = (game_date.date() - last_game.date()).days - 1
-            
-            # Clamp rest days between 0-5
-            return max(0, min(rest, 5))
+            """Get days of rest for a team using ELO ratings table"""
+            try:
+                # Use ELO table as it's most current (updated by initialize_elo.py)
+                with sqlite3.connect(self.db_path) as conn:
+                    query = """
+                        SELECT MAX(game_date) as last_game
+                        FROM elo_ratings
+                        WHERE team = ? AND game_date < ?
+                    """
+                    result = pd.read_sql_query(query, conn, params=(team, game_date.strftime('%Y-%m-%d')))
+                    
+                    if result.empty or pd.isna(result['last_game'].iloc[0]):
+                        # Fallback to game_results_df if ELO table has no data
+                        if not self.game_results_df.empty:
+                            past_games = self.game_results_df[
+                                (self.game_results_df['TEAM_ABBREVIATION'] == team) &
+                                (self.game_results_df['game_date'] < game_date)
+                            ]
+                            if not past_games.empty:
+                                last_game = pd.to_datetime(past_games['game_date'].max())
+                                rest = (game_date.date() - last_game.date()).days - 1
+                                return max(0, min(rest, 5))
+                        return 3  # Default moderate rest if no data
+                    
+                    last_game = pd.to_datetime(result['last_game'].iloc[0])
+                    rest = (game_date.date() - last_game.date()).days - 1
+                    
+                    # Clamp rest days between 0-5
+                    return max(0, min(rest, 5))
+                    
+            except Exception as e:
+                self.logger.debug(f"Rest calculation failed for {team}: {e}")
+                return 3  # Default moderate rest on error
         
         home_rest = get_rest_days(home_team)
         away_rest = get_rest_days(away_team)
@@ -876,6 +1013,10 @@ class FeatureCalculatorV5:
         """Calculate head-to-head features from in-memory game results"""
         if self.game_results_df.empty:
             return {'h2h_win_rate_l3y': 0.5}
+        
+        # Check if required columns exist
+        if 'home_team' not in self.game_results_df.columns or 'away_team' not in self.game_results_df.columns:
+            return {'h2h_win_rate_l3y': 0.5}  # Neutral if schema mismatch
         
         # Look back 3 years
         start_date = game_date - timedelta(days=365 * 3)
@@ -907,59 +1048,6 @@ class FeatureCalculatorV5:
         
         win_rate = wins / len(h2h_games)
         return {'h2h_win_rate_l3y': win_rate}
-
-    def _calculate_injury_impact(
-        self,
-        home_team: str,
-        away_team: str
-    ) -> Dict:
-        """
-        Calculate injury impact differential using live injury reports
-        
-        Returns 6 features:
-        - home_injury_impact: Expected impact to home team (points)
-        - away_injury_impact: Expected impact to away team
-        - injury_differential: Net advantage (positive = home advantaged)
-        - home_star_out_count: Number of star players (>3.0 value) OUT for home
-        - away_star_out_count: Number of star players OUT for away
-        - both_teams_injured: Both teams missing star player (binary)
-        
-        NOTE: This requires live injury data. For historical training,
-        these features will be zeros unless injury database is populated.
-        """
-        try:
-            # Import here to avoid circular dependency
-            from src.services.injury_scraper import InjuryScraper
-            
-            scraper = InjuryScraper()
-            differential = scraper.get_game_injury_differential(home_team, away_team)
-            
-            # Get individual team impacts for additional features
-            home_impact_data = scraper.get_team_injury_impact(home_team)
-            away_impact_data = scraper.get_team_injury_impact(away_team)
-            
-            return {
-                'home_injury_impact': home_impact_data['total_impact'],
-                'away_injury_impact': away_impact_data['total_impact'],
-                'injury_differential': differential,
-                'home_star_out_count': home_impact_data['star_injuries'],
-                'away_star_out_count': away_impact_data['star_injuries'],
-                'both_teams_injured': int(
-                    home_impact_data['star_injuries'] > 0 and 
-                    away_impact_data['star_injuries'] > 0
-                ),
-            }
-        except Exception as e:
-            # Graceful degradation if injury scraper fails or data unavailable
-            self.logger.warning(f"Injury impact calculation failed: {e}")
-            return {
-                'home_injury_impact': 0.0,
-                'away_injury_impact': 0.0,
-                'injury_differential': 0.0,
-                'home_star_out_count': 0,
-                'away_star_out_count': 0,
-                'both_teams_injured': 0,
-            }
 
     def calculate_weighted_score(self, features: Dict) -> Dict:
         """
@@ -1770,6 +1858,18 @@ class FeatureCalculatorV5:
         For LIVE predictions - uses active_injuries table.
         Returns dict with 'home_injury_impact' and 'away_injury_impact'.
         """
+        # Map abbreviations to full team names for database lookup
+        TEAM_ABB_TO_FULL = {
+            'ATL': 'Atlanta', 'BOS': 'Boston', 'BKN': 'Brooklyn', 'CHA': 'Charlotte',
+            'CHI': 'Chicago', 'CLE': 'Cleveland', 'DAL': 'Dallas', 'DEN': 'Denver',
+            'DET': 'Detroit', 'GSW': 'Golden State', 'HOU': 'Houston', 'IND': 'Indiana',
+            'LAC': 'LA Clippers', 'LAL': 'Los Angeles Lakers', 'MEM': 'Memphis', 'MIA': 'Miami',
+            'MIL': 'Milwaukee', 'MIN': 'Minnesota', 'NOP': 'New Orleans', 'NYK': 'New York',
+            'OKC': 'Oklahoma City', 'ORL': 'Orlando', 'PHI': 'Philadelphia', 'PHX': 'Phoenix',
+            'POR': 'Portland', 'SAC': 'Sacramento', 'SAS': 'San Antonio', 'TOR': 'Toronto',
+            'UTA': 'Utah', 'WAS': 'Washington'
+        }
+        
         try:
             # Active injuries table expected from InjuryDataCollectorV2
             with sqlite3.connect(self.db_path) as conn:
@@ -1792,7 +1892,9 @@ class FeatureCalculatorV5:
         }
 
         def team_loss(team_abbr: str) -> float:
-            subset = inj_df[inj_df['team_name'].str.contains(team_abbr, case=False, na=False)]
+            # Convert abbreviation to full/partial name
+            search_name = TEAM_ABB_TO_FULL.get(team_abbr.upper(), team_abbr)
+            subset = inj_df[inj_df['team_name'].str.contains(search_name, case=False, na=False)]
             total = 0.0
             for _, row in subset.iterrows():
                 status = str(row['status']).upper()
@@ -1817,7 +1919,6 @@ class FeatureCalculatorV5:
             self.logger.debug(f"Injury impact calc failed: {e}")
             return {'home_injury_impact': 0.0, 'away_injury_impact': 0.0}
 
-
 # Backward compatibility alias (now points to v6 implementation)
 FeatureCalculatorV5 = FeatureCalculatorV5
 
@@ -1837,7 +1938,7 @@ if __name__ == "__main__":
     features = calc.calculate_game_features(
         home_team="LAL",
         away_team="BOS",
-        season="2024-25",
+        season="2025-26",
         use_recency=True,
         games_back=10
     )

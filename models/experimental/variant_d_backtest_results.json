@@ -1,0 +1,17 @@
+{
+  "variant": "D",
+  "n_features": 18,
+  "train_games": 10749,
+  "test_games": 1456,
+  "train_log_loss": 0.6134645567871223,
+  "train_accuracy": 0.6582007628616615,
+  "train_auc": 0.7123834722671933,
+  "test_log_loss": 0.6116740128976421,
+  "test_accuracy": 0.6723901098901099,
+  "test_auc": 0.7263207624446845,
+  "baseline_cv_loss": 0.633,
+  "baseline_cv_acc": 0.6389,
+  "overfitting_gap": -0.0017905438894801895,
+  "criteria_passed": 4,
+  "timestamp": "2025-12-19T16:14:30.566674"
+}

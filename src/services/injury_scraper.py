@@ -55,6 +55,19 @@ TEAM_QUESTIONABLE_ADJUSTMENTS = {
 }
 
 
+# Map NBA team abbreviations to CBS Sports team names
+TEAM_ABB_TO_CBS = {
+    'ATL': 'Atlanta', 'BOS': 'Boston', 'BKN': 'Brooklyn', 'CHA': 'Charlotte',
+    'CHI': 'Chicago', 'CLE': 'Cleveland', 'DAL': 'Dallas', 'DEN': 'Denver',
+    'DET': 'Detroit', 'GSW': 'Golden St.', 'HOU': 'Houston', 'IND': 'Indiana',
+    'LAC': 'L.A. Clippers', 'LAL': 'L.A. Lakers', 'MEM': 'Memphis', 'MIA': 'Miami',
+    'MIL': 'Milwaukee', 'MIN': 'Minnesota', 'NOP': 'New Orleans', 'NYK': 'New York',
+    'OKC': 'Oklahoma City', 'ORL': 'Orlando', 'PHI': 'Philadelphia', 'PHX': 'Phoenix',
+    'POR': 'Portland', 'SAC': 'Sacramento', 'SAS': 'San Antonio', 'TOR': 'Toronto',
+    'UTA': 'Utah', 'WAS': 'Washington'
+}
+
+
 class InjuryScraper:
     """Scrape NBA injuries from CBS Sports and calculate spread penalties"""
     
@@ -259,8 +272,11 @@ class InjuryScraper:
         if df is None:
             df = self.scrape_injuries()
         
+        # Convert abbreviation to CBS team name if needed
+        search_name = TEAM_ABB_TO_CBS.get(team_name.upper(), team_name)
+        
         # Filter for team (case-insensitive partial match)
-        team_injuries = df[df['Team'].str.contains(team_name, case=False, na=False)]
+        team_injuries = df[df['Team'].str.contains(search_name, case=False, na=False)]
         
         if len(team_injuries) == 0:
             return {

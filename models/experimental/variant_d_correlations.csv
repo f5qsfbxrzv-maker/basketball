@@ -1,0 +1,4 @@
+Feature 1,Feature 2,Correlation
+home_composite_elo,off_elo_diff,0.6371200290265374
+total_foul_environment,net_free_throw_advantage,0.6006293524549522
+off_elo_diff,def_elo_diff,0.5778627673259114

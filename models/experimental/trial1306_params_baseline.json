@@ -1,0 +1,43 @@
+{
+  "trial": 1306,
+  "validation_log_loss": 0.6221971111922393,
+  "training_log_loss": 0.597828635741606,
+  "training_auc": 0.7342267648619175,
+  "hyperparameters": {
+    "max_depth": 3,
+    "min_child_weight": 25,
+    "gamma": 5.162427047142856,
+    "learning_rate": 0.010519422544676995,
+    "n_estimators": 9947,
+    "subsample": 0.6277685565263181,
+    "colsample_bytree": 0.6014538139159614,
+    "reg_alpha": 6.193992559265241
+  },
+  "features": [
+    "home_composite_elo",
+    "away_composite_elo",
+    "off_elo_diff",
+    "def_elo_diff",
+    "ewma_efg_diff",
+    "ewma_pace_diff",
+    "ewma_tov_diff",
+    "ewma_orb_diff",
+    "ewma_vol_3p_diff",
+    "ewma_chaos_home",
+    "injury_matchup_advantage",
+    "net_fatigue_score",
+    "ewma_foul_synergy_home",
+    "total_foul_environment",
+    "league_offensive_context",
+    "season_progress",
+    "pace_efficiency_interaction",
+    "projected_possession_margin",
+    "three_point_matchup",
+    "net_free_throw_advantage",
+    "star_power_leverage",
+    "offense_vs_defense_matchup"
+  ],
+  "n_features": 22,
+  "dataset": "training_data_matchup_with_injury_advantage_FIXED.csv",
+  "timestamp": "20251215_212306"
+}

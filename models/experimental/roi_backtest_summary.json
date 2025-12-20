@@ -1,0 +1,38 @@
+{
+  "model": "variant_d_optimized_trial245",
+  "flat_bet": 100,
+  "min_edge": 0.02,
+  "seasons": [
+    {
+      "season": "2023-24",
+      "games": 1230,
+      "log_loss": 0.6493419947411464,
+      "accuracy": 0.6308943089430894,
+      "total_bets": 1154,
+      "total_wagered": 115400.0,
+      "total_profit": 31200.0,
+      "roi_percent": 27.03639514731369,
+      "win_rate": 0.6351819757365684,
+      "avg_edge": 0.20389008522033691
+    },
+    {
+      "season": "2024-25",
+      "games": 1456,
+      "log_loss": 0.6751618877032257,
+      "accuracy": 0.6504120879120879,
+      "total_bets": 1398,
+      "total_wagered": 139800.0,
+      "total_profit": 44800.0,
+      "roi_percent": 32.04577968526466,
+      "win_rate": 0.6602288984263234,
+      "avg_edge": 0.2727397084236145
+    }
+  ],
+  "combined": {
+    "total_bets": 2552,
+    "total_wagered": 255200.0,
+    "total_profit": 76000.0,
+    "roi_percent": 29.780564263322884
+  },
+  "timestamp": "2025-12-19T16:49:24.845574"
+}
