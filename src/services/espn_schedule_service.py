@@ -26,10 +26,40 @@ ESPN_TEAM_MAP = {
 class ESPNScheduleService:
     """Fetch NBA schedule from ESPN API"""
     
-    def __init__(self, db_path: str = 'data/live/nba_betting_data.db'):
+    def __init__(self, db_path: str = 'data/live/nba_betting_data.db', schedule_csv: str = 'data/nba_schedule_2025_26.csv'):
         self.db_path = db_path
+        self.schedule_csv = schedule_csv
         self.cache = {}
+        self.schedule_df = None
         self._init_database()
+        self._load_schedule_csv()
+    
+    def _load_schedule_csv(self):
+        """Load full season schedule from CSV if available"""
+        from pathlib import Path
+        import pandas as pd
+        
+        csv_path = Path(self.schedule_csv)
+        if csv_path.exists():
+            try:
+                self.schedule_df = pd.read_csv(csv_path)
+                print(f"[SCHEDULE CSV] Loaded {len(self.schedule_df)} games from {csv_path.name}")
+            except Exception as e:
+                print(f"[SCHEDULE CSV] Failed to load: {e}")
+                self.schedule_df = None
+        else:
+            print(f"[SCHEDULE CSV] Not found: {csv_path}")
+            print(f"[SCHEDULE CSV] Run 'python download_season_schedule.py' to create it")
+    
+    def clear_cache(self, target_date: str = None):
+        """Clear cache for a specific date or all dates"""
+        if target_date:
+            if target_date in self.cache:
+                del self.cache[target_date]
+                print(f"[ESPN CACHE] Cleared cache for {target_date}")
+        else:
+            self.cache.clear()
+            print("[ESPN CACHE] Cleared all cached games")
     
     def _init_database(self):
         """Create schedule table if it doesn't exist"""
@@ -73,13 +103,22 @@ class ESPNScheduleService:
             print(f"[ESPN CACHE] Using cached games for {target_date}")
             return self.cache[target_date]
         
+        # Check CSV schedule first (fastest, no API needed)
+        if self.schedule_df is not None:
+            csv_games = self._get_from_csv(target_date)
+            if csv_games:
+                self.cache[target_date] = csv_games
+                if save_to_db:
+                    self._save_to_database(csv_games)
+                return csv_games
+        
         # Check database
         games = self._get_from_database(target_date)
         if games:
             self.cache[target_date] = games
             return games
         
-        # Fetch from ESPN
+        # Fetch from ESPN API as last resort
         try:
             # ESPN uses YYYYMMDD format
             espn_date = target_date.replace('-', '')
@@ -90,12 +129,17 @@ class ESPNScheduleService:
             response.raise_for_status()
             
             data = response.json()
+            
+            # Debug: print raw event count
+            raw_events = data.get('events', [])
+            print(f"[ESPN API] Raw response has {len(raw_events)} events for {target_date}")
+            
             games = self._parse_espn_response(data, target_date)
             
             if games and save_to_db:
                 self._save_to_database(games)
             
-            print(f"[ESPN API] Found {len(games)} games for {target_date}")
+            print(f"[ESPN API] Parsed {len(games)} games for {target_date}")
             self.cache[target_date] = games
             return games
             
@@ -125,11 +169,16 @@ class ESPNScheduleService:
                 home_team = ESPN_TEAM_MAP.get(home_team_name, home_team_name)
                 away_team = ESPN_TEAM_MAP.get(away_team_name, away_team_name)
                 
-                # Get game time
+                # Get game time and extract actual game date from ESPN (not the query date)
                 game_date_str = event.get('date', '')
+                actual_game_date = game_date  # Default to query date
                 if game_date_str:
                     game_dt = datetime.fromisoformat(game_date_str.replace('Z', '+00:00'))
-                    game_time = game_dt.strftime('%H:%M:%S')
+                    # Convert to local time (EST/EDT for NBA)
+                    from zoneinfo import ZoneInfo
+                    local_dt = game_dt.astimezone(ZoneInfo('America/New_York'))
+                    actual_game_date = local_dt.strftime('%Y-%m-%d')
+                    game_time = local_dt.strftime('%H:%M:%S')
                 else:
                     game_time = 'TBD'
                 
@@ -137,8 +186,8 @@ class ESPNScheduleService:
                 status = event.get('status', {}).get('type', {}).get('description', 'Scheduled')
                 
                 games.append({
-                    'game_id': event.get('id', f"{away_team}@{home_team}_{game_date}"),
-                    'game_date': game_date,
+                    'game_id': event.get('id', f"{away_team}@{home_team}_{actual_game_date}"),
+                    'game_date': actual_game_date,
                     'game_time': game_time,
                     'home_team': home_team,
                     'away_team': away_team,
@@ -150,6 +199,35 @@ class ESPNScheduleService:
                 continue
         
         return games
+    
+    def _get_from_csv(self, target_date: str) -> List[Dict]:
+        """Get games from CSV schedule"""
+        if self.schedule_df is None:
+            return []
+        
+        try:
+            date_games = self.schedule_df[self.schedule_df['game_date'] == target_date]
+            
+            if len(date_games) == 0:
+                return []
+            
+            games = []
+            for _, row in date_games.iterrows():
+                games.append({
+                    'game_id': row.get('game_id', f"{row['away_team']}@{row['home_team']}_{target_date}"),
+                    'game_date': row['game_date'],
+                    'game_time': row.get('game_time', 'TBD'),
+                    'home_team': row['home_team'],
+                    'away_team': row['away_team'],
+                    'game_status': row.get('status', 'Scheduled')
+                })
+            
+            print(f"[SCHEDULE CSV] Found {len(games)} games for {target_date}")
+            return games
+            
+        except Exception as e:
+            print(f"[SCHEDULE CSV] Error reading CSV: {e}")
+            return []
     
     def _save_to_database(self, games: List[Dict]):
         """Save games to database"""

@@ -42,47 +42,47 @@ from config.settings import (
     ISOTONIC_CALIBRATOR, PLATT_CALIBRATOR
 )
 
-# Import TRIAL 1306 Production Config (2% fav / 10% dog - 49.7% ROI)
+# Import MDP Production Config (1.5% fav / 8.0% dog - 29.1% ROI)
 try:
-    from trial1306_config import (
-        TRIAL1306_MODEL_PATH,
-        TRIAL1306_FEATURES,
-        TRIAL1306_FAVORITE_EDGE,
-        TRIAL1306_UNDERDOG_EDGE,
-        TRIAL1306_ODDS_SPLIT,
-        TRIAL1306_KELLY_FRACTION,
-        TRIAL1306_VERSION,
-        TRIAL1306_BACKTEST_ROI
+    from production_config_mdp import (
+        MODEL_PATH as MDP_MODEL_PATH,
+        ACTIVE_FEATURES,
+        MIN_EDGE_FAVORITE,
+        MIN_EDGE_UNDERDOG,
+        FILTER_MIN_OFF_ELO,
+        NBA_STD_DEV,
+        KELLY_FRACTION_MULTIPLIER,
+        MODEL_VERSION as MDP_VERSION,
+        N_ESTIMATORS,
+        BACKTEST_ROI as MDP_BACKTEST_ROI
     )
-    FAVORITE_EDGE_THRESHOLD = TRIAL1306_FAVORITE_EDGE
-    UNDERDOG_EDGE_THRESHOLD = TRIAL1306_UNDERDOG_EDGE
-    ODDS_SPLIT_THRESHOLD = TRIAL1306_ODDS_SPLIT
-    STRATEGY_KELLY_FRACTION = TRIAL1306_KELLY_FRACTION
-    MODEL_VERSION = TRIAL1306_VERSION
-    print(f"[OK] Loaded Trial 1306: {FAVORITE_EDGE_THRESHOLD*100:.1f}% fav / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% dog (ROI: {TRIAL1306_BACKTEST_ROI*100:.1f}%)")
-except ImportError:
-    print("[WARNING] trial1306_config not found, using legacy config")
-    FAVORITE_EDGE_THRESHOLD = 0.02  # 2.0%
-    UNDERDOG_EDGE_THRESHOLD = 0.10  # 10.0%
-    ODDS_SPLIT_THRESHOLD = 2.00
+    FAVORITE_EDGE_THRESHOLD = MIN_EDGE_FAVORITE
+    UNDERDOG_EDGE_THRESHOLD = MIN_EDGE_UNDERDOG
+    STRATEGY_KELLY_FRACTION = KELLY_FRACTION_MULTIPLIER
+    MODEL_VERSION = MDP_VERSION
+    MDP_FEATURES = ACTIVE_FEATURES
+    BACKTEST_ROI = MDP_BACKTEST_ROI
+    MODEL_PATH = Path(MDP_MODEL_PATH) if isinstance(MDP_MODEL_PATH, str) else MDP_MODEL_PATH
+    print(f"[OK] Loaded MDP {MDP_VERSION}: {FAVORITE_EDGE_THRESHOLD*100:.1f}% fav / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% dog")
+    print(f"[OK] Features: {len(MDP_FEATURES)}, NBA_STD_DEV: {NBA_STD_DEV}")
+except ImportError as e:
+    print(f"[ERROR] production_config_mdp not found: {e}")
+    print("[WARNING] Falling back to legacy config")
+    FAVORITE_EDGE_THRESHOLD = 0.015  # 1.5%
+    UNDERDOG_EDGE_THRESHOLD = 0.080  # 8.0%
     STRATEGY_KELLY_FRACTION = 0.25
     MODEL_VERSION = "legacy"
-    TRIAL1306_FEATURES = []  # Will need manual specification
-
-# Use Trial 1306 model path
-try:
-    MODEL_PATH = Path(TRIAL1306_MODEL_PATH)
-    if not MODEL_PATH.exists():
-        print(f"[WARNING] Trial 1306 model not found at {TRIAL1306_MODEL_PATH}, falling back to v6_ml")
-        MODEL_PATH = MONEYLINE_MODEL
-except:
+    NBA_STD_DEV = 13.42
+    FILTER_MIN_OFF_ELO = -90
+    MDP_FEATURES = []  # Will need manual specification
+    BACKTEST_ROI = 0.291  # Default to MDP ROI
     MODEL_PATH = MONEYLINE_MODEL
 
 TOTAL_MODEL_PATH = TOTALS_MODEL
 BANKROLL_SETTINGS_FILE = PROJECT_ROOT / "bankroll_settings.json"
 DATABASE_PATH = CONFIG_DB_PATH
 PREDICTIONS_CACHE_FILE = PROJECT_ROOT / "predictions_cache.json"
-MIN_EDGE = 0.02  # Trial 1306 minimum threshold (2% for favorites)
+MIN_EDGE = 0.015  # MDP v2.2 minimum threshold (1.5% for favorites)
 MAX_EDGE = 1.00
 KELLY_FRACTION = STRATEGY_KELLY_FRACTION  # Use production Kelly (0.25)
 MAX_BET_PCT = 0.05
@@ -169,37 +169,41 @@ except ImportError:
 
 
 class NBAPredictionEngine:
-    """Production prediction engine using Trial 1306 with 22 features"""
+    """Production prediction engine using MDP Regressor with 19 features"""
     
     def __init__(self):
         self.bankroll = BANKROLL
         self.predictions_cache = {}
         
         if PREDICTION_ENGINE_AVAILABLE:
-            # Load Trial 1306 PRODUCTION model (22 features, 49.7% ROI)
+            # Load MDP PRODUCTION model (19 features, 29.1% ROI)
             if not MODEL_PATH.exists():
                 raise FileNotFoundError(f"Model not found: {MODEL_PATH}")
             
-            # Load XGBoost model (Trial 1306 uses .json format)
+            # Load XGBoost REGRESSOR model (MDP uses .json Booster format)
             import xgboost as xgb
-            self.model = xgb.XGBClassifier()
+            from scipy.stats import norm
+            self.norm = norm  # Store for probability conversion
+            self.model = xgb.Booster()
             self.model.load_model(str(MODEL_PATH))
+            self.nba_std_dev = NBA_STD_DEV  # 13.42 - model's empirical RMSE
             
-            # Use Trial 1306's 22 features (in correct order)
-            if TRIAL1306_FEATURES:
-                self.features = TRIAL1306_FEATURES
-                print(f"[OK] Using Trial 1306 feature list: {len(self.features)} features")
+            # Use MDP's 19 features (in correct order)
+            if MDP_FEATURES:
+                self.features = MDP_FEATURES
+                print(f"[OK] Using MDP feature list: {len(self.features)} features")
             else:
                 # Fallback to model's feature names if config not loaded
                 try:
-                    self.features = list(self.model.get_booster().feature_names)
+                    self.features = list(self.model.feature_names)
                 except:
-                    self.features = TRIAL1306_FEATURES  # Use hardcoded list
+                    self.features = MDP_FEATURES  # Use hardcoded list
             
-            print(f"[OK] Loaded Trial 1306 model: {MODEL_PATH.name}")
-            print(f"[OK] Features: {len(self.features)} (should be 22)")
+            print(f"[OK] Loaded MDP model: {MODEL_PATH.name}")
+            print(f"[OK] Features: {len(self.features)} (should be 19)")
             print(f"[OK] Thresholds: {FAVORITE_EDGE_THRESHOLD*100:.1f}% FAV / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% DOG")
-            print(f"[OK] Expected ROI: {TRIAL1306_BACKTEST_ROI*100:.1f}% (grid search optimized)")
+            print(f"[OK] Expected ROI: 29.1% (2024-25 validation)")
+            print(f"[OK] NBA_STD_DEV: {self.nba_std_dev} (empirical RMSE)")
             
             # Use consolidated database for all services
             db_path = str(DATABASE_PATH)
@@ -210,7 +214,7 @@ class NBAPredictionEngine:
                 self.injury_updater = None
             self.injury_service = None  # Not used - we have feature_calculator
             
-            # Load total model if available (not used in Trial 1306, but keep for compatibility)
+            # Load total model if available (not used in MDP v2.2, but keep for compatibility)
             if TOTAL_MODEL_PATH.exists():
                 self.total_model = joblib.load(TOTAL_MODEL_PATH)
                 print(f"[OK] Loaded total model: {TOTAL_MODEL_PATH.name}")
@@ -310,13 +314,13 @@ class NBAPredictionEngine:
     def is_valid_odds(self, home_odds: int, away_odds: int) -> bool:
         """
         Filter out corrupted/extreme odds (validated filter)
-        Based on forensic audit: 27.4% of raw API data had corrupted odds
+        Relaxed to allow bigger favorites and underdogs with value
         """
-        return (-500 <= home_odds <= 500) and (-500 <= away_odds <= 500)
+        return (-1000 <= home_odds <= 1000) and (-1000 <= away_odds <= 1000)
     
     def predict_game(self, home_team: str, away_team: str, game_date: str, game_time: str = "19:00",
-                     home_ml_odds: int = -110, away_ml_odds: int = -110) -> Dict:
-        """Make prediction using FeatureCalculatorV5 with live injuries"""
+                     home_ml_odds: Optional[int] = None, away_ml_odds: Optional[int] = None) -> Dict:
+        """Make prediction using FeatureCalculatorV5 with live injuries - REQUIRES REAL ODDS"""
         try:
             if not self.model or not self.feature_calculator:
                 return {'error': 'Model not available'}
@@ -336,10 +340,8 @@ class NBAPredictionEngine:
             kalshi_away_prob = None
             yes_price = None
             no_price = None
-            odds_source = 'Default'
+            odds_source = 'None'
             has_real_odds = False
-            home_ml_odds = -110
-            away_ml_odds = -110
             
             # Try to get live odds from Kalshi
             # Attempt to initialize odds fetcher if not already done
@@ -356,33 +358,38 @@ class NBAPredictionEngine:
                     print(f"[ODDS] Fetching live odds for {away_team} @ {home_team} on {game_date}...")
                     odds_data = self.odds_fetcher.get_moneyline_odds(home_team, away_team, game_date)
                     
-                    home_ml_odds = odds_data.get('home_ml', -110)
-                    away_ml_odds = odds_data.get('away_ml', -110)
-                    yes_price = odds_data.get('yes_price')
-                    no_price = odds_data.get('no_price')
-                    odds_source = odds_data.get('source', 'unknown')
-                    
-                    # VALIDATED ODDS QUALITY CHECK
-                    odds_valid = self.is_valid_odds(home_ml_odds, away_ml_odds)
-                    has_real_odds = (odds_source == 'kalshi' and yes_price is not None)
-                    
-                    if not odds_valid:
-                        print(f"[WARNING ODDS] Extreme odds filtered: {home_ml_odds}/{away_ml_odds}")
+                    # Check if odds_data is None (no real market data available)
+                    if odds_data is None:
+                        print(f"[ODDS] No real market data returned from fetcher")
                         has_real_odds = False
-                    
-                    # Calculate fair probabilities from Kalshi prices
-                    if yes_price and no_price:
-                        kalshi_home_prob, kalshi_away_prob = self.odds_fetcher.remove_vig(home_ml_odds, away_ml_odds)
-                    
-                    print(f"[ODDS] {away_team} @ {home_team}: {odds_source} | {home_ml_odds}/{away_ml_odds}")
+                    else:
+                        home_ml_odds = odds_data.get('home_ml')
+                        away_ml_odds = odds_data.get('away_ml')
+                        yes_price = odds_data.get('yes_price')
+                        no_price = odds_data.get('no_price')
+                        odds_source = odds_data.get('source', 'unknown')
+                        
+                        # VALIDATED ODDS QUALITY CHECK
+                        if home_ml_odds and away_ml_odds:
+                            odds_valid = self.is_valid_odds(home_ml_odds, away_ml_odds)
+                            has_real_odds = (odds_source == 'kalshi' and yes_price is not None)
+                            
+                            if not odds_valid:
+                                print(f"[WARNING ODDS] Extreme odds filtered: {home_ml_odds}/{away_ml_odds}")
+                                has_real_odds = False
+                            
+                            # Calculate fair probabilities from Kalshi prices
+                            if yes_price and no_price:
+                                kalshi_home_prob, kalshi_away_prob = self.odds_fetcher.remove_vig(home_ml_odds, away_ml_odds)
+                            
+                            print(f"[ODDS] {away_team} @ {home_team}: {odds_source} | {home_ml_odds}/{away_ml_odds}")
+                        else:
+                            print(f"[WARNING] No valid odds in returned data from {odds_source}")
                     
                 except Exception as e:
                     print(f"[WARNING] LiveOddsFetcher error: {e}")
                     import traceback
                     traceback.print_exc()
-                    home_ml_odds = -110
-                    away_ml_odds = -110
-                    odds_source = 'default'
             else:
                 if not self.odds_fetcher:
                     print(f"[INFO] LiveOddsFetcher not available (self.odds_fetcher is None)")
@@ -390,10 +397,20 @@ class NBAPredictionEngine:
                     print(f"[INFO] LiveOddsFetcher has no kalshi_client attribute")
                 elif not self.odds_fetcher.kalshi_client:
                     print(f"[INFO] LiveOddsFetcher kalshi_client is None")
-                print(f"[INFO] Using -110 defaults for {away_team} @ {home_team}")
+            
+            # CRITICAL: Block predictions without real market odds
+            if not has_real_odds or home_ml_odds is None or away_ml_odds is None:
+                return {
+                    'error': 'NO_REAL_ODDS',
+                    'message': f'Cannot generate prediction without live market odds. Odds source: {odds_source}',
+                    'home_team': home_team,
+                    'away_team': away_team,
+                    'game_date': game_date,
+                    'odds_source': odds_source
+                }
             
             # Extract features using FeatureCalculatorV5
-            # Trial 1306 expects 22 features (includes injury_matchup_advantage as single composite)
+            # MDP expects 19 features (optimized feature set with VIF < 2.34)
             features_dict = self.feature_calculator.calculate_game_features(
                 home_team=home_team,
                 away_team=away_team,
@@ -403,8 +420,8 @@ class NBAPredictionEngine:
             # Convert to DataFrame for XGBoost
             X = pd.DataFrame([features_dict])
             
-            # Trial 1306 uses injury_matchup_advantage (single optimized composite)
-            # Ensure all 22 required features are present
+            # MDP uses 19 clean features
+            # Ensure all 19 required features are present
             missing_features = [f for f in self.features if f not in X.columns]
             if missing_features:
                 print(f"[WARNING] Missing {len(missing_features)} features: {missing_features[:5]}...")
@@ -412,14 +429,29 @@ class NBAPredictionEngine:
                 for feat in missing_features:
                     X[feat] = 0.0
             
-            # Filter to only the 22 features Trial 1306 expects (in correct order)
+            # Filter to only the 19 features MDP expects (in correct order)
             X = X[self.features]
             
-            print(f"[INFO] Prepared {len(X.columns)} features for Trial 1306: {X.columns.tolist()[:5]}...")
+            # Apply physics filter (broken offense check)
+            off_elo_diff = features_dict.get('off_elo_diff', 0)
+            if off_elo_diff < FILTER_MIN_OFF_ELO:
+                print(f"[FILTER] Off ELO diff {off_elo_diff:.1f} < {FILTER_MIN_OFF_ELO} (broken offense)")
+                return {
+                    'error': f'Physics filter: Broken offense (off_elo_diff={off_elo_diff:.1f})'
+                }
             
-            # Get model probability (home team win probability)
-            home_prob = float(self.model.predict_proba(X)[0, 1])
+            print(f"[INFO] Prepared {len(X.columns)} features for MDP: {X.columns.tolist()[:5]}...")
+            
+            # MDP REGRESSOR: Predict margin, then convert to probability
+            import xgboost as xgb
+            dmatrix = xgb.DMatrix(X, feature_names=self.features)
+            predicted_margin = float(self.model.predict(dmatrix)[0])
+            
+            # Convert margin to probability using Normal CDF with empirical RMSE
+            home_prob = float(self.norm.cdf(predicted_margin / self.nba_std_dev))
             away_prob = 1 - home_prob
+            
+            print(f"[MDP] Predicted margin: {predicted_margin:.2f}, Home prob: {home_prob:.3f}")
             
             # Calculate edges using American odds
             home_ml_prob = self.odds_to_prob(home_ml_odds)
@@ -431,18 +463,15 @@ class NBAPredictionEngine:
             print(f"[DEBUG] {away_team} @ {home_team}: model_home={home_prob:.4f}, market_home={home_ml_prob:.4f}, home_edge={home_edge:.4f}")
             print(f"[DEBUG]   model_away={away_prob:.4f}, market_away={away_ml_prob:.4f}, away_edge={away_edge:.4f}")
             
-            # Apply SPLIT THRESHOLD LOGIC (Production Strategy)
-            # Favorites (odds < 2.00): require 1.0% edge
-            # Underdogs (odds >= 2.00): require 15.0% edge
+            # Apply MDP ASYMMETRIC THRESHOLD LOGIC
+            # Favorites (negative odds): require 1.5% edge (low variance)
+            # Underdogs (positive odds): require 8.0% edge (high variance)
             
-            home_decimal = self.american_to_decimal(home_ml_odds)
-            away_decimal = self.american_to_decimal(away_ml_odds)
+            # Determine if home/away are favorites or underdogs based on odds sign
+            home_is_favorite = home_ml_odds < 0
+            away_is_favorite = away_ml_odds < 0
             
-            # Determine if home/away are favorites or underdogs
-            home_is_favorite = home_decimal < ODDS_SPLIT_THRESHOLD
-            away_is_favorite = away_decimal < ODDS_SPLIT_THRESHOLD
-            
-            # Apply appropriate threshold
+            # Apply appropriate threshold (asymmetric)
             home_threshold = FAVORITE_EDGE_THRESHOLD if home_is_favorite else UNDERDOG_EDGE_THRESHOLD
             away_threshold = FAVORITE_EDGE_THRESHOLD if away_is_favorite else UNDERDOG_EDGE_THRESHOLD
             
@@ -600,7 +629,7 @@ class NBAPredictionEngine:
                 'features': features_dict,
                 'kalshi_home_prob': kalshi_home_prob,
                 'kalshi_away_prob': kalshi_away_prob,
-                'kalshi_total_line': None,  # Not used in Trial 1306
+                'kalshi_total_line': None,  # Not used in MDP v2.2
                 'odds_source': odds_source,
                 'has_real_odds': has_real_odds,
                 'home_injuries': home_injuries,
@@ -920,14 +949,19 @@ class GameDetailDialog(QDialog):
             features = self.prediction.get('features', {})
             
             # Records - use features from prediction instead of database query
-            home_win_pct = features.get('home_win_pct', 0.5)
-            away_win_pct = features.get('away_win_pct', 0.5)
+            home_win_pct = features.get('home_win_pct')
+            away_win_pct = features.get('away_win_pct')
             
             # Estimate record from win percentage (82 games in season)
-            home_wins = int(home_win_pct * 82)
-            home_losses = 82 - home_wins
-            away_wins = int(away_win_pct * 82)
-            away_losses = 82 - away_wins
+            if home_win_pct is not None and away_win_pct is not None:
+                home_wins = int(home_win_pct * 82)
+                home_losses = 82 - home_wins
+                away_wins = int(away_win_pct * 82)
+                away_losses = 82 - away_wins
+            else:
+                # Fallback: no record data available
+                home_wins = away_wins = 0
+                home_losses = away_losses = 0
             
             stats_rows.append((
                 'Record', 
@@ -939,8 +973,11 @@ class GameDetailDialog(QDialog):
             ))
             
             # Last 10 (estimate from recent form if available, otherwise from win pct)
-            home_last_10_wins = int(home_win_pct * 10)
-            away_last_10_wins = int(away_win_pct * 10)
+            if home_win_pct is not None and away_win_pct is not None:
+                home_last_10_wins = int(home_win_pct * 10)
+                away_last_10_wins = int(away_win_pct * 10)
+            else:
+                home_last_10_wins = away_last_10_wins = 0
             
             stats_rows.append((
                 'Last 10', 
@@ -951,40 +988,89 @@ class GameDetailDialog(QDialog):
                 f"{away_last_10_wins}-{10-away_last_10_wins}"
             ))
             
-            # Points Per Game
-            home_off_rating = features.get('home_off_rating') or 110
-            away_off_rating = features.get('away_off_rating') or 110
-            home_pace = features.get('home_pace') or 100
-            away_pace = features.get('away_pace') or 100
-            home_ppg = home_off_rating * home_pace / 100
-            away_ppg = away_off_rating * away_pace / 100
-            stats_rows.append(('Points Per Game', home_ppg, away_ppg, 'higher', f"{home_ppg:.1f}", f"{away_ppg:.1f}"))
+            # TEAM STATISTICS - Comprehensive breakdown
+            stats_rows.append(('═══ OFFENSE ═══', None, None, 'header', '', ''))
             
-            # Points Allowed
-            home_def_rating = features.get('home_def_rating') or 110
-            away_def_rating = features.get('away_def_rating') or 110
-            home_papg = home_def_rating * home_pace / 100
-            away_papg = away_def_rating * away_pace / 100
-            stats_rows.append(('Points Allowed', home_papg, away_papg, 'lower', f"{home_papg:.1f}", f"{away_papg:.1f}"))
+            # Offensive Rating & PPG
+            home_off_rating = features.get('home_off_rating')
+            away_off_rating = features.get('away_off_rating')
+            home_pace = features.get('home_pace')
+            away_pace = features.get('away_pace')
             
-            # Offensive Rating
-            stats_rows.append(('Offensive Rating', home_off_rating, away_off_rating, 'higher', f"{home_off_rating:.1f}", f"{away_off_rating:.1f}"))
+            if home_off_rating and away_off_rating:
+                stats_rows.append(('Offensive Rating', home_off_rating, away_off_rating, 'higher', f"{home_off_rating:.1f}", f"{away_off_rating:.1f}"))
+                
+                if home_pace and away_pace:
+                    home_ppg = home_off_rating * home_pace / 100
+                    away_ppg = away_off_rating * away_pace / 100
+                    stats_rows.append(('Est. Points Per Game', home_ppg, away_ppg, 'higher', f"{home_ppg:.1f}", f"{away_ppg:.1f}"))
             
-            # Defensive Rating (lower is better)
-            stats_rows.append(('Defensive Rating', home_def_rating, away_def_rating, 'lower', f"{home_def_rating:.1f}", f"{away_def_rating:.1f}"))
+            # Advanced offensive metrics
+            home_efg = features.get('home_efg_pct')
+            away_efg = features.get('away_efg_pct')
+            if home_efg is not None and away_efg is not None:
+                stats_rows.append(('Effective FG%', home_efg, away_efg, 'higher', f"{home_efg:.1%}", f"{away_efg:.1%}"))
+            
+            home_3p_vol = features.get('home_three_point_volume')
+            away_3p_vol = features.get('away_three_point_volume')
+            if home_3p_vol is not None and away_3p_vol is not None:
+                stats_rows.append(('3PT Attempt Rate', home_3p_vol, away_3p_vol, 'neutral', f"{home_3p_vol:.1%}", f"{away_3p_vol:.1%}"))
+            
+            # Turnovers
+            home_tov = features.get('home_turnover_pct')
+            away_tov = features.get('away_turnover_pct')
+            if home_tov is not None and away_tov is not None:
+                stats_rows.append(('Turnover %', home_tov, away_tov, 'lower', f"{home_tov:.1%}", f"{away_tov:.1%}"))
+            
+            stats_rows.append(('═══ DEFENSE ═══', None, None, 'header', '', ''))
+            
+            # Defensive Rating & Points Allowed
+            home_def_rating = features.get('home_def_rating')
+            away_def_rating = features.get('away_def_rating')
+            if home_def_rating and away_def_rating:
+                stats_rows.append(('Defensive Rating', home_def_rating, away_def_rating, 'lower', f"{home_def_rating:.1f}", f"{away_def_rating:.1f}"))
+                
+                if home_pace and away_pace:
+                    home_papg = home_def_rating * home_pace / 100
+                    away_papg = away_def_rating * away_pace / 100
+                    stats_rows.append(('Est. Points Allowed', home_papg, away_papg, 'lower', f"{home_papg:.1f}", f"{away_papg:.1f}"))
+            
+            # Defensive EFG allowed
+            home_def_efg = features.get('home_opp_efg_pct')
+            away_def_efg = features.get('away_opp_efg_pct')
+            if home_def_efg is not None and away_def_efg is not None:
+                stats_rows.append(('Opp Effective FG%', home_def_efg, away_def_efg, 'lower', f"{home_def_efg:.1%}", f"{away_def_efg:.1%}"))
+            
+            stats_rows.append(('═══ TEMPO & ELO ═══', None, None, 'header', '', ''))
             
             # Pace
-            stats_rows.append(('Pace (Poss/Game)', home_pace, away_pace, 'neutral', f"{home_pace:.1f}", f"{away_pace:.1f}"))
+            if home_pace and away_pace:
+                stats_rows.append(('Pace (Poss/Game)', home_pace, away_pace, 'neutral', f"{home_pace:.1f}", f"{away_pace:.1f}"))
             
-            # ELO
-            home_elo = features.get('home_composite_elo') or 1500
-            away_elo = features.get('away_composite_elo') or 1500
-            stats_rows.append(('Composite ELO', home_elo, away_elo, 'higher', f"{home_elo:.0f}", f"{away_elo:.0f}"))
+            # Composite ELO
+            home_elo = features.get('home_composite_elo')
+            away_elo = features.get('away_composite_elo')
+            if home_elo is not None and away_elo is not None:
+                stats_rows.append(('Composite ELO', home_elo, away_elo, 'higher', f"{home_elo:.0f}", f"{away_elo:.0f}"))
+            
+            # Offensive/Defensive ELO
+            home_off_elo = features.get('home_off_elo')
+            away_off_elo = features.get('away_off_elo')
+            if home_off_elo is not None and away_off_elo is not None:
+                stats_rows.append(('Offensive ELO', home_off_elo, away_off_elo, 'higher', f"{home_off_elo:.0f}", f"{away_off_elo:.0f}"))
+            
+            home_def_elo = features.get('home_def_elo')
+            away_def_elo = features.get('away_def_elo')
+            if home_def_elo is not None and away_def_elo is not None:
+                stats_rows.append(('Defensive ELO', home_def_elo, away_def_elo, 'higher', f"{home_def_elo:.0f}", f"{away_def_elo:.0f}"))
+            
+            stats_rows.append(('═══ CONTEXT ═══', None, None, 'header', '', ''))
             
             # Rest
-            home_rest = features.get('home_rest_days', 0)
-            away_rest = features.get('away_rest_days', 0)
-            stats_rows.append(('Rest Days', home_rest, away_rest, 'higher', f"{home_rest:.0f}", f"{away_rest:.0f}"))
+            home_rest = features.get('home_rest_days')
+            away_rest = features.get('away_rest_days')
+            if home_rest is not None and away_rest is not None:
+                stats_rows.append(('Rest Days', home_rest, away_rest, 'higher', f"{home_rest:.0f}", f"{away_rest:.0f}"))
             
             # Injuries (PIE-based impact score)
             home_injury_impact = self.prediction.get('home_injury_impact', 0.0)
@@ -997,8 +1083,8 @@ class GameDetailDialog(QDialog):
                 home_injury_impact, 
                 away_injury_impact, 
                 'lower',
-                f"{home_injury_impact:.1f} ({len(home_injuries)} out)",
-                f"{away_injury_impact:.1f} ({len(away_injuries)} out)"
+                f"{home_injury_impact:.1f} pts ({len(home_injuries)} out)",
+                f"{away_injury_impact:.1f} pts ({len(away_injuries)} out)"
                 ))
             
             # Populate table with highlighting
@@ -1010,6 +1096,23 @@ class GameDetailDialog(QDialog):
                 comparison_type = stat_data[3]
                 home_val_str = stat_data[4]
                 away_val_str = stat_data[5]
+                
+                # Check if this is a header row
+                if comparison_type == 'header':
+                    # Header row - spans all columns
+                    stat_item = QTableWidgetItem(stat_name)
+                    stat_item.setForeground(QColor(100, 200, 255))
+                    stat_item.setBackground(QColor(30, 30, 30))
+                    stat_item.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+                    stat_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                    comparison_table.setItem(row, 0, stat_item)
+                    
+                    # Empty cells for other columns
+                    for col in [1, 2, 3]:
+                        empty_item = QTableWidgetItem("")
+                        empty_item.setBackground(QColor(30, 30, 30))
+                        comparison_table.setItem(row, col, empty_item)
+                    continue
                 
                 # Stat name column
                 stat_item = QTableWidgetItem(stat_name)
@@ -1141,6 +1244,7 @@ class GameDetailDialog(QDialog):
             previous_meetings_layout = QVBoxLayout()
             
             try:
+                import sqlite3
                 conn = sqlite3.connect(str(DATABASE_PATH))
                 cursor = conn.cursor()
                 
@@ -1170,10 +1274,15 @@ class GameDetailDialog(QDialog):
                 for date, data in sorted(meetings_dict.items(), reverse=True)[:10]:
                     teams = list(data['teams'].keys())
                     if len(teams) == 2:
-                        if 'vs.' in data['matchup']:
-                            h_team, a_team = teams[0], teams[1] if teams[0] in data['matchup'].split('vs.')[0] else teams[1], teams[0]
-                        else:
+                        # Determine home/away based on which team is in our matchup
+                        if teams[0] == home_team:
+                            h_team, a_team = teams[0], teams[1]
+                        elif teams[1] == home_team:
                             h_team, a_team = teams[1], teams[0]
+                        elif teams[0] == away_team:
+                            h_team, a_team = teams[1], teams[0]
+                        else:
+                            h_team, a_team = teams[0], teams[1]
                         
                         h_score = data['teams'].get(h_team, 0)
                         a_score = data['teams'].get(a_team, 0)
@@ -1347,6 +1456,7 @@ class PredictionsTab(QWidget):
         
         # Show all games toggle
         self.show_all_checkbox = QCheckBox("Show All Games")
+        self.show_all_checkbox.setChecked(True)  # Default to showing all games
         self.show_all_checkbox.setToolTip("Display all games, even those without qualifying edge")
         self.show_all_checkbox.stateChanged.connect(self.update_table)
         controls.addWidget(self.show_all_checkbox)
@@ -1496,12 +1606,16 @@ class PredictionsTab(QWidget):
     def load_cached_predictions_on_startup(self):
         """Load cached predictions on startup for instant display"""
         try:
+            today = datetime.now().strftime('%Y-%m-%d')
+            should_auto_refresh = False
+            
             if PREDICTIONS_CACHE_FILE.exists():
                 with open(PREDICTIONS_CACHE_FILE, 'r') as f:
                     cache_data = json.load(f)
                 
                 # Get timestamp from file modification time
                 cache_time = datetime.fromtimestamp(PREDICTIONS_CACHE_FILE.stat().st_mtime)
+                cache_date = cache_time.strftime('%Y-%m-%d')
                 time_diff = datetime.now() - cache_time
                 
                 if time_diff.total_seconds() < 60:
@@ -1525,12 +1639,21 @@ class PredictionsTab(QWidget):
                 
                 if len(self.predictions) > 0:
                     self.update_table()
-                    self.status_label.setText(f"📦 Loaded {len(self.predictions)} cached predictions from {time_str} - Click Refresh to update")
-                    print(f"[OK] Loaded {len(self.predictions)} predictions from cache ({time_str})")
+                    
+                    # Auto-refresh if cache is from a different day
+                    if cache_date != today:
+                        print(f"[STARTUP] Cache from {cache_date}, today is {today} - auto-refreshing")
+                        self.status_label.setText(f"📦 Cache from {cache_date} - refreshing for {today}...")
+                        QTimer.singleShot(500, self.refresh_predictions)
+                    else:
+                        self.status_label.setText(f"📦 Loaded {len(self.predictions)} cached predictions from {time_str} - Click Refresh to update")
+                        print(f"[OK] Loaded {len(self.predictions)} predictions from cache ({time_str})")
                     return
             
-            # No cache available, do initial refresh
-            self.status_label.setText("No cached predictions - click Refresh to load")
+            # No cache available, do initial refresh for today
+            print(f"[STARTUP] No cache found - auto-refreshing for {today}")
+            self.status_label.setText(f"Loading predictions for {today}...")
+            QTimer.singleShot(500, self.refresh_predictions)
             
         except Exception as e:
             print(f"[WARNING] Could not load cached predictions: {e}")
@@ -1642,6 +1765,9 @@ class PredictionsTab(QWidget):
             
             # Fetch games using ESPN schedule service
             if ESPN_SCHEDULE_AVAILABLE and hasattr(self.predictor, 'schedule_service') and self.predictor.schedule_service:
+                # Don't clear cache - let it use CSV schedule for fast lookups
+                # self.predictor.schedule_service.clear_cache()
+                
                 for day_offset in range(days_ahead):
                     target_date = start_date + timedelta(days=day_offset)
                     target_date_str = target_date.strftime('%Y-%m-%d')
@@ -1698,13 +1824,13 @@ class PredictionsTab(QWidget):
                     game_result = self._check_game_result(game['home_team'], game['away_team'], game['game_date'])
                     
                     # Prediction will fetch live odds internally via LiveOddsFetcher
+                    # No default odds - predictions require real market data
                     pred = self.predictor.predict_game(
                         home_team=game['home_team'],
                         away_team=game['away_team'],
                         game_date=game['game_date'],
-                        game_time=game.get('game_time', 'TBD'),
-                        home_ml_odds=-110,  # Defaults, will be overridden by LiveOddsFetcher
-                        away_ml_odds=-110
+                        game_time=game.get('game_time', 'TBD')
+                        # home_ml_odds and away_ml_odds omitted - will be fetched by LiveOddsFetcher
                     )
                     if 'error' not in pred:
                         # Add game result if available
@@ -2485,16 +2611,17 @@ class SettingsTab(QWidget):
             injury_features = [f for f in self.predictor.features if 'injury' in f.lower() or 'shock' in f.lower() or 'star' in f.lower()]
             model_name = MODEL_PATH.stem
             info_text = f"""
-<b>Model:</b> {model_name} - Trial 1306 (PRODUCTION)<br>
+<b>Model:</b> {model_name} - MDP v2.2 (PRODUCTION - Regression)<br>
 <b>Features:</b> {num_features} Features (Including {len(injury_features)} injury/shock features)<br>
 <b>Feature Calculator:</b> FeatureCalculatorV5 (PRODUCTION)<br>
-<b>Validated Performance:</b> <font color='#90EE90'><b>49.7% ROI</b></font> (2%/10% thresholds)<br>
+<b>Validated Performance:</b> <font color='#90EE90'><b>29.1% ROI</b></font> (1.5%/8.0% thresholds)<br>
 <b>Bet Thresholds:</b> {FAVORITE_EDGE_THRESHOLD*100:.1f}% Favorites / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% Underdogs<br>
+<b>Model RMSE:</b> 13.42 points | <b>MAE:</b> 11.06 points<br>
 <b>Database:</b> {DATABASE_PATH.name}<br>
 <b>Last Updated:</b> {datetime.now().strftime('%Y-%m-%d')}<br>
 <br>
 <b>Bankroll File:</b> {BANKROLL_SETTINGS_FILE.name}<br>
-<b>Status:</b> ✓ Trial 1306 Production Model Loaded (All Systems Active)
+<b>Status:</b> ✓ MDP v2.2 Production Model Loaded (All Systems Active)
 """
         else:
             info_text = "<b>Status:</b> Predictor not loaded"
@@ -2524,13 +2651,13 @@ class SettingsTab(QWidget):
         kelly_layout.addStretch()
         risk_layout.addLayout(kelly_layout)
         
-        # Trial 1306 Thresholds (Informational - Built into Model)
+        # MDP v2.2 Thresholds (Informational - Optimized via Grid Search)
         threshold_layout = QHBoxLayout()
-        threshold_layout.addWidget(QLabel("<b>Trial 1306 Bet Thresholds:</b>"))
+        threshold_layout.addWidget(QLabel("<b>MDP v2.2 Bet Thresholds:</b>"))
         threshold_info = QLabel(f"<font color='#90EE90'>{FAVORITE_EDGE_THRESHOLD*100:.1f}% for Favorites | {UNDERDOG_EDGE_THRESHOLD*100:.1f}% for Underdogs</font>")
         threshold_info.setStyleSheet("font-weight: bold;")
         threshold_layout.addWidget(threshold_info)
-        threshold_layout.addWidget(QLabel("<font color='gray'>(Built into model, not adjustable)</font>"))
+        threshold_layout.addWidget(QLabel("<font color='gray'>(Optimized via grid search, not adjustable)</font>"))
         threshold_layout.addStretch()
         risk_layout.addLayout(threshold_layout)
         
@@ -2628,7 +2755,7 @@ class SettingsTab(QWidget):
         kelly = self.kelly_spin.value() if hasattr(self, 'kelly_spin') else KELLY_FRACTION
         max_wager = self.max_wager_spin.value() if hasattr(self, 'max_wager_spin') else MAX_BET_PCT
         
-        # Trial 1306 uses built-in thresholds (2% fav / 10% dog)
+        # MDP v2.2 uses optimized thresholds (1.5% fav / 8.0% dog)
         self.risk_display.setText(
             f"Current: Kelly {kelly:.0%} | Thresholds: {FAVORITE_EDGE_THRESHOLD*100:.1f}% FAV / {UNDERDOG_EDGE_THRESHOLD*100:.1f}% DOG | Max Wager {max_wager:.1%} of bankroll"
         )
@@ -2640,7 +2767,7 @@ class SettingsTab(QWidget):
         new_kelly = self.kelly_spin.value()
         new_max_wager = self.max_wager_spin.value()
         
-        # Update global constants (Trial 1306 thresholds are built-in and not saved)
+        # Update global constants (MDP thresholds are built-in and not saved)
         KELLY_FRACTION = new_kelly
         MAX_BET_PCT = new_max_wager
         
@@ -2665,7 +2792,7 @@ class SettingsTab(QWidget):
                 f"Risk management settings updated:\n\n"
                 f"Kelly Criterion: {new_kelly:.0%}\n"
                 f"Maximum Wager: {new_max_wager:.1%} of bankroll\n\n"
-                f"Note: Trial 1306 thresholds ({FAVORITE_EDGE_THRESHOLD*100:.1f}%/{UNDERDOG_EDGE_THRESHOLD*100:.1f}%) are built-in"
+                f"Note: MDP v2.2 thresholds ({FAVORITE_EDGE_THRESHOLD*100:.1f}%/{UNDERDOG_EDGE_THRESHOLD*100:.1f}%) are optimized"
                 f"Settings will apply to new predictions."
             )
         except Exception as e:
