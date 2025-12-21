@@ -71,12 +71,14 @@ class AnalyticsTab(QWidget):
     
     def load_all_data(self):
         """Load data into all tabs automatically"""
+        print("[ANALYTICS] Loading all analytics data...")
         self.overview_tab.refresh_data()
         self.results_tab.load_results()
         self.predictions_tab.load_predictions()
         self.team_analysis_tab.refresh_analysis()
         self.edge_analysis_tab.refresh_analysis()
         self.calibration_tab.refresh_calibration()
+        print("[ANALYTICS] All analytics data loaded")
 
 
 class OverviewTab(QWidget):
@@ -90,11 +92,53 @@ class OverviewTab(QWidget):
     def init_ui(self):
         layout = QVBoxLayout()
         
-        # Refresh button
+        # Control buttons
+        btn_layout = QHBoxLayout()
+        
         refresh_btn = QPushButton("🔄 Refresh All Metrics")
         refresh_btn.clicked.connect(self.refresh_data)
         refresh_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; padding: 10px;")
-        layout.addWidget(refresh_btn)
+        btn_layout.addWidget(refresh_btn)
+        
+        db_status_btn = QPushButton("💾 Database Status")
+        db_status_btn.clicked.connect(self.show_database_status)
+        db_status_btn.setStyleSheet("background-color: #007bff; color: white; font-weight: bold; padding: 10px;")
+        btn_layout.addWidget(db_status_btn)
+        
+        btn_layout.addStretch()
+        layout.addLayout(btn_layout)
+        
+        # Database Status Group
+        db_group = QGroupBox("💾 Database Status")
+        db_layout = QVBoxLayout()
+        
+        self.db_status_label = QLabel("Loading database status...")
+        self.db_status_label.setTextFormat(Qt.TextFormat.RichText)
+        db_layout.addWidget(self.db_status_label)
+        
+        # Refresh buttons for each database
+        refresh_layout = QHBoxLayout()
+        
+        self.refresh_injuries_btn = QPushButton("🏥 Update Injuries")
+        self.refresh_injuries_btn.clicked.connect(self.refresh_injuries)
+        self.refresh_injuries_btn.setStyleSheet("background-color: #6c757d; color: white; padding: 5px;")
+        refresh_layout.addWidget(self.refresh_injuries_btn)
+        
+        self.refresh_results_btn = QPushButton("🏀 Update Game Results")
+        self.refresh_results_btn.clicked.connect(self.refresh_game_results)
+        self.refresh_results_btn.setStyleSheet("background-color: #6c757d; color: white; padding: 5px;")
+        refresh_layout.addWidget(self.refresh_results_btn)
+        
+        self.refresh_schedule_btn = QPushButton("📅 Update Schedule")
+        self.refresh_schedule_btn.clicked.connect(self.refresh_schedule)
+        self.refresh_schedule_btn.setStyleSheet("background-color: #6c757d; color: white; padding: 5px;")
+        refresh_layout.addWidget(self.refresh_schedule_btn)
+        
+        refresh_layout.addStretch()
+        db_layout.addLayout(refresh_layout)
+        
+        db_group.setLayout(db_layout)
+        layout.addWidget(db_group)
         
         # Overall Performance Group
         perf_group = QGroupBox("🎯 Overall Performance")
@@ -132,9 +176,218 @@ class OverviewTab(QWidget):
         layout.addStretch()
         self.setLayout(layout)
     
+    def check_database_status(self):
+        """Check last update times for all key database tables"""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            
+            status = {}
+            
+            # Check trial1306_bets
+            try:
+                bets_df = pd.read_sql_query("""
+                    SELECT MAX(created_at) as last_update, COUNT(*) as total
+                    FROM trial1306_bets
+                """, conn)
+                status['Bets'] = {
+                    'last_update': bets_df['last_update'].iloc[0] if pd.notna(bets_df['last_update'].iloc[0]) else 'Never',
+                    'total': int(bets_df['total'].iloc[0])
+                }
+            except:
+                status['Bets'] = {'last_update': 'Table not found', 'total': 0}
+            
+            # Check daily_predictions
+            try:
+                pred_df = pd.read_sql_query("""
+                    SELECT MAX(created_at) as last_update, COUNT(*) as total
+                    FROM daily_predictions
+                """, conn)
+                status['Predictions'] = {
+                    'last_update': pred_df['last_update'].iloc[0] if pd.notna(pred_df['last_update'].iloc[0]) else 'Never',
+                    'total': int(pred_df['total'].iloc[0])
+                }
+            except:
+                status['Predictions'] = {'last_update': 'Table not found', 'total': 0}
+            
+            # Check game_results
+            try:
+                results_df = pd.read_sql_query("""
+                    SELECT MAX(date_played) as last_update, COUNT(*) as total
+                    FROM game_results
+                """, conn)
+                status['Game Results'] = {
+                    'last_update': results_df['last_update'].iloc[0] if pd.notna(results_df['last_update'].iloc[0]) else 'Never',
+                    'total': int(results_df['total'].iloc[0])
+                }
+            except:
+                status['Game Results'] = {'last_update': 'Table not found', 'total': 0}
+            
+            # Check active_injuries
+            try:
+                injury_df = pd.read_sql_query("""
+                    SELECT MAX(last_updated) as last_update, COUNT(*) as total
+                    FROM active_injuries
+                """, conn)
+                status['Injuries'] = {
+                    'last_update': injury_df['last_update'].iloc[0] if pd.notna(injury_df['last_update'].iloc[0]) else 'Never',
+                    'total': int(injury_df['total'].iloc[0])
+                }
+            except:
+                status['Injuries'] = {'last_update': 'Table not found', 'total': 0}
+            
+            # Check elo_ratings
+            try:
+                elo_df = pd.read_sql_query("""
+                    SELECT MAX(date) as last_update, COUNT(DISTINCT team) as total
+                    FROM elo_ratings
+                """, conn)
+                status['ELO Ratings'] = {
+                    'last_update': elo_df['last_update'].iloc[0] if pd.notna(elo_df['last_update'].iloc[0]) else 'Never',
+                    'total': int(elo_df['total'].iloc[0])
+                }
+            except:
+                status['ELO Ratings'] = {'last_update': 'Table not found', 'total': 0}
+            
+            conn.close()
+            return status
+            
+        except Exception as e:
+            print(f"[ERROR] Checking database status: {e}")
+            return {}
+    
+    def update_db_status_display(self):
+        """Update the database status label"""
+        status = self.check_database_status()
+        
+        if not status:
+            self.db_status_label.setText("<b>Error checking database status</b>")
+            return
+        
+        html = "<table style='width: 100%; font-size: 13px;'>"
+        html += "<tr><th>Database</th><th>Last Updated</th><th>Records</th></tr>"
+        
+        for db_name, info in status.items():
+            last_update = info['last_update']
+            
+            # Color code based on age
+            if last_update == 'Never' or last_update == 'Table not found':
+                color = '#FF6B6B'
+            else:
+                try:
+                    # Parse timestamp and check age
+                    update_dt = pd.to_datetime(last_update)
+                    age_hours = (pd.Timestamp.now() - update_dt).total_seconds() / 3600
+                    
+                    if age_hours < 12:
+                        color = '#90EE90'  # Green - fresh
+                    elif age_hours < 48:
+                        color = '#FFD700'  # Yellow - getting old
+                    else:
+                        color = '#FF6B6B'  # Red - stale
+                    
+                    # Format timestamp nicely
+                    last_update = update_dt.strftime('%Y-%m-%d %H:%M')
+                except:
+                    color = 'white'
+            
+            html += f"<tr><td><b>{db_name}</b></td><td style='color: {color};'>{last_update}</td><td>{info['total']}</td></tr>"
+        
+        html += "</table>"
+        self.db_status_label.setText(html)
+    
+    def show_database_status(self):
+        """Show detailed database status in a dialog"""
+        status = self.check_database_status()
+        
+        msg = "DATABASE STATUS\n\n"
+        for db_name, info in status.items():
+            msg += f"{db_name}:\n"
+            msg += f"  Last Updated: {info['last_update']}\n"
+            msg += f"  Total Records: {info['total']}\n\n"
+        
+        QMessageBox.information(self, "Database Status", msg)
+    
+    def refresh_injuries(self):
+        """Refresh injury data from ESPN"""
+        try:
+            from src.services.injury_scraper import scrape_active_injuries
+            
+            self.refresh_injuries_btn.setText("🔄 Updating...")
+            self.refresh_injuries_btn.setEnabled(False)
+            
+            # Run injury scraper
+            print("[ANALYTICS] Refreshing injuries...")
+            count = scrape_active_injuries()
+            
+            self.refresh_injuries_btn.setText("🏥 Update Injuries")
+            self.refresh_injuries_btn.setEnabled(True)
+            
+            self.update_db_status_display()
+            
+            QMessageBox.information(
+                self, 
+                "Injuries Updated",
+                f"Successfully updated {count} injured players"
+            )
+        except Exception as e:
+            self.refresh_injuries_btn.setText("🏥 Update Injuries")
+            self.refresh_injuries_btn.setEnabled(True)
+            QMessageBox.warning(self, "Update Failed", f"Could not update injuries: {e}")
+    
+    def refresh_game_results(self):
+        """Refresh game results from NBA API"""
+        try:
+            self.refresh_results_btn.setText("🔄 Updating...")
+            self.refresh_results_btn.setEnabled(False)
+            
+            # This would call your game results fetcher
+            # For now, just show message
+            QMessageBox.information(
+                self,
+                "Game Results",
+                "Game results update requires running nightly pipeline.\n"
+                "Use: python scripts/overnight_pipeline.py"
+            )
+            
+            self.refresh_results_btn.setText("🏀 Update Game Results")
+            self.refresh_results_btn.setEnabled(True)
+            
+        except Exception as e:
+            self.refresh_results_btn.setText("🏀 Update Game Results")
+            self.refresh_results_btn.setEnabled(True)
+            QMessageBox.warning(self, "Update Failed", f"Could not update results: {e}")
+    
+    def refresh_schedule(self):
+        """Refresh NBA schedule"""
+        try:
+            self.refresh_schedule_btn.setText("🔄 Updating...")
+            self.refresh_schedule_btn.setEnabled(False)
+            
+            from src.services.espn_schedule_service import ESPNScheduleService
+            
+            service = ESPNScheduleService()
+            service.clear_cache()
+            
+            self.refresh_schedule_btn.setText("📅 Update Schedule")
+            self.refresh_schedule_btn.setEnabled(True)
+            
+            QMessageBox.information(
+                self,
+                "Schedule Updated",
+                "Schedule cache cleared. Next fetch will pull fresh data."
+            )
+            
+        except Exception as e:
+            self.refresh_schedule_btn.setText("📅 Update Schedule")
+            self.refresh_schedule_btn.setEnabled(True)
+            QMessageBox.warning(self, "Update Failed", f"Could not update schedule: {e}")
+    
     def refresh_data(self):
         """Load and display all overview metrics"""
         try:
+            # Update database status first
+            self.update_db_status_display()
+            
             conn = sqlite3.connect(self.db_path)
             
             # Overall stats
