@@ -313,10 +313,10 @@ class NBAPredictionEngine:
     
     def is_valid_odds(self, home_odds: int, away_odds: int) -> bool:
         """
-        Filter out corrupted/extreme odds (validated filter)
-        Relaxed to allow bigger favorites and underdogs with value
+        Accept ALL real Kalshi odds - no filtering for live games
+        Filter was only needed for backtesting with corrupted historical data
         """
-        return (-1000 <= home_odds <= 1000) and (-1000 <= away_odds <= 1000)
+        return True  # Accept all live market odds
     
     def predict_game(self, home_team: str, away_team: str, game_date: str, game_time: str = "19:00",
                      home_ml_odds: Optional[int] = None, away_ml_odds: Optional[int] = None) -> Dict:
